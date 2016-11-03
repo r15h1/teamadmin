@@ -25,7 +25,7 @@ namespace TeamAdmin.Lib.Repositories
 
         public Core.Club Save(Core.Club club)
         {
-            if (club.Id.HasValue) 
+            if (club.ClubId.HasValue) 
                 return Update(club);
 
             return Create(club);
@@ -46,7 +46,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
-                var clubInfo = context.Clubs.Where(c => c.ClubId == club.Id).FirstOrDefault();
+                var clubInfo = context.Clubs.Where(c => c.ClubId == club.ClubId).FirstOrDefault();
                 if (clubInfo == null) return club;
 
                 clubInfo.Name = club.Name;
@@ -67,7 +67,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             return new Core.Club
             {
-                Id = clubInfo.ClubId,
+                ClubId = clubInfo.ClubId,
                 Name = clubInfo.Name,
                 Address = new Address
                 {

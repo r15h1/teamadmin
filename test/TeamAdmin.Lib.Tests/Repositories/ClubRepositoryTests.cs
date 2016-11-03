@@ -39,7 +39,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
                 Club club = CreateNewClubWithNoId();
                 var savedClub = new ClubRepository().Save(club);
 
-                Assert.NotNull(savedClub.Id.HasValue && savedClub.Id.Value > 0);                
+                Assert.NotNull(savedClub.ClubId.HasValue && savedClub.ClubId.Value > 0);                
             }
 
             [Fact]
@@ -50,15 +50,15 @@ namespace TeamAdmin.Lib.Tests.Repositories
                 Club club = CreateNewClubWithNoId();
                 var newClub = clubRepository.Save(club);
                 var listAfter = repo.Get();
-                Assert.True(listBefore.Where(c => c.Id.Value == newClub.Id).Count() == 0);
-                Assert.True(listAfter.Where(c => c.Id.Value == newClub.Id).Count() == 1);
+                Assert.True(listBefore.Where(c => c.ClubId.Value == newClub.ClubId).Count() == 0);
+                Assert.True(listAfter.Where(c => c.ClubId.Value == newClub.ClubId).Count() == 1);
             }
 
             private static Club CreateNewClubWithNoId()
             {
                 return new Club()
                 {
-                    Id = null,
+                    ClubId = null,
                     Name = "Test Club",
                     Address = new Address
                     {
@@ -120,7 +120,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
                 ModifyClubValues(newClub);
                 var updatedClub = repo.Save(newClub);
 
-                Assert.True(newClub.Id == updatedClub.Id);
+                Assert.True(newClub.ClubId == updatedClub.ClubId);
             }
 
             [Fact]
@@ -132,15 +132,15 @@ namespace TeamAdmin.Lib.Tests.Repositories
                 ModifyClubValues(newClub);
                 var updatedClub = repo.Save(newClub);
                 var listAfter = repo.Get();
-                Assert.True(listBefore.Where(c => c.Id.Value == newClub.Id).Count() == 1);
-                Assert.True(listAfter.Where(c => c.Id.Value == newClub.Id).Count() == 1);
+                Assert.True(listBefore.Where(c => c.ClubId.Value == newClub.ClubId).Count() == 1);
+                Assert.True(listAfter.Where(c => c.ClubId.Value == newClub.ClubId).Count() == 1);
             }
 
             private Club CreateNewClubWithNoId()
             {
                 return new Club()
                 {
-                    Id = null,
+                    ClubId = null,
                     Name = "Test Club",
                     Address = new Address
                     {
@@ -175,7 +175,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
             {
                 Club club = CreateNewClubWithNoId();
                 var newClub = repo.Save(club);
-                bool result = repo.Delete(newClub.Id.Value);
+                bool result = repo.Delete(newClub.ClubId.Value);
                 Assert.True(result);
             }
 
@@ -185,17 +185,17 @@ namespace TeamAdmin.Lib.Tests.Repositories
                 Club club = CreateNewClubWithNoId();
                 var newClub = repo.Save(club);
                 var listBefore = repo.Get();
-                repo.Delete(newClub.Id.Value);
+                repo.Delete(newClub.ClubId.Value);
                 var listAfter = repo.Get(); 
-                Assert.True(listBefore.Where(c => c.Id.Value == newClub.Id).Count() == 1);
-                Assert.True(listAfter.Where(c => c.Id.Value == newClub.Id).Count() == 0);
+                Assert.True(listBefore.Where(c => c.ClubId.Value == newClub.ClubId).Count() == 1);
+                Assert.True(listAfter.Where(c => c.ClubId.Value == newClub.ClubId).Count() == 0);
             }
 
             private Club CreateNewClubWithNoId()
             {
                 return new Club()
                 {
-                    Id = null,
+                    ClubId = null,
                     Name = "Test Club",
                     Address = new Address
                     {

@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 
 namespace TeamAdmin.Core
 {
-    public class Club 
+    public class Team
     {
-        public Club()
+        public Team(int clubId)
         {
-            Address = new Address();
+            ClubId = clubId;
         }
 
-        public int? ClubId { get; set; }
-        public Address Address { get; set; }
+        public int ClubId { get; private set; }
         public string Name { get; set; }
+        public int? TeamId { get; set; }
     }
 }

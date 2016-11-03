@@ -12,6 +12,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         /// for e.g. Club.Address.Street to Street column when OnModelCreating is fired
         /// </summary>
         public DbSet<Club> Clubs { get; set; }
+        public DbSet<Team> Teams { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
