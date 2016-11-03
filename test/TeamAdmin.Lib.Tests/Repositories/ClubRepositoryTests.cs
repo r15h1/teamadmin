@@ -45,10 +45,9 @@ namespace TeamAdmin.Lib.Tests.Repositories
             [Fact]
             public void CountIncreasesByOneOnCreate()
             {
-                var clubRepository = new ClubRepository();
                 var listBefore = repo.Get();
                 Club club = CreateNewClubWithNoId();
-                var newClub = clubRepository.Save(club);
+                var newClub = repo.Save(club);
                 var listAfter = repo.Get();
                 Assert.True(listBefore.Where(c => c.ClubId.Value == newClub.ClubId).Count() == 0);
                 Assert.True(listAfter.Where(c => c.ClubId.Value == newClub.ClubId).Count() == 1);

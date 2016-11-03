@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using TeamAdmin.Core;
 using TeamAdmin.Core.Repositories;
 using TeamAdmin.Lib.Repositories;
@@ -34,9 +35,57 @@ namespace TeamAdmin.Lib.Tests.Repositories
                 Assert.True(newTeam.TeamId.HasValue && newTeam.TeamId.Value > 0);
             }
 
+            [Fact]
+            public void CountIncreasesByOneOnCreate()
+            {
+                var listBefore = repo.Get();
+                var team = CreateTeamWithNoId();
+                var newTeam = repo.Save(team);
+                var listAfter = repo.Get();
+                Assert.True(listBefore.Where(t => t.TeamId.Value == newTeam.TeamId).Count() == 0);
+                Assert.True(listAfter.Where(t => t.TeamId.Value == newTeam.TeamId).Count() == 1);
+            }
+
             private Team CreateTeamWithNoId()
             {
                 return new Team (1){
+                    TeamId = null,
+                    Name = "Team Name"
+                };
+            }
+        }
+
+        public class TeamModification
+        {
+            private ITeamRepository repo;
+
+            public TeamModification()
+            {
+                repo = new TeamRepository();
+            }
+
+            [Fact]
+            public void ValuesArePersistedOnUpdate()
+            {
+                var team = CreateNewTeamWithNoId();
+                var newTeam = repo.Save(team);
+                ModifyTeamValues(newTeam);
+                var updatedTeam = repo.Save(newTeam);
+
+                Assert.NotNull(updatedTeam);
+                Assert.Equal(updatedTeam.Name, newTeam.Name);
+                Assert.Equal(updatedTeam.ClubId, newTeam.ClubId);
+            }
+
+            private void ModifyTeamValues(Team team)
+            {
+                team.Name = "New Name";
+            }
+
+            private Team CreateNewTeamWithNoId()
+            {
+                return new Team(1) 
+                {
                     TeamId = null,
                     Name = "Team Name"
                 };
