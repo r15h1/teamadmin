@@ -117,5 +117,46 @@ namespace TeamAdmin.Lib.Tests.Repositories
                 };
             }
         }
+
+        public class TeamDeletion
+        {
+            private ITeamRepository repo;
+
+            public TeamDeletion()
+            {
+                repo = new TeamRepository();
+            }
+
+            [Fact]
+            public void ExistingTeamDeletedWithSuccess()
+            {
+                var team = CreateNewTeamWithNoId();
+                var newTeam = repo.Save(team);
+                bool result = repo.Delete(newTeam.ClubId, newTeam.TeamId.Value);
+                Assert.True(result);
+            }
+
+            [Fact]
+            public void CountReducesByOneOnDelete()
+            {
+                Team team = CreateNewTeamWithNoId();
+                var newTeam = repo.Save(team);
+                var listBefore = repo.Get();
+                repo.Delete(newTeam.ClubId, newTeam.TeamId.Value);
+                var listAfter = repo.Get();
+                Assert.True(listBefore.Where(t => t.ClubId == newTeam.ClubId && t.TeamId == newTeam.TeamId).Count() == 1);
+                Assert.True(listAfter.Where(t => t.ClubId == newTeam.ClubId && t.TeamId == newTeam.TeamId).Count() == 0);
+            }
+
+            private Team CreateNewTeamWithNoId()
+            {
+                return new Team(1)
+                {
+                    TeamId = null,
+                    Name = "Team Name"
+                };
+            }
+        }
+
     }
 }

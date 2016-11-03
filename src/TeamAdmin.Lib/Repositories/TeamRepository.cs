@@ -11,6 +11,8 @@ namespace TeamAdmin.Lib.Repositories
     public class TeamRepository : ITeamRepository
     {
         IMapper mapper;
+        private object c;
+
         public TeamRepository()
         {
             mapper = AutoMapperFactory.GetMapper();
@@ -21,7 +23,7 @@ namespace TeamAdmin.Lib.Repositories
             var list = new List<Core.Team>();
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
-                var teams = context.Teams.ToList();
+                var teams = context.Teams.Where( t => !t.Deleted.HasValue || !t.Deleted.Value).ToList();
                 teams.ForEach((t) => list.Add(MapTeamFromDB(t)));
                 return list;
             }
@@ -68,6 +70,20 @@ namespace TeamAdmin.Lib.Repositories
                 TeamId = teamInfo.TeamId,
                 Name = teamInfo.Name
             };
+        }
+
+        public bool Delete(int clubId, int teamId)
+        {
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                var teamInfo = context.Teams.Where(t => t.ClubId == clubId && t.TeamId == teamId).FirstOrDefault();
+                if (teamInfo == null) return false;
+
+                teamInfo.Deleted = true;
+                context.Entry(teamInfo).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                context.SaveChanges();
+                return true;
+            }
         }
     }
 }

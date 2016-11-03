@@ -161,11 +161,9 @@ namespace TeamAdmin.Lib.Tests.Repositories
         public class ClubDeletion
         {
             private IClubRepository repo;
-            private ITestOutputHelper output;
 
-            public ClubDeletion(ITestOutputHelper output)
+            public ClubDeletion()
             {
-                this.output = output;
                 repo = new ClubRepository();
             }
 
