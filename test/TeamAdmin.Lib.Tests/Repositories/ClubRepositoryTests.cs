@@ -21,7 +21,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
             }
 
             [Fact]
-            public void ValuesArePersisted()
+            public void ValuesArePersistedOnCreate()
             {
                 Club club = CreateNewClubWithNoId();
                 var savedClub = new ClubRepository().Save(club);
@@ -36,7 +36,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
             }
 
             [Fact]
-            public void NewIdIsObtained()
+            public void NewIdIsObtainedOnCreate()
             {
                 Club club = CreateNewClubWithNoId();
                 var savedClub = new ClubRepository().Save(club);
@@ -45,7 +45,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
             }
 
             [Fact]
-            public void CountIncreasesByOne()
+            public void CountIncreasesByOneOnCreate()
             {
                 var clubRepository = new ClubRepository();
                 var listBefore = repo.Get();
@@ -89,7 +89,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
             }
 
             [Fact]
-            public void ValuesArePersisted()
+            public void ValuesArePersistedOnUpdate()
             {
                 Club club = CreateNewClubWithNoId();
                 var newClub = repo.Save(club);
@@ -115,7 +115,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
             }
 
             [Fact]
-            public void IdDoesNotChange()
+            public void IdDoesNotChangeOnUpdate()
             {
                 Club club = CreateNewClubWithNoId();
                 var newClub = repo.Save(club);
@@ -126,7 +126,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
             }
 
             [Fact]
-            public void CountRemainsTheSameAfterSave()
+            public void CountDoesNotChangeOnUpdate()
             {
                 Club club = CreateNewClubWithNoId();
                 var newClub = repo.Save(club);
@@ -182,7 +182,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
             }
 
             [Fact]
-            public void CountReducesByOneUponDeletion()
+            public void CountReducesByOneOnDelete()
             {
                 Club club = CreateNewClubWithNoId();
                 var newClub = repo.Save(club);
