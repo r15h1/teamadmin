@@ -1,10 +1,9 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
+using System.Collections.Generic;
+using System.Linq;
 using TeamAdmin.Core;
 using TeamAdmin.Core.Repositories;
 using TeamAdmin.Lib.Repositories.EFContext;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace TeamAdmin.Lib.Repositories
 {

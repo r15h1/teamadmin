@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TeamAdmin.Lib.Repositories.EFContext
+﻿namespace TeamAdmin.Lib.Repositories.EFContext
 {
     internal class Club
     {
