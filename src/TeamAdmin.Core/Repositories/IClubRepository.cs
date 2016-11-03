@@ -9,5 +9,7 @@ namespace TeamAdmin.Core.Repositories
     {
         Club Save(Club club);
         int Count { get; }
+        IEnumerable<Club> Get();
+        bool Delete(int clubId);
     }
 }

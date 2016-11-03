@@ -14,5 +14,6 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         public string Country { get; set; }
         public string Street { get; set; }
         public string PostalCode { get; set; }
+        public bool? Deleted { get; set; }
     }
 }

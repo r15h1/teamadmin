@@ -4,6 +4,7 @@ using TeamAdmin.Core;
 using TeamAdmin.Core.Repositories;
 using TeamAdmin.Lib.Repositories.EFContext;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace TeamAdmin.Lib.Repositories
 {
@@ -19,10 +20,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             get
             {
-                using (var context = ClubContextFactory.Create<ClubContext>())
-                {
-                    return context.Clubs.Count();
-                }
+                return Get().Count();
             }
         }
 
@@ -81,6 +79,31 @@ namespace TeamAdmin.Lib.Repositories
                     Street = clubInfo.Street
                 }
             };
+        }
+
+        public IEnumerable<Core.Club> Get()
+        {
+            List<Core.Club> list = new List<Core.Club>();
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                var clubs = context.Clubs.Where(c => !c.Deleted.HasValue || !c.Deleted.Value).ToList();
+                clubs.ForEach((c) => list.Add(MapClubFromDB(c)));
+                return list;
+            }
+        }
+
+        public bool Delete(int clubId)
+        {
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                var clubInfo = context.Clubs.Where(c => c.ClubId == clubId).FirstOrDefault();
+                if (clubInfo == null) return false;
+
+                clubInfo.Deleted = true;
+                context.Entry(clubInfo).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                context.SaveChanges();
+                return true;
+            }
         }
     }
 }
