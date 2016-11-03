@@ -77,6 +77,32 @@ namespace TeamAdmin.Lib.Tests.Repositories
                 Assert.Equal(updatedTeam.ClubId, newTeam.ClubId);
             }
 
+            [Fact]
+            public void IdDoesNotChangeOnUpdate()
+            {
+                Team team = CreateNewTeamWithNoId();
+                var newTeam = repo.Save(team);
+                ModifyTeamValues(newTeam);
+                var updatedTeam = repo.Save(newTeam);
+
+                Assert.True(newTeam.ClubId == updatedTeam.ClubId);
+                Assert.True(newTeam.TeamId == updatedTeam.TeamId);
+            }
+
+            [Fact]
+            public void CountDoesNotChangeOnUpdate()
+            {
+                var team = CreateNewTeamWithNoId();
+                var newTeam = repo.Save(team);
+                var listBefore = repo.Get();
+                ModifyTeamValues(newTeam);
+                var updatedClub = repo.Save(newTeam);
+                var listAfter = repo.Get();
+                Assert.True(listBefore.Where(t => t.ClubId == newTeam.ClubId && t.TeamId.Value == newTeam.TeamId).Count() == 1);
+                Assert.True(listAfter.Where(t => t.ClubId == newTeam.ClubId && t.TeamId.Value == newTeam.TeamId).Count() == 1);
+            }
+
+
             private void ModifyTeamValues(Team team)
             {
                 team.Name = "New Name";
