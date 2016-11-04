@@ -47,7 +47,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
-                var clubInfo = context.Clubs.Where(c => c.ClubId == club.ClubId).FirstOrDefault();
+                var clubInfo = context.Clubs.FirstOrDefault(c => c.ClubId == club.ClubId);
                 if (clubInfo == null) return club;
 
                 clubInfo.Name = club.Name;
@@ -96,7 +96,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
-                var club = context.Clubs.Where(c => c.ClubId == clubId && (!c.Deleted.HasValue || !c.Deleted.Value)).FirstOrDefault();
+                var club = context.Clubs.FirstOrDefault(c => c.ClubId == clubId && (!c.Deleted.HasValue || !c.Deleted.Value));
                 if (club != null)
                     return MapClubFromDB(club);
             }
@@ -108,7 +108,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
-                var clubInfo = context.Clubs.Where(c => c.ClubId == clubId).FirstOrDefault();
+                var clubInfo = context.Clubs.FirstOrDefault(c => c.ClubId == clubId);
                 if (clubInfo == null) return false;
 
                 clubInfo.Deleted = true;

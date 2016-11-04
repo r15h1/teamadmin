@@ -21,7 +21,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
             [Fact]
             public void ValuesArePersistedOnCreate()
             {
-                Team team = CreateTeamWithNoId();
+                var team = CreateTeamWithNoId();
                 Team newTeam = repo.Save(team);
                 Assert.Equal(team.Name, newTeam.Name);
                 Assert.Equal(team.ClubId, newTeam.ClubId);
@@ -30,7 +30,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
             [Fact]
             public void NewIdIsObtainedOnCreate()
             {
-                Team team = CreateTeamWithNoId();
+                var team = CreateTeamWithNoId();
                 Team newTeam = repo.Save(team);
                 Assert.True(newTeam.TeamId.HasValue && newTeam.TeamId.Value > 0);
             }
@@ -44,6 +44,18 @@ namespace TeamAdmin.Lib.Tests.Repositories
                 var listAfter = repo.Get();
                 Assert.True(listBefore.Where(t => t.TeamId.Value == newTeam.TeamId).Count() == 0);
                 Assert.True(listAfter.Where(t => t.TeamId.Value == newTeam.TeamId).Count() == 1);
+            }
+
+            [Fact]
+            public void CanRetrieveTeamByIdUponCreation()
+            {
+                var team = CreateTeamWithNoId();
+                var newTeam = repo.Save(team);
+                var retrievedTeam = repo.Get(newTeam.ClubId, newTeam.TeamId.Value);
+                Assert.NotNull(retrievedTeam);
+                Assert.True(retrievedTeam.ClubId == newTeam.ClubId);
+                Assert.True(retrievedTeam.TeamId == newTeam.TeamId);
+                Assert.True(retrievedTeam.Name == newTeam.Name);
             }
 
             private Team CreateTeamWithNoId()
@@ -80,7 +92,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
             [Fact]
             public void IdDoesNotChangeOnUpdate()
             {
-                Team team = CreateNewTeamWithNoId();
+                var team = CreateNewTeamWithNoId();
                 var newTeam = repo.Save(team);
                 ModifyTeamValues(newTeam);
                 var updatedTeam = repo.Save(newTeam);
@@ -102,6 +114,19 @@ namespace TeamAdmin.Lib.Tests.Repositories
                 Assert.True(listAfter.Where(t => t.ClubId == newTeam.ClubId && t.TeamId.Value == newTeam.TeamId).Count() == 1);
             }
 
+            [Fact]
+            public void CanRetrieveTeamByIdUponModification()
+            {
+                var team = CreateNewTeamWithNoId();
+                var newTeam = repo.Save(team);
+                ModifyTeamValues(newTeam);
+                var updatedTeam = repo.Save(newTeam);
+                var retrievedTeam = repo.Get(updatedTeam.ClubId, updatedTeam.TeamId.Value);
+                Assert.NotNull(retrievedTeam);
+                Assert.True(retrievedTeam.ClubId == updatedTeam.ClubId);
+                Assert.True(retrievedTeam.TeamId == updatedTeam.TeamId);
+                Assert.True(retrievedTeam.Name == updatedTeam.Name);
+            }
 
             private void ModifyTeamValues(Team team)
             {
@@ -139,13 +164,27 @@ namespace TeamAdmin.Lib.Tests.Repositories
             [Fact]
             public void CountReducesByOneOnDelete()
             {
-                Team team = CreateNewTeamWithNoId();
+                var team = CreateNewTeamWithNoId();
                 var newTeam = repo.Save(team);
                 var listBefore = repo.Get();
                 repo.Delete(newTeam.ClubId, newTeam.TeamId.Value);
                 var listAfter = repo.Get();
                 Assert.True(listBefore.Where(t => t.ClubId == newTeam.ClubId && t.TeamId == newTeam.TeamId).Count() == 1);
                 Assert.True(listAfter.Where(t => t.ClubId == newTeam.ClubId && t.TeamId == newTeam.TeamId).Count() == 0);
+            }
+
+            [Fact]
+            public void CanNotRetrieveClubByIdUponDeletion()
+            {
+                var team = CreateNewTeamWithNoId();
+                var newTeam = repo.Save(team);
+                var beforeDelete = repo.Get(newTeam.ClubId, newTeam.TeamId.Value);
+                repo.Delete(newTeam.ClubId, newTeam.TeamId.Value);
+                var afterDelete = repo.Get(newTeam.ClubId, newTeam.TeamId.Value);
+                Assert.NotNull(beforeDelete);
+                Assert.Equal(beforeDelete.ClubId, newTeam.ClubId);
+                Assert.Equal(beforeDelete.TeamId, newTeam.TeamId);
+                Assert.Null(afterDelete);
             }
 
             private Team CreateNewTeamWithNoId()

@@ -52,7 +52,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
-                var teaminfo = context.Teams.Where(t => t.ClubId == team.ClubId && t.TeamId == team.TeamId).FirstOrDefault();
+                var teaminfo = context.Teams.FirstOrDefault(t => t.ClubId == team.ClubId && t.TeamId == team.TeamId);
                 if (teaminfo == null)
                     return team;
 
@@ -76,7 +76,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
-                var teamInfo = context.Teams.Where(t => t.ClubId == clubId && t.TeamId == teamId).FirstOrDefault();
+                var teamInfo = context.Teams.FirstOrDefault(t => t.ClubId == clubId && t.TeamId == teamId);
                 if (teamInfo == null) return false;
 
                 teamInfo.Deleted = true;
@@ -84,6 +84,18 @@ namespace TeamAdmin.Lib.Repositories
                 context.SaveChanges();
                 return true;
             }
+        }
+
+        public Core.Team Get(int clubId, int teamId)
+        {
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                var team = context.Teams.FirstOrDefault(t => t.ClubId == clubId && t.TeamId == teamId && (!t.Deleted.HasValue || !t.Deleted.Value));
+                if (team != null)
+                        return MapTeamFromDB(team);
+            }
+
+            return null;
         }
     }
 }
