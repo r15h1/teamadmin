@@ -8,7 +8,6 @@ namespace TeamAdmin.Core.Repositories
         Club Save(Club club);
         int Count { get; }
         IEnumerable<Club> Get();
-        //IEnumerable<Club> Get(Func<Club, bool> filter);
         Club Get(int clubId);
         bool Delete(int clubId);
     }

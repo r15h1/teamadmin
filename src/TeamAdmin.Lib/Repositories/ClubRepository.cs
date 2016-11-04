@@ -116,6 +116,6 @@ namespace TeamAdmin.Lib.Repositories
                 context.SaveChanges();
                 return true;
             }
-        }        
+        }
     }
 }
