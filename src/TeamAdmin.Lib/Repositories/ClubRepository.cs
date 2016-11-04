@@ -4,6 +4,7 @@ using System.Linq;
 using TeamAdmin.Core;
 using TeamAdmin.Core.Repositories;
 using TeamAdmin.Lib.Repositories.EFContext;
+using System;
 
 namespace TeamAdmin.Lib.Repositories
 {
@@ -91,6 +92,18 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
+        public Core.Club Get(int clubId)
+        {
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                var club = context.Clubs.Where(c => c.ClubId == clubId && (!c.Deleted.HasValue || !c.Deleted.Value)).FirstOrDefault();
+                if (club != null)
+                    return MapClubFromDB(club);
+            }
+
+            return null;
+        }
+
         public bool Delete(int clubId)
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
@@ -103,6 +116,6 @@ namespace TeamAdmin.Lib.Repositories
                 context.SaveChanges();
                 return true;
             }
-        }
+        }        
     }
 }
