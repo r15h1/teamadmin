@@ -22,7 +22,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
             public void ValuesArePersistedOnCreate()
             {
                 Club club = CreateNewClubWithNoId();
-                var savedClub = new ClubRepository().Save(club);
+                var savedClub = repo.Save(club);
                 
                 Assert.NotNull(savedClub);
                 Assert.Equal(club.Name, savedClub.Name);
@@ -34,10 +34,25 @@ namespace TeamAdmin.Lib.Tests.Repositories
             }
 
             [Fact]
+            public void CanRetrieveClubByIdUponCreation()
+            {
+                var club = CreateNewClubWithNoId();
+                var savedClub = repo.Save(club);
+                var retrievedClub = repo.Get(savedClub.ClubId.Value);
+                Assert.Equal(retrievedClub.ClubId, savedClub.ClubId);
+                Assert.Equal(retrievedClub.Name, savedClub.Name);
+                Assert.Equal(retrievedClub.Address.City, savedClub.Address.City);
+                Assert.Equal(retrievedClub.Address.Country, savedClub.Address.Country);
+                Assert.Equal(retrievedClub.Address.PostalCode, savedClub.Address.PostalCode);
+                Assert.Equal(retrievedClub.Address.Province, savedClub.Address.Province);
+                Assert.Equal(retrievedClub.Address.Street, savedClub.Address.Street);
+            }
+
+            [Fact]
             public void NewIdIsObtainedOnCreate()
             {
                 Club club = CreateNewClubWithNoId();
-                var savedClub = new ClubRepository().Save(club);
+                var savedClub = repo.Save(club);
 
                 Assert.NotNull(savedClub.ClubId.HasValue && savedClub.ClubId.Value > 0);                
             }
@@ -72,7 +87,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
 
             private Club SaveClub(Club club)
             {
-                return new ClubRepository().Save(club);
+                return repo.Save(club);
             }
         }
 
@@ -118,8 +133,24 @@ namespace TeamAdmin.Lib.Tests.Repositories
                 var newClub = repo.Save(club);
                 ModifyClubValues(newClub);
                 var updatedClub = repo.Save(newClub);
-
                 Assert.True(newClub.ClubId == updatedClub.ClubId);
+            }
+
+            [Fact]
+            public void CanRetrieveClubByIdUponModification()
+            {
+                var club = CreateNewClubWithNoId();
+                var newClub = repo.Save(club);
+                ModifyClubValues(newClub);
+                var updatedClub = repo.Save(newClub);
+                var retrievedClub = repo.Get(updatedClub.ClubId.Value);
+                Assert.Equal(retrievedClub.ClubId, updatedClub.ClubId);
+                Assert.Equal(retrievedClub.Name, updatedClub.Name);
+                Assert.Equal(retrievedClub.Address.City, updatedClub.Address.City);
+                Assert.Equal(retrievedClub.Address.Country, updatedClub.Address.Country);
+                Assert.Equal(retrievedClub.Address.PostalCode, updatedClub.Address.PostalCode);
+                Assert.Equal(retrievedClub.Address.Province, updatedClub.Address.Province);
+                Assert.Equal(retrievedClub.Address.Street, updatedClub.Address.Street);
             }
 
             [Fact]
@@ -186,6 +217,19 @@ namespace TeamAdmin.Lib.Tests.Repositories
                 var listAfter = repo.Get(); 
                 Assert.True(listBefore.Where(c => c.ClubId.Value == newClub.ClubId).Count() == 1);
                 Assert.True(listAfter.Where(c => c.ClubId.Value == newClub.ClubId).Count() == 0);
+            }
+
+            [Fact]
+            public void CanNotRetrieveClubByIdUponDeletion()
+            {
+                Club club = CreateNewClubWithNoId();
+                var newClub = repo.Save(club);
+                var retrievedClubBeforeDel = repo.Get(newClub.ClubId.Value);
+                repo.Delete(newClub.ClubId.Value);
+                var retrievedClubAfterDel = repo.Get(newClub.ClubId.Value);
+                Assert.Equal(retrievedClubBeforeDel.ClubId, newClub.ClubId);
+                Assert.NotNull(retrievedClubBeforeDel);
+                Assert.Null(retrievedClubAfterDel);
             }
 
             private Club CreateNewClubWithNoId()
