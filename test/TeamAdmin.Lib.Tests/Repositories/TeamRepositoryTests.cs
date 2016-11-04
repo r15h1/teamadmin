@@ -42,8 +42,8 @@ namespace TeamAdmin.Lib.Tests.Repositories
                 var team = CreateTeamWithNoId();
                 var newTeam = repo.Save(team);
                 var listAfter = repo.Get();
-                Assert.True(listBefore.Where(t => t.TeamId.Value == newTeam.TeamId).Count() == 0);
-                Assert.True(listAfter.Where(t => t.TeamId.Value == newTeam.TeamId).Count() == 1);
+                Assert.True(listBefore.Count(t => t.TeamId.Value == newTeam.TeamId) == 0);
+                Assert.True(listAfter.Count(t => t.TeamId.Value == newTeam.TeamId) == 1);
             }
 
             [Fact]
@@ -110,8 +110,8 @@ namespace TeamAdmin.Lib.Tests.Repositories
                 ModifyTeamValues(newTeam);
                 var updatedClub = repo.Save(newTeam);
                 var listAfter = repo.Get();
-                Assert.True(listBefore.Where(t => t.ClubId == newTeam.ClubId && t.TeamId.Value == newTeam.TeamId).Count() == 1);
-                Assert.True(listAfter.Where(t => t.ClubId == newTeam.ClubId && t.TeamId.Value == newTeam.TeamId).Count() == 1);
+                Assert.True(listBefore.Count(t => t.ClubId == newTeam.ClubId && t.TeamId.Value == newTeam.TeamId) == 1);
+                Assert.True(listAfter.Count(t => t.ClubId == newTeam.ClubId && t.TeamId.Value == newTeam.TeamId) == 1);
             }
 
             [Fact]
@@ -169,8 +169,8 @@ namespace TeamAdmin.Lib.Tests.Repositories
                 var listBefore = repo.Get();
                 repo.Delete(newTeam.ClubId, newTeam.TeamId.Value);
                 var listAfter = repo.Get();
-                Assert.True(listBefore.Where(t => t.ClubId == newTeam.ClubId && t.TeamId == newTeam.TeamId).Count() == 1);
-                Assert.True(listAfter.Where(t => t.ClubId == newTeam.ClubId && t.TeamId == newTeam.TeamId).Count() == 0);
+                Assert.True(listBefore.Count(t => t.ClubId == newTeam.ClubId && t.TeamId == newTeam.TeamId) == 1);
+                Assert.True(listAfter.Count(t => t.ClubId == newTeam.ClubId && t.TeamId == newTeam.TeamId) == 0);
             }
 
             [Fact]
