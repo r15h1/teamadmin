@@ -4,6 +4,6 @@ namespace TeamAdmin.Core.Repositories
 {
     public interface IMediaRepository<T> where T: class
     {
-        IEnumerable<Media> Add(T entity, IEnumerable<Media> mediaList);
+        IEnumerable<Media> AddMedia(int entityId, IEnumerable<Media> mediaList);
     }
 }

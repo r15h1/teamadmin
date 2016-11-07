@@ -118,12 +118,12 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        public IEnumerable<Core.Media> Add(Core.Club entity, IEnumerable<Core.Media> mediaList)
+        public IEnumerable<Core.Media> AddMedia(int clubId, IEnumerable<Core.Media> mediaList)
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
                 List<EFContext.ClubMedia> list = mapper.Map<List<EFContext.ClubMedia>>(mediaList);
-                list.ForEach(c => c.ClubId = entity.ClubId.Value);
+                list.ForEach(c => c.ClubId = clubId);
                 context.Media.AddRange(list);
                 context.SaveChanges();
                 return mapper.Map<List<Core.Media>>(list); ;
