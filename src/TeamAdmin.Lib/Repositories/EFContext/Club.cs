@@ -1,4 +1,7 @@
-﻿namespace TeamAdmin.Lib.Repositories.EFContext
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace TeamAdmin.Lib.Repositories.EFContext
 {
     internal class Club
     {

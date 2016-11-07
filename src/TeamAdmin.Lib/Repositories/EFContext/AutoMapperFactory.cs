@@ -27,7 +27,9 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                         .ForMember(d => d.Street, opt => opt.MapFrom(src => src.Address.Street))
                         .ForMember(d => d.PostalCode, opt => opt.MapFrom(src => src.Address.PostalCode));
 
-                    cfg.CreateMap<Core.Team, EFContext.Team>();                        
+                    cfg.CreateMap<Core.Team, EFContext.Team>();
+                    cfg.CreateMap<Core.Media, EFContext.ClubMedia>();
+                    cfg.CreateMap<EFContext.ClubMedia, Core.Media>();                        
                 });
             }
         }

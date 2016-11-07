@@ -5,10 +5,19 @@ using System.Threading.Tasks;
 
 namespace TeamAdmin.Core
 {
-    public enum MediaTypes
+    public enum MediaType
     {
-        IMAGE = 0,
-        VIDEO = 1,
-        LOGO = 2
+        IMAGE = 1,
+        VIDEO = 2,
+        LOGO = 3
+    }
+
+    public class Media
+    {
+        public int? MediaId { get; set; }
+        public MediaType MediaType { get; set; }
+        public string Url { get; set; }
+        public string Caption { get; set; }
+        public int Position { get; set; }
     }
 }

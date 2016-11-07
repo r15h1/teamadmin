@@ -12,7 +12,8 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         /// for e.g. Club.Address.Street to Street column when OnModelCreating is fired
         /// </summary>
         public DbSet<Club> Clubs { get; set; }
-        public DbSet<Team> Teams { get; internal set; }
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<ClubMedia> Media { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,7 +22,8 @@ namespace TeamAdmin.Lib.Repositories.EFContext
 
         private void SetUpClubs(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Club>().ToTable("Clubs");
+            modelBuilder.Entity<ClubMedia>().ForSqlServerToTable("ClubMedia")
+                .Property(b => b.MediaType).HasColumnName("MediaTypeId");
         }
     }
 }

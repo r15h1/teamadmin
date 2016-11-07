@@ -8,7 +8,7 @@ using System;
 
 namespace TeamAdmin.Lib.Repositories
 {
-    public class ClubRepository : IClubRepository
+    public class ClubRepository : IClubRepository, IMediaRepository<Core.Club>
     {
         IMapper mapper;
         public ClubRepository()
@@ -116,6 +116,18 @@ namespace TeamAdmin.Lib.Repositories
                 context.SaveChanges();
                 return true;
             }
+        }
+
+        public IEnumerable<Core.Media> Add(Core.Club entity, IEnumerable<Core.Media> mediaList)
+        {
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                List<EFContext.ClubMedia> list = mapper.Map<List<EFContext.ClubMedia>>(mediaList);
+                list.ForEach(c => c.ClubId = entity.ClubId.Value);
+                context.Media.AddRange(list);
+                context.SaveChanges();
+                return mapper.Map<List<Core.Media>>(list); ;
+            }            
         }
     }
 }

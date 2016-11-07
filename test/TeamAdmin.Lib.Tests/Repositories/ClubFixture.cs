@@ -57,7 +57,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
 
             clubs.ForEach((c) => {
                 var club = clubRepo.Save(c);
-                Clubs.Add(c);
+                Clubs.Add(club);
                 Teams.Add(teamRepo.Save(new Team(club.ClubId.Value) { Name = "U10" }));
                 Teams.Add(teamRepo.Save(new Team(club.ClubId.Value) { Name = "U11" }));
                 Teams.Add(teamRepo.Save(new Team(club.ClubId.Value) { Name = "U12" }));
@@ -66,7 +66,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 
