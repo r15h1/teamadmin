@@ -152,5 +152,20 @@ namespace TeamAdmin.Lib.Repositories
                 return context.ClubMedia.Where(m => m.ClubId == clubId).Count();
             }
         }
+
+        public bool DeleteMedia(int entityId, int mediaId)
+        {
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                var media = context.ClubMedia.FirstOrDefault(m => m.ClubId == entityId && m.MediaId == mediaId);
+                if (media != null)
+                {
+                    context.ClubMedia.Remove(media);
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

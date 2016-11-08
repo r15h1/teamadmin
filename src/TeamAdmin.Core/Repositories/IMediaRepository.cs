@@ -7,5 +7,6 @@ namespace TeamAdmin.Core.Repositories
         IEnumerable<Media> AddMedia(int entityId, IEnumerable<Media> mediaList);
         IEnumerable<Media> GetMedia(int entityId);
         int GetMediaCount(int entityId);
+        bool DeleteMedia(int entityId, int mediaId);
     }
 }
