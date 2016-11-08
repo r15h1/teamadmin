@@ -122,12 +122,35 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
+                var maxPosition = context.ClubMedia.Where(m => m.ClubId == clubId).Max(m => m.Position);
+
                 List<EFContext.ClubMedia> list = mapper.Map<List<EFContext.ClubMedia>>(mediaList);
-                list.ForEach(c => c.ClubId = clubId);
-                context.Media.AddRange(list);
+                list.ForEach(c => {
+                    c.ClubId = clubId;
+                    c.Position += maxPosition;
+                });
+                context.ClubMedia.AddRange(list);
                 context.SaveChanges();
                 return mapper.Map<List<Core.Media>>(list); ;
             }            
+        }
+
+        public IEnumerable<Core.Media> GetMedia(int clubId)
+        {
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                return context.ClubMedia.Where(m => m.ClubId == clubId)
+                            .Select(m => mapper.Map<Core.Media>(m))
+                            .ToList();
+            }
+        }
+
+        public int GetMediaCount(int clubId)
+        {
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                return context.ClubMedia.Where(m => m.ClubId == clubId).Count();
+            }
         }
     }
 }

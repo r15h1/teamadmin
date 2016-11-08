@@ -13,7 +13,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         /// </summary>
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Team> Teams { get; set; }
-        public DbSet<ClubMedia> Media { get; set; }
+        public DbSet<ClubMedia> ClubMedia { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
