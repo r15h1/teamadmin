@@ -77,12 +77,10 @@ namespace TeamAdmin.Lib.Tests.Repositories
         [Fact]
         public void MediaCanBeRetrivedAfterAddition()
         {
-            var all = new List<Media>();
-            all.AddRange(mediaList1);
-            all.AddRange(mediaList2);
-            var dblist = mediaRepo.GetMedia(club.ClubId.Value);
-            foreach (var media in all)
-                Assert.NotNull(dblist.FirstOrDefault(m => m.Caption == media.Caption && m.MediaType == media.MediaType && m.Url == media.Url));
+            var media = new Media { MediaType = MediaType.IMAGE, Url = "http://www.images.com/myimage001.jpg", Position = 1, Caption = "awesome image" };
+            var newId = mediaRepo.AddMedia(club.ClubId.Value, new List<Media> { media }).FirstOrDefault().MediaId;
+            var retrievedMedia = mediaRepo.GetMedia(club.ClubId.Value).FirstOrDefault(m => m.MediaId == newId);
+            Assert.NotNull(retrievedMedia);
         }
 
         [Fact]
@@ -97,7 +95,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
             var savedList1 = mediaRepo.AddMedia(club.ClubId.Value, mediaList1);
             var media = savedList1.FirstOrDefault(m => m.MediaId == savedList1.FirstOrDefault().MediaId);
             Assert.NotNull(media);
-            bool success = mediaRepo.DeleteMedia(club.ClubId.Value, media.MediaId.Value);
+            bool success = mediaRepo.DeleteMedia(media.MediaId.Value);
             Assert.True(success);
             Assert.Null(mediaRepo.GetMedia(club.ClubId.Value).FirstOrDefault(m => m.MediaId == media.MediaId));
         }
@@ -109,10 +107,23 @@ namespace TeamAdmin.Lib.Tests.Repositories
             var media = savedList1.FirstOrDefault(m => m.MediaId == savedList1.FirstOrDefault().MediaId);
             Assert.NotNull(media);
             var beforeCount = mediaRepo.GetMediaCount(club.ClubId.Value);
-            bool success = mediaRepo.DeleteMedia(club.ClubId.Value, media.MediaId.Value);
+            bool success = mediaRepo.DeleteMedia(media.MediaId.Value);
             Assert.True(success);
             var afterCount = mediaRepo.GetMediaCount(club.ClubId.Value);
             Assert.True(afterCount == beforeCount - 1);            
+        }
+
+        [Fact]
+        public void MediaCaptionIsUpdated()
+        {
+            string updatedCaption = "Updated the awesome caption";
+            var originalMedia = new Media { MediaType = MediaType.IMAGE, Url = "http://www.images.com/myimage001.jpg", Position = 1, Caption = "awesome image" };
+            var newId = mediaRepo.AddMedia(club.ClubId.Value, new List<Media> { originalMedia }).FirstOrDefault().MediaId;
+            var retrievedMedia = mediaRepo.GetMedia(club.ClubId.Value).FirstOrDefault(m => m.MediaId == newId);
+            Assert.True(retrievedMedia.Caption.Equals(originalMedia.Caption));
+            mediaRepo.UpdateMediaCaption(retrievedMedia.MediaId.Value, updatedCaption);
+            retrievedMedia = mediaRepo.GetMedia(club.ClubId.Value).FirstOrDefault(m => m.MediaId == newId);
+            Assert.True(retrievedMedia.Caption.Equals(updatedCaption));
         }
     }
 }

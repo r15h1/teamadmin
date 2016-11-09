@@ -18,7 +18,7 @@ namespace TeamAdmin.Lib.Repositories
             mapper = AutoMapperFactory.GetMapper();
         }
 
-        public IEnumerable<Core.Team> Get()
+        public IEnumerable<Core.Team> GetTeams()
         {
             var list = new List<Core.Team>();
             using (var context = ClubContextFactory.Create<ClubContext>())
@@ -29,15 +29,15 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        public Core.Team Save(Core.Team team)
+        public Core.Team SaveTeam(Core.Team team)
         {
             if (team.TeamId.HasValue)
-                return Update(team);
+                return UpdateTeam(team);
 
-            return Create(team);
+            return CreateTeam(team);
         }
 
-        private Core.Team Create(Core.Team team)
+        private Core.Team CreateTeam(Core.Team team)
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
@@ -48,7 +48,7 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        private Core.Team Update(Core.Team team)
+        private Core.Team UpdateTeam(Core.Team team)
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
@@ -72,7 +72,7 @@ namespace TeamAdmin.Lib.Repositories
             };
         }
 
-        public bool Delete(int clubId, int teamId)
+        public bool DeleteTeam(int clubId, int teamId)
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
@@ -86,7 +86,7 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        public Core.Team Get(int clubId, int teamId)
+        public Core.Team GetTeam(int clubId, int teamId)
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {

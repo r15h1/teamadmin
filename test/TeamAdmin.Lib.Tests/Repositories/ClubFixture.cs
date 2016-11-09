@@ -56,11 +56,11 @@ namespace TeamAdmin.Lib.Tests.Repositories
             ITeamRepository teamRepo = new TeamRepository();
 
             clubs.ForEach((c) => {
-                var club = clubRepo.Save(c);
+                var club = clubRepo.SaveClub(c);
                 Clubs.Add(club);
-                Teams.Add(teamRepo.Save(new Team(club.ClubId.Value) { Name = "U10" }));
-                Teams.Add(teamRepo.Save(new Team(club.ClubId.Value) { Name = "U11" }));
-                Teams.Add(teamRepo.Save(new Team(club.ClubId.Value) { Name = "U12" }));
+                Teams.Add(teamRepo.SaveTeam(new Team(club.ClubId.Value) { Name = "U10" }));
+                Teams.Add(teamRepo.SaveTeam(new Team(club.ClubId.Value) { Name = "U11" }));
+                Teams.Add(teamRepo.SaveTeam(new Team(club.ClubId.Value) { Name = "U12" }));
             });
         }
 
@@ -73,4 +73,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
 
     [CollectionDefinition("ClubFixtureCollection")]
     public class ClubFixtureCollection : ICollectionFixture<ClubFixture> { }
+
+    [CollectionDefinition("ClubMediaFixtureCollection")]
+    public class ClubMediaFixtureCollection : ICollectionFixture<ClubFixture> { }
 }

@@ -16,23 +16,23 @@ namespace TeamAdmin.Lib.Repositories
             mapper = AutoMapperFactory.GetMapper();
         }
 
-        public int Count
+        public int ClubCount
         {
             get
             {
-                return Get().Count();
+                return GetClubs().Count();
             }
         }
 
-        public Core.Club Save(Core.Club club)
+        public Core.Club SaveClub(Core.Club club)
         {
             if (club.ClubId.HasValue) 
-                return Update(club);
+                return UpdateClub(club);
 
-            return Create(club);
+            return CreateClub(club);
         }
 
-        private Core.Club Create(Core.Club club)
+        private Core.Club CreateClub(Core.Club club)
         {
             var clubInfo = mapper.Map<EFContext.Club>(club);
             using (var context = ClubContextFactory.Create<ClubContext>())
@@ -43,7 +43,7 @@ namespace TeamAdmin.Lib.Repositories
             return MapClubFromDB(clubInfo);
         }
 
-        private Core.Club Update(Core.Club club)
+        private Core.Club UpdateClub(Core.Club club)
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
@@ -81,7 +81,7 @@ namespace TeamAdmin.Lib.Repositories
             };
         }
 
-        public IEnumerable<Core.Club> Get()
+        public IEnumerable<Core.Club> GetClubs()
         {
             List<Core.Club> list = new List<Core.Club>();
             using (var context = ClubContextFactory.Create<ClubContext>())
@@ -92,7 +92,7 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        public Core.Club Get(int clubId)
+        public Core.Club GetClub(int clubId)
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
@@ -104,7 +104,7 @@ namespace TeamAdmin.Lib.Repositories
             return null;
         }
 
-        public bool Delete(int clubId)
+        public bool DeleteClub(int clubId)
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
@@ -153,11 +153,11 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        public bool DeleteMedia(int entityId, int mediaId)
+        public bool DeleteMedia(int mediaId)
         {
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
-                var media = context.ClubMedia.FirstOrDefault(m => m.ClubId == entityId && m.MediaId == mediaId);
+                var media = context.ClubMedia.FirstOrDefault(m => m.MediaId == mediaId);
                 if (media != null)
                 {
                     context.ClubMedia.Remove(media);
@@ -166,6 +166,78 @@ namespace TeamAdmin.Lib.Repositories
                 }
             }
             return false;
+        }
+
+        public void UpdateMediaCaption(int mediaId, string newCaption)
+        {
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                var media = context.ClubMedia.FirstOrDefault(m => m.MediaId == mediaId);
+                if (media != null)
+                {
+                    media.Caption = newCaption;
+                    context.SaveChanges();
+                }                
+            }
+        }
+
+        public bool SetMediaPosition(int mediaId, int newPosition)
+        {
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            using (var transaction = context.Database.BeginTransaction())
+            {                
+                var selectedMedia = context.ClubMedia.FirstOrDefault(m => m.MediaId == mediaId);
+                var mediaList = context.ClubMedia.Where(m => m.ClubId == selectedMedia.ClubId && m.MediaType == selectedMedia.MediaType);
+                var tempPostition = mediaList.Max(m => m.Position) + 1; //needed to avoid unique key violation (clubid, mediatype, position) on update
+
+                if (selectedMedia == null || newPosition == selectedMedia.Position || newPosition < 1 || newPosition > mediaList.Count()) return false;
+
+                if (newPosition > selectedMedia.Position)
+                {
+                    var swappableList = context.ClubMedia.Where(m => m.ClubId == selectedMedia.ClubId && m.Position > selectedMedia.Position && m.Position <= newPosition && m.MediaType == selectedMedia.MediaType).OrderBy(m => m.Position).ToList();
+                    
+                    try
+                    {
+                        //successive updates needed to avoid unique key violation (clubid, mediatype, position) on update
+                        selectedMedia.Position = tempPostition;
+                        context.SaveChanges();
+
+                        foreach (var m in swappableList) m.Position -= 1;
+                        context.SaveChanges();
+
+                        selectedMedia.Position = newPosition;
+                        context.SaveChanges();
+                        transaction.Commit();
+                    }
+                    catch(Exception ex)
+                    {
+                        transaction.Rollback();
+                        return false;
+                    }
+                }
+                else
+                {
+                    var swappableList = context.ClubMedia.Where(m => m.ClubId == selectedMedia.ClubId && m.Position < selectedMedia.Position && m.Position >= newPosition && m.MediaType == selectedMedia.MediaType).OrderByDescending(m => m.Position).ToList();
+                    try
+                    {
+                        selectedMedia.Position = tempPostition;
+                        context.SaveChanges();
+
+                        foreach (var m in swappableList) m.Position += 1;
+                        context.SaveChanges();
+
+                        selectedMedia.Position = newPosition;
+                        context.SaveChanges();
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 }

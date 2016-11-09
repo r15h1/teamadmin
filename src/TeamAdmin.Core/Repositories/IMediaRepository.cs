@@ -7,6 +7,8 @@ namespace TeamAdmin.Core.Repositories
         IEnumerable<Media> AddMedia(int entityId, IEnumerable<Media> mediaList);
         IEnumerable<Media> GetMedia(int entityId);
         int GetMediaCount(int entityId);
-        bool DeleteMedia(int entityId, int mediaId);
+        bool DeleteMedia(int mediaId);
+        void UpdateMediaCaption(int mediaId, string updatedCaption);
+        bool SetMediaPosition(int mediaId, int newPosition);
     }
 }

@@ -4,9 +4,9 @@ namespace TeamAdmin.Core.Repositories
 {
     public interface ITeamRepository
     {
-        Team Save(Team team);
-        IEnumerable<Team> Get();
-        Team Get(int clubId, int teamId);
-        bool Delete(int clubId, int teamId);
+        Team SaveTeam(Team team);
+        IEnumerable<Team> GetTeams();
+        Team GetTeam(int clubId, int teamId);
+        bool DeleteTeam(int clubId, int teamId);
     }
 }

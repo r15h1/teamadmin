@@ -5,10 +5,10 @@ namespace TeamAdmin.Core.Repositories
 {
     public interface IClubRepository
     {
-        Club Save(Club club);
-        int Count { get; }
-        IEnumerable<Club> Get();
-        Club Get(int clubId);
-        bool Delete(int clubId);
+        Club SaveClub(Club club);
+        int ClubCount { get; }
+        IEnumerable<Club> GetClubs();
+        Club GetClub(int clubId);
+        bool DeleteClub(int clubId);
     }
 }
