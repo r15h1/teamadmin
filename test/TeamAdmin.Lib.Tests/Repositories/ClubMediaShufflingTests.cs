@@ -36,7 +36,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
         }
         
         [Fact]
-        public void ImagePositionCanBeIncreasedIndependentOfOtherTypes()
+        public void MediaPositionCanBeIncreasedIndependentOfOtherTypes()
         {
             var allMedia = mediaRepo.GetMedia(club.ClubId.Value);
             var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.IMAGE).OrderBy(o => o.Position);
@@ -71,14 +71,14 @@ namespace TeamAdmin.Lib.Tests.Repositories
         }
 
         [Fact]
-        public void PositionCanBeDecreased()
+        public void MediaPositionCanBeDecreasedIndependentOfOtherTypes()
         {
             var allMedia = mediaRepo.GetMedia(club.ClubId.Value);
             var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.IMAGE).OrderBy(o => o.Position);
             var videosBefore = allMedia.Where(t => t.MediaType == MediaType.VIDEO).OrderBy(o => o.Position);
 
-            var imageAtPosn2Before = imagesBefore.ElementAt(3);
-            var result = mediaRepo.SetMediaPosition(imageAtPosn2Before.MediaId.Value, 2);
+            var imageAtPosn4Before = imagesBefore.ElementAt(3);
+            var result = mediaRepo.SetMediaPosition(imageAtPosn4Before.MediaId.Value, 2);
 
             var imagesAfter = mediaRepo.GetMedia(club.ClubId.Value).Where(t => t.MediaType == MediaType.IMAGE).OrderBy(x => x.Position);
             var videosAfter = mediaRepo.GetMedia(club.ClubId.Value).Where(t => t.MediaType == MediaType.VIDEO).OrderBy(x => x.Position);
@@ -88,6 +88,146 @@ namespace TeamAdmin.Lib.Tests.Repositories
             Assert.True(imagesBefore.ElementAt(1).MediaId == imagesAfter.ElementAt(2).MediaId);
             Assert.True(imagesBefore.ElementAt(2).MediaId == imagesAfter.ElementAt(3).MediaId);
             Assert.True(imagesBefore.ElementAt(3).MediaId == imagesAfter.ElementAt(1).MediaId);
+
+
+            Assert.True(imagesAfter.ElementAt(0).Position == 1);
+            Assert.True(imagesAfter.ElementAt(1).Position == 2);
+            Assert.True(imagesAfter.ElementAt(2).Position == 3);
+            Assert.True(imagesAfter.ElementAt(3).Position == 4);
+
+            Assert.True(videosBefore.ElementAt(0).MediaId == videosAfter.ElementAt(0).MediaId);
+            Assert.True(videosBefore.ElementAt(0).Position == videosAfter.ElementAt(0).Position);
+
+            Assert.True(videosBefore.ElementAt(1).MediaId == videosAfter.ElementAt(1).MediaId);
+            Assert.True(videosBefore.ElementAt(1).Position == videosAfter.ElementAt(1).Position);
+
+            Assert.True(videosBefore.ElementAt(2).MediaId == videosAfter.ElementAt(2).MediaId);
+            Assert.True(videosBefore.ElementAt(2).Position == videosAfter.ElementAt(2).Position);
+        }
+
+        [Fact]
+        public void MediaPositionCannotBeIncreasedBeyondCount()
+        {
+            var allMedia = mediaRepo.GetMedia(club.ClubId.Value);
+            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.IMAGE).OrderBy(o => o.Position);
+            var videosBefore = allMedia.Where(t => t.MediaType == MediaType.VIDEO).OrderBy(o => o.Position);
+
+            var imageAtPosn2Before = imagesBefore.ElementAt(1);
+            var result = mediaRepo.SetMediaPosition(imageAtPosn2Before.MediaId.Value, imagesBefore.Count() + 1);
+
+            var imagesAfter = mediaRepo.GetMedia(club.ClubId.Value).Where(t => t.MediaType == MediaType.IMAGE).OrderBy(x => x.Position);
+            var videosAfter = mediaRepo.GetMedia(club.ClubId.Value).Where(t => t.MediaType == MediaType.VIDEO).OrderBy(x => x.Position);
+
+            Assert.False(result);
+            Assert.True(imagesBefore.ElementAt(0).MediaId == imagesAfter.ElementAt(0).MediaId);
+            Assert.True(imagesBefore.ElementAt(1).MediaId == imagesAfter.ElementAt(1).MediaId);
+            Assert.True(imagesBefore.ElementAt(2).MediaId == imagesAfter.ElementAt(2).MediaId);
+            Assert.True(imagesBefore.ElementAt(3).MediaId == imagesAfter.ElementAt(3).MediaId);
+
+
+            Assert.True(imagesAfter.ElementAt(0).Position == 1);
+            Assert.True(imagesAfter.ElementAt(1).Position == 2);
+            Assert.True(imagesAfter.ElementAt(2).Position == 3);
+            Assert.True(imagesAfter.ElementAt(3).Position == 4);
+
+            Assert.True(videosBefore.ElementAt(0).MediaId == videosAfter.ElementAt(0).MediaId);
+            Assert.True(videosBefore.ElementAt(0).Position == videosAfter.ElementAt(0).Position);
+
+            Assert.True(videosBefore.ElementAt(1).MediaId == videosAfter.ElementAt(1).MediaId);
+            Assert.True(videosBefore.ElementAt(1).Position == videosAfter.ElementAt(1).Position);
+
+            Assert.True(videosBefore.ElementAt(2).MediaId == videosAfter.ElementAt(2).MediaId);
+            Assert.True(videosBefore.ElementAt(2).Position == videosAfter.ElementAt(2).Position);
+        }
+
+        [Fact]
+        public void MediaPositionCannotBeDecreasedBeyondOne()
+        {
+            var allMedia = mediaRepo.GetMedia(club.ClubId.Value);
+            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.IMAGE).OrderBy(o => o.Position);
+            var videosBefore = allMedia.Where(t => t.MediaType == MediaType.VIDEO).OrderBy(o => o.Position);
+
+            var imageAtPosn4Before = imagesBefore.ElementAt(3);
+            var result = mediaRepo.SetMediaPosition(imageAtPosn4Before.MediaId.Value, 0);
+
+            var imagesAfter = mediaRepo.GetMedia(club.ClubId.Value).Where(t => t.MediaType == MediaType.IMAGE).OrderBy(x => x.Position);
+            var videosAfter = mediaRepo.GetMedia(club.ClubId.Value).Where(t => t.MediaType == MediaType.VIDEO).OrderBy(x => x.Position);
+
+            Assert.False(result);
+            Assert.True(imagesBefore.ElementAt(0).MediaId == imagesAfter.ElementAt(0).MediaId);
+            Assert.True(imagesBefore.ElementAt(1).MediaId == imagesAfter.ElementAt(1).MediaId);
+            Assert.True(imagesBefore.ElementAt(2).MediaId == imagesAfter.ElementAt(2).MediaId);
+            Assert.True(imagesBefore.ElementAt(3).MediaId == imagesAfter.ElementAt(3).MediaId);
+
+
+            Assert.True(imagesAfter.ElementAt(0).Position == 1);
+            Assert.True(imagesAfter.ElementAt(1).Position == 2);
+            Assert.True(imagesAfter.ElementAt(2).Position == 3);
+            Assert.True(imagesAfter.ElementAt(3).Position == 4);
+
+            Assert.True(videosBefore.ElementAt(0).MediaId == videosAfter.ElementAt(0).MediaId);
+            Assert.True(videosBefore.ElementAt(0).Position == videosAfter.ElementAt(0).Position);
+
+            Assert.True(videosBefore.ElementAt(1).MediaId == videosAfter.ElementAt(1).MediaId);
+            Assert.True(videosBefore.ElementAt(1).Position == videosAfter.ElementAt(1).Position);
+
+            Assert.True(videosBefore.ElementAt(2).MediaId == videosAfter.ElementAt(2).MediaId);
+            Assert.True(videosBefore.ElementAt(2).Position == videosAfter.ElementAt(2).Position);
+        }
+
+        [Fact]
+        public void BoundaryMediaPositionIncrease()
+        {
+            var allMedia = mediaRepo.GetMedia(club.ClubId.Value);
+            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.IMAGE).OrderBy(o => o.Position);
+            var videosBefore = allMedia.Where(t => t.MediaType == MediaType.VIDEO).OrderBy(o => o.Position);
+
+            var imageAtPosn1Before = imagesBefore.ElementAt(0);
+            var result = mediaRepo.SetMediaPosition(imageAtPosn1Before.MediaId.Value, imagesBefore.Count());
+
+            var imagesAfter = mediaRepo.GetMedia(club.ClubId.Value).Where(t => t.MediaType == MediaType.IMAGE).OrderBy(x => x.Position);
+            var videosAfter = mediaRepo.GetMedia(club.ClubId.Value).Where(t => t.MediaType == MediaType.VIDEO).OrderBy(x => x.Position);
+
+            Assert.True(result);
+            Assert.True(imagesBefore.ElementAt(0).MediaId == imagesAfter.ElementAt(3).MediaId);
+            Assert.True(imagesBefore.ElementAt(1).MediaId == imagesAfter.ElementAt(0).MediaId);
+            Assert.True(imagesBefore.ElementAt(2).MediaId == imagesAfter.ElementAt(1).MediaId);
+            Assert.True(imagesBefore.ElementAt(3).MediaId == imagesAfter.ElementAt(2).MediaId);
+
+
+            Assert.True(imagesAfter.ElementAt(0).Position == 1);
+            Assert.True(imagesAfter.ElementAt(1).Position == 2);
+            Assert.True(imagesAfter.ElementAt(2).Position == 3);
+            Assert.True(imagesAfter.ElementAt(3).Position == 4);
+
+            Assert.True(videosBefore.ElementAt(0).MediaId == videosAfter.ElementAt(0).MediaId);
+            Assert.True(videosBefore.ElementAt(0).Position == videosAfter.ElementAt(0).Position);
+
+            Assert.True(videosBefore.ElementAt(1).MediaId == videosAfter.ElementAt(1).MediaId);
+            Assert.True(videosBefore.ElementAt(1).Position == videosAfter.ElementAt(1).Position);
+
+            Assert.True(videosBefore.ElementAt(2).MediaId == videosAfter.ElementAt(2).MediaId);
+            Assert.True(videosBefore.ElementAt(2).Position == videosAfter.ElementAt(2).Position);
+        }
+
+        [Fact]
+        public void BoundaryMediaPositionDecrease()
+        {
+            var allMedia = mediaRepo.GetMedia(club.ClubId.Value);
+            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.IMAGE).OrderBy(o => o.Position);
+            var videosBefore = allMedia.Where(t => t.MediaType == MediaType.VIDEO).OrderBy(o => o.Position);
+
+            var imageAtPosn4Before = imagesBefore.ElementAt(3);
+            var result = mediaRepo.SetMediaPosition(imageAtPosn4Before.MediaId.Value, 1);
+
+            var imagesAfter = mediaRepo.GetMedia(club.ClubId.Value).Where(t => t.MediaType == MediaType.IMAGE).OrderBy(x => x.Position);
+            var videosAfter = mediaRepo.GetMedia(club.ClubId.Value).Where(t => t.MediaType == MediaType.VIDEO).OrderBy(x => x.Position);
+
+            Assert.True(result);
+            Assert.True(imagesBefore.ElementAt(0).MediaId == imagesAfter.ElementAt(1).MediaId);
+            Assert.True(imagesBefore.ElementAt(1).MediaId == imagesAfter.ElementAt(2).MediaId);
+            Assert.True(imagesBefore.ElementAt(2).MediaId == imagesAfter.ElementAt(3).MediaId);
+            Assert.True(imagesBefore.ElementAt(3).MediaId == imagesAfter.ElementAt(0).MediaId);
 
 
             Assert.True(imagesAfter.ElementAt(0).Position == 1);

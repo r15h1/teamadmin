@@ -97,11 +97,10 @@ namespace TeamAdmin.Lib.Repositories
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
                 var club = context.Clubs.FirstOrDefault(c => c.ClubId == clubId && (!c.Deleted.HasValue || !c.Deleted.Value));
-                if (club != null)
-                    return MapClubFromDB(club);
-            }
+                if (club == null) return null;
 
-            return null;
+                return MapClubFromDB(club);
+            }            
         }
 
         public bool DeleteClub(int clubId)
@@ -158,14 +157,12 @@ namespace TeamAdmin.Lib.Repositories
             using (var context = ClubContextFactory.Create<ClubContext>())
             {
                 var media = context.ClubMedia.FirstOrDefault(m => m.MediaId == mediaId);
-                if (media != null)
-                {
-                    context.ClubMedia.Remove(media);
-                    context.SaveChanges();
-                    return true;
-                }
-            }
-            return false;
+                if (media == null) return false;
+
+                context.ClubMedia.Remove(media);
+                context.SaveChanges();
+                return true;
+            }           
         }
 
         public void UpdateMediaCaption(int mediaId, string newCaption)
@@ -183,58 +180,53 @@ namespace TeamAdmin.Lib.Repositories
 
         public bool SetMediaPosition(int mediaId, int newPosition)
         {
-            using (var context = ClubContextFactory.Create<ClubContext>())
-            using (var transaction = context.Database.BeginTransaction())
+            using (var context = ClubContextFactory.Create<ClubContext>())           
             {                
                 var selectedMedia = context.ClubMedia.FirstOrDefault(m => m.MediaId == mediaId);
                 var mediaList = context.ClubMedia.Where(m => m.ClubId == selectedMedia.ClubId && m.MediaType == selectedMedia.MediaType);
-                var tempPostition = mediaList.Max(m => m.Position) + 1; //needed to avoid unique key violation (clubid, mediatype, position) on update
-
+                var outOfRangePosition = mediaList.Max(m => m.Position) + 1; //needed to avoid unique key violation (clubid, mediatype, position) on update
                 if (selectedMedia == null || newPosition == selectedMedia.Position || newPosition < 1 || newPosition > mediaList.Count()) return false;
 
-                if (newPosition > selectedMedia.Position)
+                return RecalculatePositions(context, selectedMedia, newPosition, outOfRangePosition);
+            }
+            
+        }
+
+        //successive updates needed to avoid unique key violation (clubid, mediatype, position) on update
+        private bool RecalculatePositions(ClubContext context, EFContext.ClubMedia media, int newPosition, int outOfRangePosition)
+        {
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
                 {
-                    var swappableList = context.ClubMedia.Where(m => m.ClubId == selectedMedia.ClubId && m.Position > selectedMedia.Position && m.Position <= newPosition && m.MediaType == selectedMedia.MediaType).OrderBy(m => m.Position).ToList();
-                    
-                    try
-                    {
-                        //successive updates needed to avoid unique key violation (clubid, mediatype, position) on update
-                        selectedMedia.Position = tempPostition;
-                        context.SaveChanges();
+                    var originalPosition = media.Position;                   
+                    media.Position = outOfRangePosition;
+                    context.SaveChanges();
 
-                        foreach (var m in swappableList) m.Position -= 1;
-                        context.SaveChanges();
-
-                        selectedMedia.Position = newPosition;
-                        context.SaveChanges();
-                        transaction.Commit();
-                    }
-                    catch(Exception ex)
+                    if (newPosition > originalPosition)
                     {
-                        transaction.Rollback();
-                        return false;
+                        context.ClubMedia.Where(m => m.ClubId == media.ClubId && m.MediaType == media.MediaType && m.Position > originalPosition && m.Position <= newPosition)
+                                       .OrderBy(m => m.Position)
+                                       .ToList()
+                                       .ForEach(m => m.Position -= 1);
                     }
+                    else
+                    {
+                        context.ClubMedia.Where(m => m.ClubId == media.ClubId && m.MediaType == media.MediaType && m.Position < originalPosition && m.Position >= newPosition)
+                                        .OrderByDescending(m => m.Position)
+                                        .ToList()
+                                        .ForEach(m => m.Position += 1);
+                    }
+
+                    context.SaveChanges();
+                    media.Position = newPosition;
+                    context.SaveChanges();
+                    transaction.Commit();
                 }
-                else
+                catch (Exception ex)
                 {
-                    var swappableList = context.ClubMedia.Where(m => m.ClubId == selectedMedia.ClubId && m.Position < selectedMedia.Position && m.Position >= newPosition && m.MediaType == selectedMedia.MediaType).OrderByDescending(m => m.Position).ToList();
-                    try
-                    {
-                        selectedMedia.Position = tempPostition;
-                        context.SaveChanges();
-
-                        foreach (var m in swappableList) m.Position += 1;
-                        context.SaveChanges();
-
-                        selectedMedia.Position = newPosition;
-                        context.SaveChanges();
-                        transaction.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-                        return false;
-                    }
+                    transaction.Rollback();
+                    return false;
                 }
             }
             return true;
