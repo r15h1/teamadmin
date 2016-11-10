@@ -161,7 +161,55 @@ namespace TeamAdmin.Lib.Repositories
 
         public bool SetMediaPosition(int mediaId, int newPosition)
         {
-            throw new NotImplementedException();
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                var selectedMedia = context.TeamMedia.FirstOrDefault(m => m.MediaId == mediaId);
+                var mediaList = context.TeamMedia.Where(m => m.TeamId == selectedMedia.TeamId && m.MediaType == selectedMedia.MediaType);
+                var outOfRangePosition = mediaList.Max(m => m.Position) + 1; //needed to avoid unique key violation (teamid, mediatype, position) on update
+                if (selectedMedia == null || newPosition == selectedMedia.Position || newPosition < 1 || newPosition > mediaList.Count()) return false;
+
+                return RecalculatePositions(context, selectedMedia, newPosition, outOfRangePosition);
+            }
+        }
+
+        //successive updates needed to avoid unique key violation (teamid, mediatype, position) on update
+        private bool RecalculatePositions(ClubContext context, EFContext.TeamMedia media, int newPosition, int outOfRangePosition)
+        {
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var originalPosition = media.Position;
+                    media.Position = outOfRangePosition;
+                    context.SaveChanges();
+
+                    if (newPosition > originalPosition)
+                    {
+                        context.TeamMedia.Where(m => m.TeamId == media.TeamId && m.MediaType == media.MediaType && m.Position > originalPosition && m.Position <= newPosition)
+                                       .OrderBy(m => m.Position)
+                                       .ToList()
+                                       .ForEach(m => m.Position -= 1);
+                    }
+                    else
+                    {
+                        context.TeamMedia.Where(m => m.TeamId == media.TeamId && m.MediaType == media.MediaType && m.Position < originalPosition && m.Position >= newPosition)
+                                        .OrderByDescending(m => m.Position)
+                                        .ToList()
+                                        .ForEach(m => m.Position += 1);
+                    }
+
+                    context.SaveChanges();
+                    media.Position = newPosition;
+                    context.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
