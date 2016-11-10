@@ -14,6 +14,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<ClubMedia> ClubMedia { get; set; }
+        public DbSet<TeamMedia> TeamMedia { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +24,9 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         private void SetUpClubs(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ClubMedia>().ForSqlServerToTable("ClubMedia")
+                .Property(b => b.MediaType).HasColumnName("MediaTypeId");
+
+            modelBuilder.Entity<TeamMedia>().ForSqlServerToTable("TeamMedia")
                 .Property(b => b.MediaType).HasColumnName("MediaTypeId");
         }
     }

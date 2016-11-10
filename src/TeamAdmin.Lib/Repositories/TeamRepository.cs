@@ -8,7 +8,7 @@ using TeamAdmin.Core;
 
 namespace TeamAdmin.Lib.Repositories
 {
-    public class TeamRepository : ITeamRepository
+    public class TeamRepository : ITeamRepository, IMediaRepository<Core.Team>
     {
         IMapper mapper;
         private object c;
@@ -96,6 +96,72 @@ namespace TeamAdmin.Lib.Repositories
             }
 
             return null;
+        }
+
+        public IEnumerable<Core.Media> AddMedia(int teamId, IEnumerable<Core.Media> mediaList)
+        {
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                var maxPosition = context.TeamMedia.Where(m => m.TeamId == teamId).Max(m => m.Position);
+
+                List<EFContext.TeamMedia> list = mapper.Map<List<EFContext.TeamMedia>>(mediaList);
+                list.ForEach(c => {
+                    c.TeamId = teamId;
+                    c.Position += maxPosition;
+                });
+                context.TeamMedia.AddRange(list);
+                context.SaveChanges();
+                return mapper.Map<List<Core.Media>>(list); ;
+            }
+        }
+
+        public IEnumerable<Core.Media> GetMedia(int teamId)
+        {
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                return context.TeamMedia.Where(m => m.TeamId == teamId)
+                            .Select(m => mapper.Map<Core.Media>(m))
+                            .ToList();
+            }
+        }
+
+        public int GetMediaCount(int teamId)
+        {
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                return context.TeamMedia.Where(m => m.TeamId == teamId).Count();
+            }
+        }
+
+        public bool DeleteMedia(int mediaId)
+        {
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                var media = context.TeamMedia.FirstOrDefault(m => m.MediaId == mediaId);
+                if (media == null) return false;
+
+                context.TeamMedia.Remove(media);
+                context.SaveChanges();
+                return true;
+            }
+        }
+
+        public void UpdateMediaCaption(int mediaId, string newCaption)
+        {
+            using (var context = ClubContextFactory.Create<ClubContext>())
+            {
+                var media = context.TeamMedia.FirstOrDefault(m => m.MediaId == mediaId);
+                if (media != null)
+                {
+                    media.Caption = newCaption;
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public bool SetMediaPosition(int mediaId, int newPosition)
+        {
+            throw new NotImplementedException();
         }
     }
 }
