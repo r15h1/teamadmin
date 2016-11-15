@@ -21,7 +21,7 @@ namespace TeamAdmin.Lib.Repositories
         public IEnumerable<Core.Team> GetTeams()
         {
             var list = new List<Core.Team>();
-            using (var context = ClubContextFactory.Create<ClubContext>())
+            using (var context = ContextFactory.Create<ClubContext>())
             {
                 var teams = context.Teams.Where( t => !t.Deleted.HasValue || !t.Deleted.Value).ToList();
                 teams.ForEach((t) => list.Add(MapTeamFromDB(t)));
@@ -39,7 +39,7 @@ namespace TeamAdmin.Lib.Repositories
 
         private Core.Team CreateTeam(Core.Team team)
         {
-            using (var context = ClubContextFactory.Create<ClubContext>())
+            using (var context = ContextFactory.Create<ClubContext>())
             {
                 var teamInfo = mapper.Map<EFContext.Team>(team);
                 context.Teams.Add(teamInfo);
@@ -50,7 +50,7 @@ namespace TeamAdmin.Lib.Repositories
 
         private Core.Team UpdateTeam(Core.Team team)
         {
-            using (var context = ClubContextFactory.Create<ClubContext>())
+            using (var context = ContextFactory.Create<ClubContext>())
             {
                 var teaminfo = context.Teams.FirstOrDefault(t => t.ClubId == team.ClubId && t.TeamId == team.TeamId);
                 if (teaminfo == null)
@@ -74,7 +74,7 @@ namespace TeamAdmin.Lib.Repositories
 
         public bool DeleteTeam(int clubId, int teamId)
         {
-            using (var context = ClubContextFactory.Create<ClubContext>())
+            using (var context = ContextFactory.Create<ClubContext>())
             {
                 var teamInfo = context.Teams.FirstOrDefault(t => t.ClubId == clubId && t.TeamId == teamId);
                 if (teamInfo == null) return false;
@@ -88,7 +88,7 @@ namespace TeamAdmin.Lib.Repositories
 
         public Core.Team GetTeam(int clubId, int teamId)
         {
-            using (var context = ClubContextFactory.Create<ClubContext>())
+            using (var context = ContextFactory.Create<ClubContext>())
             {
                 var team = context.Teams.FirstOrDefault(t => t.ClubId == clubId && t.TeamId == teamId && (!t.Deleted.HasValue || !t.Deleted.Value));
                 if (team != null)
@@ -100,7 +100,7 @@ namespace TeamAdmin.Lib.Repositories
 
         public IEnumerable<Core.Media> AddMedia(int teamId, IEnumerable<Core.Media> mediaList)
         {
-            using (var context = ClubContextFactory.Create<ClubContext>())
+            using (var context = ContextFactory.Create<ClubContext>())
             {
                 var maxPosition = context.TeamMedia.Where(m => m.TeamId == teamId).Max(m => m.Position);
 
@@ -117,7 +117,7 @@ namespace TeamAdmin.Lib.Repositories
 
         public IEnumerable<Core.Media> GetMedia(int teamId)
         {
-            using (var context = ClubContextFactory.Create<ClubContext>())
+            using (var context = ContextFactory.Create<ClubContext>())
             {
                 return context.TeamMedia.Where(m => m.TeamId == teamId)
                             .Select(m => mapper.Map<Core.Media>(m))
@@ -127,7 +127,7 @@ namespace TeamAdmin.Lib.Repositories
 
         public int GetMediaCount(int teamId)
         {
-            using (var context = ClubContextFactory.Create<ClubContext>())
+            using (var context = ContextFactory.Create<ClubContext>())
             {
                 return context.TeamMedia.Where(m => m.TeamId == teamId).Count();
             }
@@ -135,7 +135,7 @@ namespace TeamAdmin.Lib.Repositories
 
         public bool DeleteMedia(int mediaId)
         {
-            using (var context = ClubContextFactory.Create<ClubContext>())
+            using (var context = ContextFactory.Create<ClubContext>())
             {
                 var media = context.TeamMedia.FirstOrDefault(m => m.MediaId == mediaId);
                 if (media == null) return false;
@@ -148,7 +148,7 @@ namespace TeamAdmin.Lib.Repositories
 
         public void UpdateMediaCaption(int mediaId, string newCaption)
         {
-            using (var context = ClubContextFactory.Create<ClubContext>())
+            using (var context = ContextFactory.Create<ClubContext>())
             {
                 var media = context.TeamMedia.FirstOrDefault(m => m.MediaId == mediaId);
                 if (media != null)
@@ -161,7 +161,7 @@ namespace TeamAdmin.Lib.Repositories
 
         public bool SetMediaPosition(int mediaId, int newPosition)
         {
-            using (var context = ClubContextFactory.Create<ClubContext>())
+            using (var context = ContextFactory.Create<ClubContext>())
             {
                 var selectedMedia = context.TeamMedia.FirstOrDefault(m => m.MediaId == mediaId);
                 var mediaList = context.TeamMedia.Where(m => m.TeamId == selectedMedia.TeamId && m.MediaType == selectedMedia.MediaType);

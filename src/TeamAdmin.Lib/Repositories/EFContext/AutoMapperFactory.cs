@@ -32,7 +32,11 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                     cfg.CreateMap<EFContext.ClubMedia, Core.Media>().ForMember(m => m.MediaType, opt => opt.MapFrom(src => (int)src.MediaType));
 
                     cfg.CreateMap<Core.Media, EFContext.TeamMedia>().ForMember(m => m.MediaType, opt => opt.MapFrom(src => (byte)src.MediaType));
-                    cfg.CreateMap<EFContext.TeamMedia, Core.Media>().ForMember(m => m.MediaType, opt => opt.MapFrom(src => (int)src.MediaType)); ;
+                    cfg.CreateMap<EFContext.TeamMedia, Core.Media>().ForMember(m => m.MediaType, opt => opt.MapFrom(src => (int)src.MediaType));
+
+                    cfg.CreateMap<EFContext.Event, Core.Event>().ForMember(m => m.EventType, opt => opt.MapFrom(src => (byte)src.EventType));
+                    cfg.CreateMap<Core.Event, EFContext.Event>().ForMember(m => m.EventType, opt => opt.MapFrom(src => (int)src.EventType));
+
                 });
             }
         }

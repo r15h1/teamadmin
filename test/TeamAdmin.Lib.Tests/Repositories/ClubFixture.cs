@@ -82,4 +82,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
 
     [CollectionDefinition("TeamMediaFixtureCollection")]
     public class TeamMediaFixtureCollection : ICollectionFixture<ClubFixture> { }
+
+    [CollectionDefinition("EventFixtureCollection")]
+    public class EventFixtureCollection : ICollectionFixture<ClubFixture> { }
 }
