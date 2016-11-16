@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using TeamAdmin.Core;
+using System.Linq;
 using TeamAdmin.Core.Repositories;
 using TeamAdmin.Lib.Repositories.EFContext;
+using TeamAdmin.Core;
 
 namespace TeamAdmin.Lib.Repositories
 {
@@ -16,21 +18,43 @@ namespace TeamAdmin.Lib.Repositories
             mapper = AutoMapperFactory.GetMapper();
         }
 
-        public void CreateEvent(IEnumerable<Core.Team> teams, Core.Event evnt)
+        public Core.Event CreateEvent(IEnumerable<Core.Team> teams, Core.Event evnt)
         {
             var ev = mapper.Map<EFContext.Event>(evnt);
             foreach (var team in teams) ev.ClubTeamEvents.Add(new ClubTeamEvent { ClubId = team.ClubId, TeamId = team.TeamId });
-            SaveEvent(ev);
+            return SaveEvent(ev);
         }
 
-        public void CreateEvent(Core.Club club, Core.Event evnt)
+        public Core.Event CreateEvent(Core.Club club, Core.Event evnt)
         {
             var ev = mapper.Map<EFContext.Event>(evnt);
             ev.ClubTeamEvents.Add(new ClubTeamEvent { ClubId = club.ClubId.Value });
-            SaveEvent(ev);
+            return SaveEvent(ev);
         }
 
-        private void SaveEvent(EFContext.Event evnt)
+        public bool DeleteEvent(long eventId)
+        {
+            using (var context = ContextFactory.Create<EventContext>())
+            {
+                var evnt = context.Events.Include(c => c.ClubTeamEvents).FirstOrDefault(m => m.EventId == eventId);
+                if (evnt == null) return false;
+                
+                context.Events.Remove(evnt);
+                context.SaveChanges();
+                return true;
+            }
+        }
+
+        public Core.Event GetEvent(long eventId)
+        {
+            using (var context = ContextFactory.Create<EventContext>())
+            {
+                var evnt = context.Events.FirstOrDefault(m => m.EventId == eventId);
+                return mapper.Map<Core.Event>(evnt);
+            }
+        }
+
+        private Core.Event SaveEvent(EFContext.Event evnt)
         {
             using (var context = ContextFactory.Create<EventContext>())
             using (var transaction = context.Database.BeginTransaction())
@@ -40,12 +64,14 @@ namespace TeamAdmin.Lib.Repositories
                     context.Events.Add(evnt);
                     context.SaveChanges();
                     transaction.Commit();
+                    return mapper.Map<Core.Event>(evnt);
                 }
                 catch (Exception ex)
                 {
                     transaction.Rollback();
                 }
             }
+            return null;
         }
     }
 }

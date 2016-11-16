@@ -7,6 +7,7 @@ namespace TeamAdmin.Core
 {
     public class Event
     {
+        public long? EventId { get; set; }
         public DateTime StartDate { get; set; }
         public string Description { get; set; }
         public EventType EventType { get; set; }

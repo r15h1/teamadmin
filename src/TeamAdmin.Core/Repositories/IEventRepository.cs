@@ -4,7 +4,9 @@ namespace TeamAdmin.Core.Repositories
 {
     public interface IEventRepository
     {
-        void CreateEvent(Club club, Event evnt);
-        void CreateEvent(IEnumerable<Team> teams, Event evnt);
+        Event CreateEvent(Club club, Event evnt);
+        Event CreateEvent(IEnumerable<Team> teams, Event evnt);
+        bool DeleteEvent(long eventId);
+        Event GetEvent(long value);
     }
 }

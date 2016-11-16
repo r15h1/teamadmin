@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TeamAdmin.Lib.Repositories.EFContext
 {
@@ -26,5 +24,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         public long? ClubTeamEventId { get; set; }
         public int ClubId { get; set; }
         public int? TeamId { get; set; }
+        public long? EventId { get; set; }
+        public Event Event { get; set; }
     }
 }

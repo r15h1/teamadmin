@@ -18,10 +18,10 @@ namespace TeamAdmin.Lib.Repositories.EFContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            SetUpClubs(modelBuilder);            
+            SetUp(modelBuilder);            
         }
 
-        private void SetUpClubs(ModelBuilder modelBuilder)
+        private void SetUp(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ClubMedia>().ForSqlServerToTable("ClubMedia")
                 .Property(b => b.MediaType).HasColumnName("MediaTypeId");
