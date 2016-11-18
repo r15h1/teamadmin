@@ -90,10 +90,43 @@ namespace TeamAdmin.Lib.Tests
         }
 
         [Fact]
+        public void GetEventByTeamLevel()
+        {
+            Event ev1 = new Event()
+            {
+                EventType = EventType.GAME,
+                Title = "Game at Soccer Field",
+                Description = "SAAC soccer game against Panthers",
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddHours(2)
+            };
+
+            Event ev2 = new Event()
+            {
+                EventType = EventType.TRAINING,
+                Title = "Training at training Field",
+                Description = "U10 physical conditioning",
+                StartDate = DateTime.Now.AddDays(2),
+                EndDate = DateTime.Now.AddDays(2).AddHours(2)
+            };
+
+            var team = teams.FirstOrDefault();
+            var existingEvents = eventRepository.GetEvents(team).Count();
+            var e1 = eventRepository.CreateEvent(new List<Team> { team }, ev1);
+            var e2 = eventRepository.CreateEvent(new List<Team> { team }, ev2);
+            var evbyteam = eventRepository.GetEvents(team);
+            Assert.NotNull(evbyteam);
+            Assert.True(evbyteam.Count() == 2 + existingEvents);
+            Assert.Contains(evbyteam, e => e.EventId == e1.EventId);
+            Assert.Contains(evbyteam, e => e.EventId == e2.EventId);
+        }
+
+        [Fact]
         public void GetEventByIdClubLevel()
         {
             Event ev = new Event()
             {
+
                 EventType = EventType.GAME,
                 Title = "Game at Soccer Field",
                 Description = "SAAC soccer game against Panthers",

@@ -8,5 +8,6 @@ namespace TeamAdmin.Core.Repositories
         Event CreateEvent(IEnumerable<Team> teams, Event evnt);
         bool DeleteEvent(long eventId);
         Event GetEvent(long value);
+        IEnumerable<Event> GetEvents(Team team);
     }
 }
