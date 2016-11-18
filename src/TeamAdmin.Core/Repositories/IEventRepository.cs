@@ -9,5 +9,6 @@ namespace TeamAdmin.Core.Repositories
         bool DeleteEvent(long eventId);
         Event GetEvent(long value);
         IEnumerable<Event> GetEvents(Team team);
+        IEnumerable<Event> GetEvents(Club club);
     }
 }

@@ -68,7 +68,7 @@ namespace TeamAdmin.Lib.Tests
         }
 
         [Fact]
-        public void GetEventByIdTeamLevel()
+        public void GetEventByIdForTeam()
         {
             Event ev = new Event()
             {
@@ -89,8 +89,32 @@ namespace TeamAdmin.Lib.Tests
             Assert.True(evbyid.EndDate.ToString("dd/MM/yyyy hh:mm").Equals(ev.EndDate.ToString("dd/MM/yyyy hh:mm")));
         }
 
+        
         [Fact]
-        public void GetEventByTeamLevel()
+        public void GetEventByIdForClub()
+        {
+            Event ev = new Event()
+            {
+
+                EventType = EventType.GAME,
+                Title = "Game at Soccer Field",
+                Description = "SAAC soccer game against Panthers",
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddHours(2)
+            };
+
+            var e = eventRepository.CreateEvent(club, ev);
+            var evbyid = eventRepository.GetEvent(e.EventId.Value);
+            Assert.NotNull(evbyid);
+            Assert.True(evbyid.EventType == ev.EventType);
+            Assert.True(evbyid.Description.Equals(ev.Description));
+            Assert.True(evbyid.Title.Equals(ev.Title));
+            Assert.True(evbyid.StartDate.ToString("dd/MM/yyyy hh:mm").Equals(ev.StartDate.ToString("dd/MM/yyyy hh:mm")));
+            Assert.True(evbyid.EndDate.ToString("dd/MM/yyyy hh:mm").Equals(ev.EndDate.ToString("dd/MM/yyyy hh:mm")));
+        }
+
+        [Fact]
+        public void GetEventsByTeam()
         {
             Event ev1 = new Event()
             {
@@ -122,11 +146,10 @@ namespace TeamAdmin.Lib.Tests
         }
 
         [Fact]
-        public void GetEventByIdClubLevel()
+        public void GetEventsByClub()
         {
-            Event ev = new Event()
+            Event ev1 = new Event()
             {
-
                 EventType = EventType.GAME,
                 Title = "Game at Soccer Field",
                 Description = "SAAC soccer game against Panthers",
@@ -134,14 +157,23 @@ namespace TeamAdmin.Lib.Tests
                 EndDate = DateTime.Now.AddHours(2)
             };
 
-            var e = eventRepository.CreateEvent(club, ev);
-            var evbyid = eventRepository.GetEvent(e.EventId.Value);
-            Assert.NotNull(evbyid);
-            Assert.True(evbyid.EventType == ev.EventType);
-            Assert.True(evbyid.Description.Equals(ev.Description));
-            Assert.True(evbyid.Title.Equals(ev.Title));
-            Assert.True(evbyid.StartDate.ToString("dd/MM/yyyy hh:mm").Equals(ev.StartDate.ToString("dd/MM/yyyy hh:mm")));
-            Assert.True(evbyid.EndDate.ToString("dd/MM/yyyy hh:mm").Equals(ev.EndDate.ToString("dd/MM/yyyy hh:mm")));
+            Event ev2 = new Event()
+            {
+                EventType = EventType.TRAINING,
+                Title = "Training at training Field",
+                Description = "U10 physical conditioning",
+                StartDate = DateTime.Now.AddDays(2),
+                EndDate = DateTime.Now.AddDays(2).AddHours(2)
+            };
+
+            var existingEvents = eventRepository.GetEvents(club).Count();
+            var e1 = eventRepository.CreateEvent(club, ev1);
+            var e2 = eventRepository.CreateEvent(club, ev2);
+            var evbyclub = eventRepository.GetEvents(club);
+            Assert.NotNull(evbyclub);
+            Assert.True(evbyclub.Count() == 2 + existingEvents);
+            Assert.Contains(evbyclub, e => e.EventId == e1.EventId);
+            Assert.Contains(evbyclub, e => e.EventId == e2.EventId);
         }
 
         [Fact]

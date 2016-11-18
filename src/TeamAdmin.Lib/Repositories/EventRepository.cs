@@ -54,6 +54,27 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
+        public IEnumerable<Core.Event> GetEvents(Core.Club club)
+        {
+            using (var context = ContextFactory.Create<EventContext>())
+            {
+                return (from e in context.Events
+                        join t in context.ClubTeamEvents on e.EventId equals t.EventId into te
+                        from t1 in te
+                        where t1.ClubId == club.ClubId
+                        select new Core.Event
+                        {
+                            Description = e.Description,
+                            EndDate = e.EndDate,
+                            EventId = e.EventId,
+                            EventType = (EventType)Enum.Parse(typeof(EventType), e.EventType.ToString()),
+                            StartDate = e.StartDate,
+                            Title = e.Title
+                        }
+                            ).ToList();
+            }
+        }
+
         public IEnumerable<Core.Event> GetEvents(Core.Team team)
         {
             using (var context = ContextFactory.Create<EventContext>())
