@@ -4,6 +4,7 @@ using System.Linq;
 using TeamAdmin.Core;
 using TeamAdmin.Core.Repositories;
 using TeamAdmin.Lib.Repositories.EFContext;
+using System.Collections.Generic;
 
 namespace TeamAdmin.Lib.Repositories
 {
@@ -34,6 +35,17 @@ namespace TeamAdmin.Lib.Repositories
             {
                 var p1 = context.Posts.SingleOrDefault(p => p.PostId == postId);
                 if (p1 != null) return mapper.Map<Core.Post>(p1);
+            }
+            return null;
+        }
+
+        public IEnumerable<Core.Post> GetPosts(int clubId)
+        {
+            using (var context = ContextFactory.Create<PostContext>())
+            {
+                List<EFContext.Post> posts = context.Posts.Where(p => p.ClubId == clubId).ToList();
+                if (posts != null && posts.Count() > 0)
+                    return mapper.Map<List<Core.Post>>(posts);
             }
             return null;
         }

@@ -91,5 +91,24 @@ namespace TeamAdmin.Lib.Tests
             var post2 = postRepository.GetPost(post1.PostId.Value);
             Assert.Null(post2);
         }
+
+        [Fact]
+        public void GetPostList()
+        {
+            IEnumerable<Post> before = postRepository.GetPosts(club.ClubId.Value);
+            if (before == null) before = new List<Core.Post>();
+
+            var post1 = postRepository.SavePost(BuildPost());
+            var post2 = postRepository.SavePost(BuildPost());
+            var post3 = postRepository.SavePost(BuildPost());
+
+            IEnumerable<Post> after = postRepository.GetPosts(club.ClubId.Value);
+            var diff = after.Except(before);
+
+            Assert.True(diff.Count() == 3);
+            Assert.True(diff.SingleOrDefault(p => p.PostId == post1.PostId) != null);
+            Assert.True(diff.SingleOrDefault(p => p.PostId == post2.PostId) != null);
+            Assert.True(diff.SingleOrDefault(p => p.PostId == post3.PostId) != null);
+        }
     }
 }
