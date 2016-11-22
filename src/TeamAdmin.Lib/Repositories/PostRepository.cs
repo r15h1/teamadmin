@@ -1,0 +1,77 @@
+﻿using AutoMapper;
+using System;
+using System.Linq;
+using TeamAdmin.Core;
+using TeamAdmin.Core.Repositories;
+using TeamAdmin.Lib.Repositories.EFContext;
+
+namespace TeamAdmin.Lib.Repositories
+{
+    public class PostRepository : IPostRepository
+    {
+        IMapper mapper;
+
+        public PostRepository()
+        {
+            mapper = AutoMapperFactory.GetMapper();
+        }
+
+        public bool DeletePost(long postId)
+        {
+            using (var context = ContextFactory.Create<PostContext>())
+            {
+                var p1 = context.Posts.SingleOrDefault(p => p.PostId == postId);
+                if (p1 == null) return false;
+                context.Entry(p1).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+                context.SaveChanges();
+            }
+            return true;
+        }
+
+        public Core.Post GetPost(long postId)
+        {
+            using (var context = ContextFactory.Create<PostContext>())
+            {
+                var p1 = context.Posts.SingleOrDefault(p => p.PostId == postId);
+                if (p1 != null) return mapper.Map<Core.Post>(p1);
+            }
+            return null;
+        }
+
+        public Core.Post SavePost(Core.Post post)
+        {
+            if (post.PostId.HasValue)
+                return UpdatePost(post);
+
+            return CreatePost(post);
+        }
+
+        private Core.Post CreatePost(Core.Post post)
+        {
+            var p = mapper.Map<EFContext.Post>(post);
+            using (var context = ContextFactory.Create<PostContext>())
+            {
+                context.Posts.Add(p);
+                context.SaveChanges();
+                return mapper.Map<Core.Post>(p);
+            }
+        }
+
+        private Core.Post UpdatePost(Core.Post post)
+        {
+            using (var context = ContextFactory.Create<PostContext>())
+            {
+                var p = context.Posts.FirstOrDefault(x => x.PostId == post.PostId);
+                if (p == null) return null;
+
+                p.Body = post.Body;
+                p.DatePublished = post.DatePublished;
+                p.PostStatus = (byte) post.PostStatus;
+                p.Title = post.Title;
+                context.Entry(p).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                context.SaveChanges();
+                return mapper.Map<Core.Post>(p);
+            }
+        }
+    }
+}

@@ -85,4 +85,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
 
     [CollectionDefinition("EventFixtureCollection")]
     public class EventFixtureCollection : ICollectionFixture<ClubFixture> { }
+
+    [CollectionDefinition("PostFixtureCollection")]
+    public class PostFixtureCollection : ICollectionFixture<ClubFixture> { }
 }

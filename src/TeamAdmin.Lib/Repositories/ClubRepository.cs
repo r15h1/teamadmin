@@ -48,7 +48,7 @@ namespace TeamAdmin.Lib.Repositories
             using (var context = ContextFactory.Create<ClubContext>())
             {
                 var clubInfo = context.Clubs.FirstOrDefault(c => c.ClubId == club.ClubId);
-                if (clubInfo == null) return club;
+                if (clubInfo == null) return null;
 
                 clubInfo.Name = club.Name;
                 clubInfo.City = club.Address.City;

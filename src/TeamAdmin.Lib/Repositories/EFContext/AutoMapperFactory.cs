@@ -36,6 +36,9 @@ namespace TeamAdmin.Lib.Repositories.EFContext
 
                     cfg.CreateMap<Core.Event, EFContext.Event>().ForMember(m => m.EventType, opt => opt.MapFrom(src => (byte)src.EventType));
                     cfg.CreateMap<EFContext.Event, Core.Event>().ForMember(m => m.EventType, opt => opt.MapFrom(src => (int)src.EventType));
+
+                    cfg.CreateMap<Core.Post, EFContext.Post>().ForMember(m => m.PostStatus, opt => opt.MapFrom(src => (byte)src.PostStatus));
+                    cfg.CreateMap<EFContext.Post, Core.Post>().ForMember(m => m.PostStatus, opt => opt.MapFrom(src => (int)src.PostStatus));
                 });
             }
         }
