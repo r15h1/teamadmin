@@ -1,0 +1,10 @@
+﻿{
+  "ConnectionStrings": {
+    "DefaultConnection": "data source=.\\SQL2012; initial catalog=TeamAdmin;user id=sa;password=Cr@2yHor5e;MultipleActiveResultSets=true"
+  },
+
+  "Images": {
+    "Directory": "h:\\root\\home\\rrishi-001\\www\\teamadmin\\website\\cdn\\images\\",
+    "UrlRoot": "http://rrishi-001-site3.dtempurl.com/cdn/images/"
+  }
+}
