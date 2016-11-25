@@ -10,7 +10,8 @@ namespace TeamAdmin.Web.Controllers
     {
         public IActionResult Index()
         {
-            return View("Upload");
+            return View();
+            //return View("Upload");
         }
 
         public IActionResult About()
