@@ -14,6 +14,11 @@ namespace TeamAdmin.Web.Controllers
             //return View("Upload");
         }
 
+        public IActionResult Upload()
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

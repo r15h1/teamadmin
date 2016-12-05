@@ -11,6 +11,7 @@ namespace TeamAdmin.Core
         {
             ClubId = clubId;
             PostStatus = PostStatus.DRAFT;
+            Media = new List<Media>();
         }
         public int ClubId { get; private set; }
         public string Body { get; set; }
@@ -19,6 +20,7 @@ namespace TeamAdmin.Core
         public long? PostId { get; set; }
         public PostStatus PostStatus { get; set; }
         public string Title { get; set; }
+        public IEnumerable<Media> Media { get; set; }
     }
 
     public enum PostStatus

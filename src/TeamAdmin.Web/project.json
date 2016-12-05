@@ -1,7 +1,9 @@
-﻿{
+{
   "userSecretsId": "aspnet-TeamAdmin.Web-befbf0c8-6bf9-45ac-a6ec-691503fcd8c5",
 
   "dependencies": {
+    "AutoMapper": "5.2.0",
+    "AutoMapper.Extensions.Microsoft.DependencyInjection": "1.1.2",
     "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",

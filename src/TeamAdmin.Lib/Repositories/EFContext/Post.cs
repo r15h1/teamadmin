@@ -8,6 +8,11 @@ namespace TeamAdmin.Lib.Repositories.EFContext
 {
     internal class Post
     {
+        public Post()
+        {
+
+        }
+
         public int ClubId { get; set; }
         public string Body { get; set; }
         public DateTime DateCreated { get; set; }
@@ -15,5 +20,6 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         public long? PostId { get; set; }
         public byte PostStatus { get; set; }
         public string Title { get; set; }
+        public ICollection<PostMedia> PostMedia { get; set; }
     }
 }

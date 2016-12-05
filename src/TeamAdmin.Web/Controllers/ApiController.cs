@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using TeamAdmin.Lib.Util;
+using TeamAdmin.Web.Models.ApiViewModels;
 
 namespace TeamAdmin.Web.Controllers
 {
@@ -20,10 +22,13 @@ namespace TeamAdmin.Web.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> Upload(ICollection<IFormFile> files)
+        public async Task<IActionResult> Upload(IFormFileCollection files)
         {
             List<string> locs = new List<string>();
-            var location = Settings.ImageDirectory;
+            if (files == null || files.Count == 0) files = Request.Form.Files;
+            var location = Settings.ImageDirectory + $"\\{DateTime.Today.ToString("yyyy-MM")}";
+
+            if (!Directory.Exists(location)) Directory.CreateDirectory(location);
             foreach (var file in files)
             {
                 if (file.Length > 0)
@@ -32,11 +37,11 @@ namespace TeamAdmin.Web.Controllers
                     using (var fileStream = new FileStream(Path.Combine(location, filename), FileMode.Create))
                     {
                         await file.CopyToAsync(fileStream);
-                        locs.Add(Settings.ImageUrlRoot + filename);
+                        locs.Add($"<img src='{Settings.ImageUrlRoot}{DateTime.Today.ToString("yyyy-MM")}/{filename}?h=160'>");
                     }
                 }
             }
-            return new JsonResult(locs);
+            return new JsonResult(new UploadedData { InitialPreview = locs });
         }
 
         private string GenerateFileName(string location, string fileName)

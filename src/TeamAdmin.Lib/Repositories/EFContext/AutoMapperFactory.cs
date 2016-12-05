@@ -1,5 +1,6 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
+using System.Collections.Generic;
+using System;
 using TeamAdmin.Core;
 
 namespace TeamAdmin.Lib.Repositories.EFContext
@@ -37,7 +38,11 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                     cfg.CreateMap<Core.Event, EFContext.Event>().ForMember(m => m.EventType, opt => opt.MapFrom(src => (byte)src.EventType));
                     cfg.CreateMap<EFContext.Event, Core.Event>().ForMember(m => m.EventType, opt => opt.MapFrom(src => (int)src.EventType));
 
-                    cfg.CreateMap<Core.Post, EFContext.Post>().ForMember(m => m.PostStatus, opt => opt.MapFrom(src => (byte)src.PostStatus));
+                    cfg.CreateMap<Core.Post, EFContext.Post>()
+                        .ForMember(m => m.PostMedia, opt => opt.ResolveUsing<PostMediaResolver>())
+                        .ForMember(m => m.PostStatus, opt => opt.MapFrom(src => (byte)src.PostStatus));
+
+
                     cfg.CreateMap<EFContext.Post, Core.Post>().ForMember(m => m.PostStatus, opt => opt.MapFrom(src => (int)src.PostStatus));
                 });
             }
@@ -46,6 +51,18 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         internal static IMapper GetMapper()
         {
             return mapper;
+        }
+    }
+
+    internal class PostMediaResolver : IValueResolver<Core.Post, EFContext.Post, ICollection<PostMedia>>
+    {
+        public ICollection<PostMedia> Resolve(Core.Post source, Post destination, ICollection<PostMedia> destMember, ResolutionContext context)
+        {
+            var mediaSet = new List<PostMedia>();
+            foreach (var m in source.Media)
+                mediaSet.Add(new PostMedia { Position = m.Position, MediaType = (byte)m.MediaType, Url = m.Url, MediaId = m.MediaId, Caption = m.Caption, PostId = source.PostId });
+
+            return mediaSet;
         }
     }
 }
