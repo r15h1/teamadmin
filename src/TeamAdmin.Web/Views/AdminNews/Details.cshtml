@@ -6,7 +6,7 @@
 
 <h2>Add a News Item</h2>
 
-<form asp-action="AddNews" name="myform" id="myform" method="post">
+<form asp-action="Add" name="myform" id="myform" method="post">
     <hr />
     <div class="form-horizontal">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -132,9 +132,6 @@
                     $('#myform').append(hidden);
                 }
             }
-        });
-        $('#myform').submit(function () {
-            alert($("#fileUploader").fileinput('getFileStack'));
         });
     });
 </script>

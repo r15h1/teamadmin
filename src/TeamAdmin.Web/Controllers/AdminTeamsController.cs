@@ -6,44 +6,44 @@ using TeamAdmin.Core.Repositories;
 namespace TeamAdmin.Web.Controllers
 {
     [Authorize]
-    [Route("Admin")]
-    public class AdminController : Controller
+    [Route("admin/teams")]
+    public class AdminTeamsController : Controller
     {
         IPostRepository postRepository;
         int clubId = 1;
         private IMapper mapper;
 
-        public AdminController(IPostRepository postRepository, IMapper mapper)
+        public AdminTeamsController(IPostRepository postRepository, IMapper mapper)
         {
             this.postRepository = postRepository;
             this.mapper = mapper;
         }
 
-        [HttpGet("News")]
-        public IActionResult News()
+        [HttpGet("")]
+        public IActionResult Index()
         {
             var newsList = postRepository.GetPosts(clubId);
             return View(newsList);
         }
 
-        [HttpGet("News/Add")]
-        public IActionResult AddNews()
+        [HttpGet("add")]
+        public IActionResult Add()
         {
-            return View("NewsDetails");
+            return View("Details");
         }
 
-        [HttpPost("News/Add")]
+        [HttpPost("add")]
         [ValidateAntiForgeryToken]
-        public IActionResult AddNews(Models.AdminViewModels.News news)
+        public IActionResult Add(Models.AdminViewModels.News news)
         {
             if (ModelState.IsValid)
             {
                 news.ClubId = clubId;
                 var post = mapper.Map<Core.Post>(news);
                 postRepository.SavePost(post);
-                return RedirectToAction("News");
+                return RedirectToAction("Index");
             }
-            return View("NewsDetails", news);
+            return View("Details", news);
         }
     }
 }

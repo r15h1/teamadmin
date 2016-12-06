@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<TeamAdmin.Core.Post>
 <h2>News</h2>
 <hr />
-<div class="btn-toolbar" role="toolbar"><a class="btn btn-default pull-right" asp-controller="Admin" asp-action="AddNews">Add News</a></div>
+<div class="btn-toolbar" role="toolbar"><a class="btn btn-default pull-right" asp-controller="AdminTeams" asp-action="Add">Add a Team</a></div>
 @if (Model != null && Model.Count() > 0)
 {
     <div class="table-responsive">
