@@ -9,21 +9,21 @@ namespace TeamAdmin.Web.Controllers
     [Route("admin/teams")]
     public class AdminTeamsController : Controller
     {
-        IPostRepository postRepository;
+        ITeamRepository teamRepository;
         int clubId = 1;
         private IMapper mapper;
 
-        public AdminTeamsController(IPostRepository postRepository, IMapper mapper)
+        public AdminTeamsController(ITeamRepository teamRepository, IMapper mapper)
         {
-            this.postRepository = postRepository;
+            this.teamRepository = teamRepository;
             this.mapper = mapper;
         }
 
         [HttpGet("")]
         public IActionResult Index()
         {
-            var newsList = postRepository.GetPosts(clubId);
-            return View(newsList);
+            var teamsList = teamRepository.GetTeams();
+            return View(teamsList);
         }
 
         [HttpGet("add")]
@@ -34,16 +34,16 @@ namespace TeamAdmin.Web.Controllers
 
         [HttpPost("add")]
         [ValidateAntiForgeryToken]
-        public IActionResult Add(Models.AdminViewModels.News news)
+        public IActionResult Add(Models.AdminViewModels.Team team)
         {
             if (ModelState.IsValid)
             {
-                news.ClubId = clubId;
-                var post = mapper.Map<Core.Post>(news);
-                postRepository.SavePost(post);
+                team.ClubId = clubId;
+                var tm = new Core.Team(clubId) { Name = team.Name };
+                teamRepository.SaveTeam(tm);
                 return RedirectToAction("Index");
             }
-            return View("Details", news);
+            return View("Details", team);
         }
     }
 }

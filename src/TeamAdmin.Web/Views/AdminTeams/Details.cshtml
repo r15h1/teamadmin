@@ -1,42 +1,18 @@
-@model TeamAdmin.Web.Models.AdminViewModels.News
+@model TeamAdmin.Web.Models.AdminViewModels.Team
 
-@{
-    ViewData["Title"] = "AddNews";
-}
-
-<h2>Add a News Item</h2>
+<h2>Add a Team</h2>
 
 <form asp-action="Add" name="myform" id="myform" method="post">
     <hr />
     <div class="form-horizontal">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>        
         <div class="form-group">
-            <label asp-for="PostStatus" class="col-md-1 control-label">Status</label>
+            <label asp-for="Name" class="col-md-1 control-label"></label>
             <div class="col-md-11">
-                <select class="btn btn-default" id="poststatus" name="poststatus" asp-for="PostStatus" asp-items="Html.GetEnumSelectList<TeamAdmin.Core.PostStatus>()"></select>
+                <input asp-for="Name" class="form-control" style="max-width:100%" name="Name" id="Name"/>
+                <span asp-validation-for="Name" class="text-danger" />
             </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Title" class="col-md-1 control-label"></label>
-            <div class="col-md-11">
-                <input asp-for="Title" class="form-control" style="max-width:100%" name="title" id="title"/>
-                <span asp-validation-for="Title" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Body" class="col-md-1 control-label"></label>
-            <div class="col-md-11">
-                <textarea autofocus class="form-control" name="body" id="body" asp-for="Body" rows="10" required>@Model.Body</textarea>
-                <span asp-validation-for="Body" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Images" class="col-md-1 control-label"></label>
-            <div class="col-md-11">
-                <input type="file" class="form-control" name="fileUploader" id="fileUploader" multiple/>
-                <!--http://plugins.krajee.com/file-input-ajax-demo/8-->
-            </div>
-        </div>
+        </div>        
         <div class="form-group">
             <div class="col-md-offset-1 col-md-1">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -54,85 +30,6 @@
 }
 
 @section scripts {
-    
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/tinymce/tinymce.min.js"></script>
-<script src="~/lib/bootstrap-fileinput/js/fileinput.min.js"></script>
-<script>
-        tinyMCE.init({
-            plugins: [
-                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                'searchreplace wordcount visualblocks visualchars code fullscreen',
-                'insertdatetime media nonbreaking save table contextmenu directionality',
-                'emoticons template paste textcolor colorpicker textpattern imagetools'
-            ],
-            toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | print preview | code',
-            image_advtab: true,
-            selector: '#body',
-            menubar: false,
-            setup: function (editor) {
-                editor.on('change', function () {
-                    editor.save();
-                });
-            },
-            onchange_callback: function (editor) {
-                tinyMCE.triggerSave();
-                $("#" + editor.id).valid();
-            }
-        });
-
-        $(function () {
-            var validator = $("#myform").submit(function () {
-                // update underlying textarea before submit validation
-                tinyMCE.triggerSave();
-            }).validate({
-                ignore: "",
-                rules: {
-                    title: "required",
-                    content: "required"
-                },
-                errorPlacement: function (label, element) {
-                    // position error label after generated textarea
-                    if (element.is("textarea")) {
-                        label.insertAfter(element.next());
-                    } else {
-                        label.insertAfter(element)
-                    }
-                }
-            });
-            validator.focusInvalid = function () {
-                // put focus on tinymce on submit validation
-                if (this.settings.focusInvalid) {
-                    try {
-                        var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
-                        if (toFocus.is("textarea")) {
-                            tinyMCE.get(toFocus.attr("id")).focus();
-                        } else {
-                            toFocus.filter(":visible").focus();
-                        }
-                    } catch (e) {
-                        // ignore IE throwing errors when focusing hidden elements
-                    }
-                }
-            }
-        })
-</script>
-
-<script>
-    $(document).ready(function () {
-        $("#fileUploader").fileinput({ 'showUpload': true, 'previewFileType': 'jpg', 'uploadUrl': '/api/upload', 'uploadAsync': false });
-        $('#fileUploader').on('filebatchuploadsuccess', function (event, data, previewId, index) {
-            var response = data.response;
-            if(response && response.initialPreview && response.initialPreview.length > 0)
-            {
-                for (i = 0; i < response.initialPreview.length; i++)
-                {
-                    var img = $.parseHTML(response.initialPreview[i]);
-                    var hidden = $("<input type='hidden' name='images' value='" + $(img).attr("src") + "'>");
-                    $('#myform').append(hidden);
-                }
-            }
-        });
-    });
-</script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 }

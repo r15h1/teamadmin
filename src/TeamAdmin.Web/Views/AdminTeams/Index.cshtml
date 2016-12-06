@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TeamAdmin.Core.Post>
+﻿@model IEnumerable<TeamAdmin.Core.Team>
 <h2>News</h2>
 <hr />
 <div class="btn-toolbar" role="toolbar"><a class="btn btn-default pull-right" asp-controller="AdminTeams" asp-action="Add">Add a Team</a></div>
@@ -9,18 +9,16 @@
             <thead>
                 <tr class="bg-primary">
                     <th class="col-md-1 col-sm-1 col-xs-1">Id</th>
-                    <th class="col-md-4 col-sm-4 col-xs-3">Title</th>
-                    <th class="col-md-1 col-sm-1 col-xs-1">Status</th>
+                    <th class="col-md-10 col-sm-4 col-xs-10">Name</th>
                     <th class="col-md-1 col-sm-1 col-xs-1">Edit</th>
                 </tr>
             </thead>
-            @foreach (var news in Model)
+            @foreach (var team in Model)
             {
                 <tr>
-                    <td>@news.PostId</td>
-                    <td>@news.Title</td>
-                    <td>@news.PostStatus.ToString()</td>
-                    <td class="text-center"><a href="/admin/news/@news.PostId"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="edit"></i></a></td>
+                    <td>@team.TeamId</td>
+                    <td>@team.Name</td>
+                    <td class="text-center"><a href="/admin/teams/@team.TeamId"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="edit"></i></a></td>
                 </tr>
             }
         </table>
