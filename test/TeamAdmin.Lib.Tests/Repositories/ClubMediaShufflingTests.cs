@@ -28,7 +28,8 @@ namespace TeamAdmin.Lib.Tests.Repositories
 
         public ClubMediaShufflingTests(ClubFixture fixture)
         {
-            this.fixture = fixture;
+            Config.Init();
+            this.fixture = fixture;            
             club = fixture.Clubs.FirstOrDefault();
             mediaRepo = new ClubRepository();
             if (mediaRepo.GetMediaCount(club.ClubId.Value) == 0) mediaRepo.AddMedia(club.ClubId.Value, mediaList1);

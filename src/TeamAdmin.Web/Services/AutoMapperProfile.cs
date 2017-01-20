@@ -11,6 +11,8 @@ namespace TeamAdmin.Web.Services
         {
             CreateMap<Models.AdminViewModels.News, Core.Post>()
                 .ForMember(dest => dest.Media, opt => opt.ResolveUsing<MediaResolver>());
+
+            CreateMap<Models.AdminViewModels.Event, Core.Event>();
         }
     }
 

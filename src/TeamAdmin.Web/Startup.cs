@@ -60,6 +60,7 @@ namespace TeamAdmin.Web
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<ITeamRepository, TeamRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

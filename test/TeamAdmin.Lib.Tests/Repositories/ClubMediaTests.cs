@@ -30,6 +30,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
 
         public ClubMediaTests(ClubFixture fixture)
         {
+            Config.Init();
             this.fixture = fixture;
             club = fixture.Clubs.FirstOrDefault();
             mediaRepo = new ClubRepository();

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<TeamAdmin.Core.Post>
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -10,51 +11,26 @@
         <li data-target="#myCarousel" data-slide-to="3"></li>
     </ol>
     <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
+@if (Model != null && Model.Count() > 0)
+{
+    int i = 0;
+    @foreach (var news in Model)
+    {        
+        <div class='item @(i == 0 ? "active" : "")'>
+            <img src="@news.Media.FirstOrDefault().Url?w=230&h=70&mode=crop" srcset="@news.Media.FirstOrDefault().Url?w=1200&h=400&mode=crop 1200w, @news.Media.FirstOrDefault().Url?w=800&h=266&mode=crop 800w, @news.Media.FirstOrDefault().Url?w=600&h=200&mode=crop 600w, @news.Media.FirstOrDefault().Url?w=400&h=133&mode=crop 400w" alt="@news.Title" class="img-responsive center-block" />
             <div class="carousel-caption" role="option">
                 <p>
-                    Learn how to build ASP.NET apps that can run anywhere.
-                    <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                        Learn More
-                    </a>
+                    @news.Title
+                <a class="btn btn-default" href="/news/@news.PostId/@news.Title">
+                    Learn More
+                </a>
                 </p>
             </div>
         </div>
-        <div class="item">
-            <img src="~/images/banner2.svg" alt="Visual Studio" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    There are powerful new features in Visual Studio for building modern web apps.
-                    <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner3.svg" alt="Package Management" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Bring in libraries from NuGet, Bower, and npm, and automate tasks using Grunt or Gulp.
-                    <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkID=525029&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner4.svg" alt="Microsoft Azure" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
-                    <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
+        i++;
+    }
+}
+</div>
     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
@@ -67,7 +43,7 @@
 
 <div class="row">
     <div class="col-md-3">
-        <h2>Application uses</h2>
+        <h2>Latest News</h2>
         <ul>
             <li>Sample pages using ASP.NET Core MVC</li>
             <li><a href="http://go.microsoft.com/fwlink/?LinkId=518004">Bower</a> for managing client-side libraries</li>

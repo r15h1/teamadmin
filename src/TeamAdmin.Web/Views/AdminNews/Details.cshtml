@@ -130,6 +130,7 @@
                     var img = $.parseHTML(response.initialPreview[i]);
                     var hidden = $("<input type='hidden' name='images' value='" + $(img).attr("src") + "'>");
                     $('#myform').append(hidden);
+                    response.initialPreview[i] = "<img src='" + $(img).attr("src") + "?w=200'>";
                 }
             }
         });

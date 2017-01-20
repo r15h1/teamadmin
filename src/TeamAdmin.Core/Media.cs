@@ -14,7 +14,7 @@ namespace TeamAdmin.Core
 
     public class Media
     {
-        public int? MediaId { get; set; }
+        public long? MediaId { get; set; }
         public MediaType MediaType { get; set; }
         public string Url { get; set; }
         public string Caption { get; set; }

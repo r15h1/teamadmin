@@ -1,0 +1,10 @@
+﻿{
+  "ConnectionStrings": {
+    "DefaultConnection": "data source=.\\SQL2012; initial catalog=TeamAdmin;user id=sa;password=Cr@2yHor5e;MultipleActiveResultSets=true"
+  },
+
+  "Images": {
+    "Directory": "C:\\inetpub\\wwwroot\\TeamAdmin\\cdn\\images",
+    "UrlRoot": "http://teamadmin.club/cdn/images/"
+  }
+}

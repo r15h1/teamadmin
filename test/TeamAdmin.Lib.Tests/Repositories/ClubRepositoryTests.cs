@@ -15,6 +15,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
 
             public ClubCreation()
             {
+                Config.Init();
                 repo = new ClubRepository();
             }
 

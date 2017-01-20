@@ -37,7 +37,7 @@ namespace TeamAdmin.Web.Controllers
                     using (var fileStream = new FileStream(Path.Combine(location, filename), FileMode.Create))
                     {
                         await file.CopyToAsync(fileStream);
-                        locs.Add($"<img src='{Settings.ImageUrlRoot}{DateTime.Today.ToString("yyyy-MM")}/{filename}?h=160'>");
+                        locs.Add($"<img src='{Settings.ImageUrlRoot}{DateTime.Today.ToString("yyyy-MM")}/{filename}'>");
                     }
                 }
             }

@@ -45,6 +45,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
 
         public ClubFixture()
         {
+            Config.Init();
             Clubs = new List<Club>();
             Teams = new List<Team>();
             CreateClubFixture();

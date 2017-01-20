@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TeamAdmin.Core.Repositories;
 
 namespace TeamAdmin.Web.Controllers
 {
     public class HomeController : Controller
     {
+        IPostRepository postRepository;
+        private const int clubId = 1;
+
+        public HomeController(IPostRepository postRepository)
+        {
+            this.postRepository = postRepository;
+        }
+
         public IActionResult Index()
         {
-            return View();
-            //return View("Upload");
+            var news = postRepository.GetPosts(clubId);
+            return View(news);
         }
 
         public IActionResult Upload()

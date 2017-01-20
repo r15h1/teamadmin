@@ -5,6 +5,7 @@ using TeamAdmin.Core;
 using TeamAdmin.Core.Repositories;
 using TeamAdmin.Lib.Repositories.EFContext;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace TeamAdmin.Lib.Repositories
 {
@@ -43,7 +44,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<PostContext>())
             {
-                List<EFContext.Post> posts = context.Posts.Where(p => p.ClubId == clubId).ToList();
+                List<EFContext.Post> posts = context.Posts.Include(m => m.PostMedia).Where(p => p.ClubId == clubId).ToList();
                 if (posts != null && posts.Count() > 0)
                     return mapper.Map<List<Core.Post>>(posts);
             }

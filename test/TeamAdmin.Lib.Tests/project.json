@@ -1,10 +1,13 @@
 {
   "version": "1.0.0-*",
-  
+
   "testRunner": "xunit",
 
   "dependencies": {
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Microsoft.Extensions.Configuration": "1.0.0",
+    "Microsoft.Extensions.Configuration.FileExtensions": "1.0.0",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0",
     "TeamAdmin.Core": "1.0.0-*",
     "TeamAdmin.Lib": "1.0.0-*",
     "xunit": "2.2.0-beta3-build3402"
@@ -12,6 +15,12 @@
 
   "frameworks": {
     "dnx451": {
+    }
+  },
+
+  "buildOptions": {
+    "copyToOutput": {
+      "include": [ "settings.json" ]
     }
   }
 }
