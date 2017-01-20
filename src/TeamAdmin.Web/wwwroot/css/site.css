@@ -18,6 +18,11 @@ textarea {
 }
 
 /* Carousel */
+.carousel-caption{
+    background-color:rgba(0,0,0,0.6);
+    border-radius:5px;
+}
+
 .carousel-caption p {
     font-size: 20px;
     line-height: 1.4;
@@ -33,6 +38,38 @@ textarea {
     display:inline-block;
     content: "]";
     padding-left: 0.5em;
+}
+
+/*calendar*/
+.calendar-item{    
+    border-radius:3px;
+    border:solid 1px darkred;
+    background-color:rgb(255, 255, 255);
+    color:darkred;    
+    text-align:center;
+    width:75px;
+}
+
+.calendar-item > .calendar-month{ 
+    border-top-left-radius:3px;
+    border-top-right-radius:3px;
+    padding:5px 5px 5px 5px;  
+    background-color:darkred;
+    color:white;
+    font-weight:600;
+}
+
+.calendar-item > .calendar-date{ 
+    padding:2px 2px 0px 2px;  
+    color:black;
+    font-size:20px;
+    font-weight:900;
+}
+
+.calendar-item > .calendar-day{ 
+    color:darkred;
+    font-size:15px;
+    font-weight:600;
 }
 
 /* Make .svg files in the carousel display properly in older browsers */
@@ -52,4 +89,10 @@ textarea {
 .navbar-brand {
     width: 80px;
     padding-top:0;
+}
+
+.panel-default{
+    padding:7px 7px 7px 7px;
+    background-color:white;
+    color:black;
 }
