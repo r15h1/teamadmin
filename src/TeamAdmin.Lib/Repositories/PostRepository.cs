@@ -34,7 +34,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<PostContext>())
             {
-                var p1 = context.Posts.SingleOrDefault(p => p.PostId == postId);
+                var p1 = context.Posts.Include(m => m.PostMedia).SingleOrDefault(p => p.PostId == postId);
                 if (p1 != null) return mapper.Map<Core.Post>(p1);
             }
             return null;
@@ -74,13 +74,25 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<PostContext>())
             {
-                var p = context.Posts.FirstOrDefault(x => x.PostId == post.PostId);
+                var p = context.Posts.Include(m => m.PostMedia).FirstOrDefault(x => x.PostId == post.PostId);
                 if (p == null) return null;
 
                 p.Body = post.Body;
                 p.DatePublished = post.DatePublished;
                 p.PostStatus = (byte) post.PostStatus;
                 p.Title = post.Title;
+
+                if (p.PostMedia != null && p.PostMedia.Count > 0)
+                    foreach (var m in p.PostMedia)
+                        context.Remove(m);
+
+                if (post.Media != null && post.Media.Count() > 0)
+                    foreach (var media in post.Media)
+                        p.PostMedia.Add(new PostMedia {
+                            Caption = media.Caption, MediaId = media.MediaId, MediaType = (byte)media.MediaType,
+                            Position = media.Position, Url = media.Url, PostId = post.PostId
+                        });
+
                 context.Entry(p).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 context.SaveChanges();
                 return mapper.Map<Core.Post>(p);

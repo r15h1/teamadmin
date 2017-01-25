@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TeamAdmin.Core.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TeamAdmin.Web.Controllers
 {
@@ -36,6 +37,15 @@ namespace TeamAdmin.Web.Controllers
         }
 
         public IActionResult Contact()
+        {
+            ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
+        [Authorize]
+        [HttpGet("admin")]
+        public IActionResult Admin()
         {
             ViewData["Message"] = "Your contact page.";
 

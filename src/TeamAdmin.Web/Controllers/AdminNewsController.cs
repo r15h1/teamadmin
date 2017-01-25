@@ -25,6 +25,14 @@ namespace TeamAdmin.Web.Controllers
             var newsList = postRepository.GetPosts(clubId);
             return View(newsList);
         }
+        
+        [HttpGet("{id}")]
+        public IActionResult Index(long id)
+        {
+            var post = postRepository.GetPost(id);
+            var news = mapper.Map<Models.AdminViewModels.News>(post);
+            return View("Details", news);
+        }
 
         [HttpGet("add")]
         public IActionResult Add()

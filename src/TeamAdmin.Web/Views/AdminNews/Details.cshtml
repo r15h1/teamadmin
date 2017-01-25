@@ -19,7 +19,7 @@
         <div class="form-group">
             <label asp-for="Title" class="col-md-1 control-label"></label>
             <div class="col-md-11">
-                <input asp-for="Title" class="form-control" style="max-width:100%" name="title" id="title"/>
+                <input asp-for="Title" class="form-control" style="max-width:100%" name="title" id="title" />
                 <span asp-validation-for="Title" class="text-danger" />
             </div>
         </div>
@@ -33,20 +33,29 @@
         <div class="form-group">
             <label asp-for="Images" class="col-md-1 control-label"></label>
             <div class="col-md-11">
-                <input type="file" class="form-control" name="fileUploader" id="fileUploader" multiple/>
-                <!--http://plugins.krajee.com/file-input-ajax-demo/8-->
+                <input type="file" class="form-control" name="fileUploader" id="fileUploader" multiple />
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-1 col-md-1">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
+    <input type="hidden" asp-for="PostId" />
+    @{
+        if (Model.Images != null && Model.Images.Count() > 0)
+        {
+            foreach (var image in Model.Images)
+            {
+                <input type="hidden" name='images' value="@image" />
+            }
+        }
+    }
 </form>
 
 <div>
-    <a asp-action="News">Back to List</a>
+    <a href="/admin/news">Back to List</a>
 </div>
 
 @section headerlinks{
@@ -54,11 +63,11 @@
 }
 
 @section scripts {
-    
-<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/tinymce/tinymce.min.js"></script>
-<script src="~/lib/bootstrap-fileinput/js/fileinput.min.js"></script>
-<script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/tinymce/tinymce.min.js"></script>
+    <script src="~/lib/bootstrap-fileinput/js/fileinput.min.js"></script>
+    <script>
         tinyMCE.init({
             plugins: [
                 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
@@ -116,24 +125,44 @@
                 }
             }
         })
-</script>
+    </script>
 
-<script>
-    $(document).ready(function () {
-        $("#fileUploader").fileinput({ 'showUpload': true, 'previewFileType': 'jpg', 'uploadUrl': '/api/upload', 'uploadAsync': false });
-        $('#fileUploader').on('filebatchuploadsuccess', function (event, data, previewId, index) {
-            var response = data.response;
-            if(response && response.initialPreview && response.initialPreview.length > 0)
-            {
-                for (i = 0; i < response.initialPreview.length; i++)
-                {
-                    var img = $.parseHTML(response.initialPreview[i]);
-                    var hidden = $("<input type='hidden' name='images' value='" + $(img).attr("src") + "'>");
-                    $('#myform').append(hidden);
-                    response.initialPreview[i] = "<img src='" + $(img).attr("src") + "?w=200'>";
+    <script>
+        $(document).ready(function () {
+            $("#fileUploader").fileinput({
+                'showUpload': true, 'previewFileType': 'jpg', 'uploadUrl': '/api/upload', 'uploadAsync': false,
+                'initialPreview': [
+                    @{
+                        if(Model.Images != null && Model.Images.Count() > 0)
+                        {
+                            int i = 0;
+                            foreach(var image in Model.Images)
+                            {
+                                if (i == 0)
+                                {
+                                    <text>'<img src= "@image?w=200" class="file-preview-image">'</text>
+                                }
+                                else
+                                {
+                                    <text >, '<img src= "@image?w=200" class="file-preview-image">'</text>
+                                }
+                                i++;
+                            }
+                        }
+                        }
+                ]
+            });
+            $('#fileUploader').on('filebatchuploadsuccess', function (event, data, previewId, index) {
+                var response = data.response;
+                if (response && response.initialPreview && response.initialPreview.length > 0) {
+                    for (i = 0; i < response.initialPreview.length; i++) {
+                        var img = $.parseHTML(response.initialPreview[i]);
+                        var hidden = $("<input type='hidden' name='images' value='" + $(img).attr("src") + "'>");
+                        $('#myform').append(hidden);
+                        response.initialPreview[i] = "<img src='" + $(img).attr("src") + "?w=200'>";
+                    }
                 }
-            }
+            });
         });
-    });
-</script>
+    </script>
 }

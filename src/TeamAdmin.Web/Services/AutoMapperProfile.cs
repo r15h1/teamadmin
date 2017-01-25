@@ -10,13 +10,16 @@ namespace TeamAdmin.Web.Services
         public AutoMapperProfile()
         {
             CreateMap<Models.AdminViewModels.News, Core.Post>()
-                .ForMember(dest => dest.Media, opt => opt.ResolveUsing<MediaResolver>());
+                .ForMember(dest => dest.Media, opt => opt.ResolveUsing<CoreMediaResolver>());
+
+            CreateMap<Core.Post, Models.AdminViewModels.News>()
+                .ForMember(dest => dest.Images, opt => opt.ResolveUsing<NewsMediaResolver>());
 
             CreateMap<Models.AdminViewModels.Event, Core.Event>();
         }
     }
 
-    public class MediaResolver : IValueResolver<Models.AdminViewModels.News, Core.Post, IEnumerable<Media>>
+    public class CoreMediaResolver : IValueResolver<Models.AdminViewModels.News, Core.Post, IEnumerable<Media>>
     {
         public IEnumerable<Media> Resolve(News news, Post post, IEnumerable<Media> media, ResolutionContext context)
         {
@@ -27,5 +30,19 @@ namespace TeamAdmin.Web.Services
 
             return mediaSet;
         }        
+    }
+
+    public class NewsMediaResolver : IValueResolver<Core.Post, Models.AdminViewModels.News, IEnumerable<string>>
+    {
+        public IEnumerable<string> Resolve(Post source, News destination, IEnumerable<string> images, ResolutionContext context)
+        {
+            var imagelist = new List<string>();
+            if(source.Media != null)
+                foreach (var image in source.Media)
+                    if(!string.IsNullOrWhiteSpace(image.Url))
+                        imagelist.Add(image.Url);
+
+            return imagelist;
+        }
     }
 }

@@ -72,8 +72,9 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         IEnumerable<Core.Media> IValueResolver<Post, Core.Post, IEnumerable<Core.Media>>.Resolve(Post source, Core.Post destination, IEnumerable<Core.Media> destMember, ResolutionContext context)
         {
             var mediaSet = new List<Core.Media>();
-            foreach (var m in source.PostMedia)
-                mediaSet.Add(new Core.Media { Position = m.Position, MediaType = (Core.MediaType)m.MediaType, Url = m.Url, MediaId = m.MediaId, Caption = m.Caption });
+            if(source.PostMedia != null)
+                foreach (var m in source.PostMedia)
+                    mediaSet.Add(new Core.Media { Position = m.Position, MediaType = (Core.MediaType)m.MediaType, Url = m.Url, MediaId = m.MediaId, Caption = m.Caption });
 
             return mediaSet;
         }

@@ -152,7 +152,7 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        public bool DeleteMedia(int mediaId)
+        public bool DeleteMedia(long mediaId)
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {
@@ -165,7 +165,7 @@ namespace TeamAdmin.Lib.Repositories
             }           
         }
 
-        public void UpdateMediaCaption(int mediaId, string newCaption)
+        public void UpdateMediaCaption(long mediaId, string newCaption)
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {
@@ -178,7 +178,7 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        public bool SetMediaPosition(int mediaId, int newPosition)
+        public bool SetMediaPosition(long mediaId, int newPosition)
         {
             using (var context = ContextFactory.Create<ClubContext>())           
             {                
