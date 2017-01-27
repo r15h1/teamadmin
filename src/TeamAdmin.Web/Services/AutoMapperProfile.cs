@@ -19,7 +19,9 @@ namespace TeamAdmin.Web.Services
             CreateMap<Models.AdminViewModels.Event, Core.Event>();
 
             CreateMap<Core.Event, Models.AdminViewModels.Event>()
-                .ForMember(dest => dest.Teams, opt => opt.ResolveUsing<TeamEventResolver>());                
+                .ForMember(dest => dest.Teams, opt => opt.ResolveUsing<TeamEventResolver>());
+
+            CreateMap<Models.AdminViewModels.Team, Core.Team>().ReverseMap();
         }
     }
 

@@ -26,10 +26,19 @@ namespace TeamAdmin.Web.Controllers
             return View(teamsList);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Index(int id)
+        {
+            var t = teamRepository.GetTeam(clubId, id);
+            var team = mapper.Map<Models.AdminViewModels.Team>(t);
+            return View("Details", team);
+        }
+
         [HttpGet("add")]
         public IActionResult Add()
         {
-            return View("Details");
+            var team = new Models.AdminViewModels.Team { ClubId = clubId };
+            return View("Details", team);
         }
 
         [HttpPost("add")]
@@ -38,8 +47,8 @@ namespace TeamAdmin.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                team.ClubId = clubId;
                 var tm = new Core.Team(clubId) { Name = team.Name };
+                if (team.TeamId.HasValue) tm.TeamId = team.TeamId;
                 teamRepository.SaveTeam(tm);
                 return RedirectToAction("Index");
             }

@@ -19,10 +19,12 @@
             </div>
         </div>
     </div>
+    <input type="hidden" name="ClubId" asp-for="ClubId" />
+    <input type="hidden" name="TeamId" asp-for="TeamId" />
 </form>
 
 <div>
-    <a asp-action="News">Back to List</a>
+    <a href="/admin/teams">Back to List</a>
 </div>
 
 @section headerlinks{
