@@ -1,27 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TeamAdmin.Core.Repositories;
-using Microsoft.AspNetCore.Authorization;
+using TeamAdmin.Web.Models;
 
 namespace TeamAdmin.Web.Controllers
 {
     public class HomeController : Controller
     {
-        IPostRepository postRepository;
         private const int clubId = 1;
+        private IPostRepository postRepository;
+        private IEventRepository eventRepository;
 
-        public HomeController(IPostRepository postRepository)
+        public HomeController(IPostRepository postRepository, IEventRepository eventRepository)
         {
             this.postRepository = postRepository;
+            this.eventRepository = eventRepository;
         }
 
         public IActionResult Index()
         {
             var news = postRepository.GetPosts(clubId);
-            return View(news);
+            var events = eventRepository.GetEvents(new Core.Club { ClubId = clubId });
+            var model = new HomePageModel { Events = events, News = news };
+            return View(model);
         }
 
         public IActionResult Upload()
@@ -32,7 +33,6 @@ namespace TeamAdmin.Web.Controllers
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 

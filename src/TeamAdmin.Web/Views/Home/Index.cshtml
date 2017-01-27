@@ -1,4 +1,6 @@
-﻿@model IEnumerable<TeamAdmin.Core.Post>
+﻿@model TeamAdmin.Web.Models.HomePageModel
+@using System.Globalization
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -10,11 +12,11 @@
         <li data-target="#myCarousel" data-slide-to="2"></li>
     </ol>
     <div class="carousel-inner" role="listbox">
-        @if (Model != null && Model.Count() > 0)
-        {
-            int i = 0;
-            @foreach (var news in Model.Take(3))
+        @if (Model != null && Model.News != null && Model.News.Count() > 0)
             {
+                int i = 0;
+            @foreach (var news in Model.News.Take(3))
+                {
                 <div class='item @(i == 0 ? "active" : "")'>
                     <a href="/news/@news.PostId/@news.Title">
                         <img src="@news.Media.FirstOrDefault().Url?w=230&h=70&mode=crop" srcset="@news.Media.FirstOrDefault().Url?w=1200&h=400&mode=crop 1200w, @news.Media.FirstOrDefault().Url?w=800&h=266&mode=crop 800w, @news.Media.FirstOrDefault().Url?w=600&h=200&mode=crop 600w, @news.Media.FirstOrDefault().Url?w=400&h=133&mode=crop 400w" alt="@news.Title" class="img-responsive" />
@@ -37,43 +39,38 @@
 <hr />
 <div class="row">
     <h2>Latest News</h2>
-    @if (Model != null && Model.Count() > 0)
+    @if (Model != null && Model.News != null && Model.News.Count() > 0)
     {
-        @foreach (var news in Model.Take(6))
+        @foreach (var news in Model.News.Take(6))
         {
             <div class="col-sm-6 col-md-3">
                 <a href="/news/@news.PostId/@news.Title" class="thumbnail">
                     <img class="media-object" src="@news.Media.FirstOrDefault().Url?w=200&h=117&mode=crop" srcset="@news.Media.FirstOrDefault().Url?w=200&h=117&mode=crop 200w, @news.Media.FirstOrDefault().Url?w=360&h=210&mode=crop 360w" alt="@news.Title">
-                    <h4 class="caption media-heading">@news.Title</h4> 
+                    <h4 class="caption media-heading">@news.Title</h4>
                 </a>
-            </div>            
+            </div>
         }
-    }    
+    }
 </div>
 <hr />
 <div class="row">
     <h2>Events</h2>
-    @if (Model != null && Model.Count() > 0)
+    @if (Model != null && Model.Events != null && Model.Events.Count() > 0)
     {
-        @foreach (var news in Model.Take(6))
+        @foreach (var evnt in Model.Events.Take(6))
         {
             <div class="col-sm-6 col-md-4">
                 <div class="panel panel-default">
                     <div class="media">
                         <div class="media-left">
                             <div class="media-object calendar-item">
-                                <div class="calendar-month">SEP</div>
+                                <div class="calendar-month">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(evnt.StartDate.Month).ToUpper())</div>
                                 <div class="calendar-date">23</div>
-                                <div class="calendar-day">Saturday</div>
+                                <div class="calendar-day">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedDayName(evnt.StartDate.DayOfWeek).ToUpper())</div>
                             </div>
                         </div>
                         <div class="media-body">
-                            <div class="media-heading">U10 - Training at Clarington</div>
-                            <div class="media-heading">U10 - Training at Clarington</div>
-                            <div class="media-heading">U10 - Training at Clarington</div>
-                            <div class="media-heading">U10 - Training at Clarington</div>
-                            <div class="media-heading">U10 - Training at Clarington</div>
-                            <div class="media-heading">U10 - Training at Clarington</div>
+                            <div class="media-heading"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> @evnt.StartDate.ToString("hh:mmtt") - @evnt.EndDate.ToString("hh:mmtt"): @evnt.EventType @evnt.Title</div>                            
                         </div>
                     </div>
                 </div>
