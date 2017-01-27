@@ -44,7 +44,7 @@
     </div>
     <input type="hidden" asp-for="PostId" />
     @{
-        if (Model.Images != null && Model.Images.Count() > 0)
+        if (Model != null && Model.Images != null && Model.Images.Count() > 0)
         {
             foreach (var image in Model.Images)
             {
@@ -124,7 +124,7 @@
                     }
                 }
             }
-        })
+        });
     </script>
 
     <script>
@@ -133,7 +133,7 @@
                 'showUpload': true, 'previewFileType': 'jpg', 'uploadUrl': '/api/upload', 'uploadAsync': false,
                 'initialPreview': [
                     @{
-                        if(Model.Images != null && Model.Images.Count() > 0)
+                        if(Model != null && Model.Images != null && Model.Images.Count() > 0)
                         {
                             int i = 0;
                             foreach(var image in Model.Images)

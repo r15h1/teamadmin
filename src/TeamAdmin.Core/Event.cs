@@ -7,12 +7,17 @@ namespace TeamAdmin.Core
 {
     public class Event
     {
+        public Event()
+        {
+            Teams = new List<int>();
+        }
         public long? EventId { get; set; }
         public DateTime StartDate { get; set; }
         public string Description { get; set; }
         public EventType EventType { get; set; }
         public string Title { get; set; }
         public DateTime EndDate { get; set; }
+        public IList<int> Teams { get; set; }
     }
 
     public enum EventType

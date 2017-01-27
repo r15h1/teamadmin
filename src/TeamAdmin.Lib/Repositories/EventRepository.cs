@@ -18,18 +18,93 @@ namespace TeamAdmin.Lib.Repositories
             mapper = AutoMapperFactory.GetMapper();
         }
 
-        public Core.Event CreateEvent(IEnumerable<Core.Team> teams, Core.Event evnt)
+        public Core.Event SaveEvent(IEnumerable<Core.Team> teams, Core.Event evnt)
         {
             var ev = mapper.Map<EFContext.Event>(evnt);
             foreach (var team in teams) ev.ClubTeamEvents.Add(new ClubTeamEvent { ClubId = team.ClubId, TeamId = team.TeamId });
-            return SaveEvent(ev);
+            //return SaveEvent(ev);
+            return null;
         }
 
-        public Core.Event CreateEvent(Core.Club club, Core.Event evnt)
+        public Core.Event SaveEvent(Core.Club club, Core.Event evnt)
+        {
+            if (evnt.EventId.HasValue)
+                return UpdateEvent(club, evnt);
+
+            return CreateEvent(club, evnt);            
+        }
+
+        private Core.Event CreateEvent(Core.Club club, Core.Event evnt)
         {
             var ev = mapper.Map<EFContext.Event>(evnt);
-            ev.ClubTeamEvents.Add(new ClubTeamEvent { ClubId = club.ClubId.Value });
-            return SaveEvent(ev);
+
+            if (evnt.Teams.Count > 0)
+            {
+                foreach (var t in evnt.Teams)
+                    ev.ClubTeamEvents.Add(new ClubTeamEvent { ClubId = club.ClubId.Value, TeamId = t });
+            }
+            else
+            {
+                ev.ClubTeamEvents.Add(new ClubTeamEvent { ClubId = club.ClubId.Value});
+            }
+
+            using (var context = ContextFactory.Create<EventContext>())
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    context.Events.Add(ev);
+                    context.SaveChanges();
+                    transaction.Commit();
+                    return mapper.Map<Core.Event>(evnt);
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                }
+            }
+            return null;
+        }
+
+        private Core.Event UpdateEvent(Core.Club club, Core.Event evnt)
+        {
+            using (var context = ContextFactory.Create<EventContext>())
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                var eventItem = context.Events.Include(c => c.ClubTeamEvents).FirstOrDefault(e => e.EventId == evnt.EventId);
+                if (eventItem == null) return null;
+
+                try
+                {
+                    eventItem.Description = evnt.Description;
+                    eventItem.EndDate = evnt.EndDate;
+                    eventItem.EventType = (byte) evnt.EventType;
+                    eventItem.StartDate = evnt.StartDate;
+                    eventItem.Title = evnt.Title;
+                    
+                    if (eventItem.ClubTeamEvents != null && eventItem.ClubTeamEvents.Count > 0)
+                        foreach (var cev in eventItem.ClubTeamEvents)
+                            context.Remove(cev);
+
+                    if (evnt.Teams != null && evnt.Teams.Count > 0)
+                    {
+                        foreach (var t in evnt.Teams)
+                            eventItem.ClubTeamEvents.Add(new ClubTeamEvent { ClubId = club.ClubId.Value, TeamId = t });
+                    }
+                    else {
+                        eventItem.ClubTeamEvents.Add(new ClubTeamEvent { ClubId = club.ClubId.Value });
+                    }
+
+                    context.SaveChanges();
+                    transaction.Commit();
+                    return mapper.Map<Core.Event>(eventItem);
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                }
+            }
+            return null;
         }
 
         public bool DeleteEvent(long eventId)
@@ -49,7 +124,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<EventContext>())
             {
-                var evnt = context.Events.FirstOrDefault(m => m.EventId == eventId);
+                var evnt = context.Events.Include(c => c.ClubTeamEvents).FirstOrDefault(m => m.EventId == eventId);
                 return mapper.Map<Core.Event>(evnt);
             }
         }
@@ -58,7 +133,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<EventContext>())
             {
-                return (from e in context.Events
+                return (from e in context.Events 
                         join t in context.ClubTeamEvents on e.EventId equals t.EventId into te
                         from t1 in te
                         where t1.ClubId == club.ClubId
@@ -69,9 +144,9 @@ namespace TeamAdmin.Lib.Repositories
                             EventId = e.EventId,
                             EventType = (EventType)Enum.Parse(typeof(EventType), e.EventType.ToString()),
                             StartDate = e.StartDate,
-                            Title = e.Title
+                            Title = e.Title                            
                         }
-                            ).ToList();
+                            ).GroupBy(x => x.EventId).Select(x => x.First()).ToList();
             }
         }
 
@@ -94,26 +169,6 @@ namespace TeamAdmin.Lib.Repositories
                             }
                             ).ToList();
             }
-        }
-
-        private Core.Event SaveEvent(EFContext.Event evnt)
-        {
-            using (var context = ContextFactory.Create<EventContext>())
-            using (var transaction = context.Database.BeginTransaction())
-            {
-                try
-                {
-                    context.Events.Add(evnt);
-                    context.SaveChanges();
-                    transaction.Commit();
-                    return mapper.Map<Core.Event>(evnt);
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                }
-            }
-            return null;
-        }
+        }        
     }
 }

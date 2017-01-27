@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TeamAdmin.Core;
 
@@ -6,22 +7,33 @@ namespace TeamAdmin.Web.Models.AdminViewModels
 {
     public class Event
     {
+        public Event()
+        {
+            TeamList = new List<Team>();
+        }
+
         public long? EventId { get; set; }
 
-        [Required(ErrorMessage = "Please enter start date and time")]
+        [Required]
         [DataType(DataType.Date)]
-        public DateTime StartDate { get; set; }
+        //[CompareDateAttribute("Start date must be greater than current date and time")]
+        public DateTime? StartDate { get; set; }
 
         public string Description { get; set; }
 
         [Required]
         public EventType EventType { get; set; }
 
-        [Required(ErrorMessage = "Please enter a title")]
+        [Required]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Please enter end date and time")]
+        [Required]
+        //[CompareDateAttribute("Start date must be greater than current date and time, End date must be greater than start date")]
         [DataType(DataType.Date)]
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
+
+        public List<int> Teams { get; set; }
+
+        public List<Team> TeamList{ get; set; }
     }
 }

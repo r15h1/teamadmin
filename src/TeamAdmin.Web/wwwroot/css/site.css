@@ -98,3 +98,16 @@ textarea {
     background-color:white;
     color:black;
 }
+
+ul.Dropdown{
+    color:rgb(0,0,0);
+}
+
+div.Tokenize, ul.TokensContainer {
+    width:100%;
+    border-radius:4px;
+}
+
+ul.TokensContainer > li.Token > span{
+    color:rgb(0,0,0);
+}

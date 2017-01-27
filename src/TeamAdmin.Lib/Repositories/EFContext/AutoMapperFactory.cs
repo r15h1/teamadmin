@@ -36,7 +36,9 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                     cfg.CreateMap<EFContext.TeamMedia, Core.Media>().ForMember(m => m.MediaType, opt => opt.MapFrom(src => (int)src.MediaType));
 
                     cfg.CreateMap<Core.Event, EFContext.Event>().ForMember(m => m.EventType, opt => opt.MapFrom(src => (byte)src.EventType));
-                    cfg.CreateMap<EFContext.Event, Core.Event>().ForMember(m => m.EventType, opt => opt.MapFrom(src => (int)src.EventType));
+                    cfg.CreateMap<EFContext.Event, Core.Event>()
+                        .ForMember(m => m.EventType, opt => opt.MapFrom(src => (int)src.EventType))
+                        .ForMember(m => m.Teams, opt => opt.ResolveUsing<TeamEventResolver>());
 
                     cfg.CreateMap<Core.Post, EFContext.Post>()
                         .ForMember(m => m.PostMedia, opt => opt.ResolveUsing<CorePostMediaResolver>())
@@ -80,4 +82,17 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         }
     }
 
+    internal class TeamEventResolver : IValueResolver<EFContext.Event, Core.Event, IList<int>>
+    {
+        public IList<int> Resolve(Event source, Core.Event destination, IList<int> destMember, ResolutionContext context)
+        {
+            var teams = new List<int>();
+            if (source.ClubTeamEvents != null && source.ClubTeamEvents.Count > 0)
+                foreach (var team in source.ClubTeamEvents)
+                    if(team.TeamId.HasValue)
+                        teams.Add(team.TeamId.Value);
+
+            return teams;
+        }
+    }
 }

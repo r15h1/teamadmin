@@ -11,13 +11,15 @@ namespace TeamAdmin.Web.Controllers
     public class AdminEventsController : Controller
     {
         IEventRepository eventRepository;
+        ITeamRepository teamRepository;
         private Club club;
         private IMapper mapper;
 
-        public AdminEventsController(IEventRepository eventRepository, IMapper mapper)
+        public AdminEventsController(IEventRepository eventRepository, ITeamRepository teamRepository, IMapper mapper)
         {
-            club = new Club { ClubId = 890 };
+            club = new Club { ClubId = 1 };
             this.eventRepository = eventRepository;
+            this.teamRepository = teamRepository;
             this.mapper = mapper;
         }
 
@@ -28,10 +30,29 @@ namespace TeamAdmin.Web.Controllers
             return View(events);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Index(long id)
+        {
+            var teams = teamRepository.GetTeams();
+            var ev = eventRepository.GetEvent(id);
+            var evnt = mapper.Map<Models.AdminViewModels.Event>(ev);
+            if (teams != null)
+                foreach (var team in teams)
+                    evnt.TeamList.Add(new Models.AdminViewModels.Team { ClubId = team.ClubId, Name = team.Name, TeamId = team.TeamId });
+            return View("Details", evnt);
+        }
+
         [HttpGet("add")]
         public IActionResult Add()
         {
-            return View("Details");
+            var teams = teamRepository.GetTeams();
+            var model = new Models.AdminViewModels.Event();
+
+            if (teams != null)
+                foreach (var team in teams)
+                    model.TeamList.Add(new Models.AdminViewModels.Team { ClubId = team.ClubId, Name = team.Name, TeamId = team.TeamId});
+
+            return View("Details", model);
         }
 
         [HttpPost("add")]
@@ -41,9 +62,14 @@ namespace TeamAdmin.Web.Controllers
             if (ModelState.IsValid)
             {                
                 var ev = mapper.Map<Core.Event>(evnt);
-                eventRepository.CreateEvent(club, ev);
+                eventRepository.SaveEvent(club, ev);
                 return RedirectToAction("Index");
             }
+
+            var teams = teamRepository.GetTeams();
+            if (teams != null)
+                foreach (var team in teams)
+                    evnt.TeamList.Add(new Models.AdminViewModels.Team { ClubId = team.ClubId, Name = team.Name, TeamId = team.TeamId });
             return View("Details", evnt);
         }
     }

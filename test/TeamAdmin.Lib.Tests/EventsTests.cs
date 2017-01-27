@@ -35,7 +35,7 @@ namespace TeamAdmin.Lib.Tests
                 EndDate = DateTime.Now.AddHours(2)
             };
 
-            var e = eventRepository.CreateEvent(club, ev);
+            var e = eventRepository.SaveEvent(club, ev);
             Assert.NotNull(e);
             Assert.NotNull(e.EventId);
             Assert.True(e.EventType == ev.EventType);
@@ -57,7 +57,7 @@ namespace TeamAdmin.Lib.Tests
                 EndDate = DateTime.Now.AddHours(2)
             };
 
-            var e = eventRepository.CreateEvent(teams, ev);
+            var e = eventRepository.SaveEvent(teams, ev);
             Assert.NotNull(e);
             Assert.NotNull(e.EventId);
             Assert.True(e.EventType == ev.EventType);
@@ -79,7 +79,7 @@ namespace TeamAdmin.Lib.Tests
                 EndDate = DateTime.Now.AddHours(2)
             };
 
-            var e = eventRepository.CreateEvent(teams, ev);
+            var e = eventRepository.SaveEvent(teams, ev);
             var evbyid = eventRepository.GetEvent(e.EventId.Value);
             Assert.NotNull(evbyid);
             Assert.True(evbyid.EventType == ev.EventType);
@@ -103,7 +103,7 @@ namespace TeamAdmin.Lib.Tests
                 EndDate = DateTime.Now.AddHours(2)
             };
 
-            var e = eventRepository.CreateEvent(club, ev);
+            var e = eventRepository.SaveEvent(club, ev);
             var evbyid = eventRepository.GetEvent(e.EventId.Value);
             Assert.NotNull(evbyid);
             Assert.True(evbyid.EventType == ev.EventType);
@@ -136,8 +136,8 @@ namespace TeamAdmin.Lib.Tests
 
             var team = teams.FirstOrDefault();
             var existingEvents = eventRepository.GetEvents(team).Count();
-            var e1 = eventRepository.CreateEvent(new List<Team> { team }, ev1);
-            var e2 = eventRepository.CreateEvent(new List<Team> { team }, ev2);
+            var e1 = eventRepository.SaveEvent(new List<Team> { team }, ev1);
+            var e2 = eventRepository.SaveEvent(new List<Team> { team }, ev2);
             var evbyteam = eventRepository.GetEvents(team);
             Assert.NotNull(evbyteam);
             Assert.True(evbyteam.Count() == 2 + existingEvents);
@@ -167,8 +167,8 @@ namespace TeamAdmin.Lib.Tests
             };
 
             var existingEvents = eventRepository.GetEvents(club).Count();
-            var e1 = eventRepository.CreateEvent(club, ev1);
-            var e2 = eventRepository.CreateEvent(club, ev2);
+            var e1 = eventRepository.SaveEvent(club, ev1);
+            var e2 = eventRepository.SaveEvent(club, ev2);
             var evbyclub = eventRepository.GetEvents(club);
             Assert.NotNull(evbyclub);
             Assert.True(evbyclub.Count() == 2 + existingEvents);
@@ -188,7 +188,7 @@ namespace TeamAdmin.Lib.Tests
                 EndDate = DateTime.Now.AddHours(2)
             };
 
-            var e = eventRepository.CreateEvent(club, ev);
+            var e = eventRepository.SaveEvent(club, ev);
             var result = eventRepository.DeleteEvent(e.EventId.Value);
             Assert.True(result);
             Event deletedEvent = eventRepository.GetEvent(e.EventId.Value);
@@ -207,7 +207,7 @@ namespace TeamAdmin.Lib.Tests
                 EndDate = DateTime.Now.AddHours(2)
             };
 
-            var e = eventRepository.CreateEvent(teams, ev);
+            var e = eventRepository.SaveEvent(teams, ev);
             var result = eventRepository.DeleteEvent(e.EventId.Value);
             Assert.True(result);
             Event deletedEvent = eventRepository.GetEvent(e.EventId.Value);

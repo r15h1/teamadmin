@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using TeamAdmin.Core;
+using TeamAdmin.Core.Repositories;
 using TeamAdmin.Lib.Util;
 using TeamAdmin.Web.Models.ApiViewModels;
 
@@ -15,10 +17,12 @@ namespace TeamAdmin.Web.Controllers
     public class ApiController : Controller
     {
         private IHostingEnvironment environment;
+        private ITeamRepository teamRepository;
 
-        public ApiController(IHostingEnvironment environment)
+        public ApiController(IHostingEnvironment environment, ITeamRepository teamRepository)
         {
             this.environment = environment;
+            this.teamRepository = teamRepository;
         }
 
         [HttpPost("upload")]
@@ -54,6 +58,13 @@ namespace TeamAdmin.Web.Controllers
                 counter++;
             }
             return tempFileName;
+        }
+
+        [HttpGet("teams")]
+        public IActionResult GetTeams()
+        {
+            var teams = teamRepository.GetTeams();
+            return new JsonResult(teams);
         }
     }
 }

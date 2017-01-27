@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TeamAdmin.Core;
 using TeamAdmin.Web.Models.AdminViewModels;
+using System;
 
 namespace TeamAdmin.Web.Services
 {
@@ -16,6 +17,9 @@ namespace TeamAdmin.Web.Services
                 .ForMember(dest => dest.Images, opt => opt.ResolveUsing<NewsMediaResolver>());
 
             CreateMap<Models.AdminViewModels.Event, Core.Event>();
+
+            CreateMap<Core.Event, Models.AdminViewModels.Event>()
+                .ForMember(dest => dest.Teams, opt => opt.ResolveUsing<TeamEventResolver>());                
         }
     }
 
@@ -43,6 +47,19 @@ namespace TeamAdmin.Web.Services
                         imagelist.Add(image.Url);
 
             return imagelist;
+        }
+    }
+
+    public class TeamEventResolver : IValueResolver<Core.Event, Models.AdminViewModels.Event, List<int>>
+    {
+        public List<int> Resolve(Core.Event source, Models.AdminViewModels.Event destination, List<int> destMember, ResolutionContext context)
+        {
+            var teams = new List<int>();
+            if (source.Teams != null && source.Teams.Count > 0)
+                foreach (var team in source.Teams)
+                    teams.Add(team);
+
+            return teams;
         }
     }
 }
