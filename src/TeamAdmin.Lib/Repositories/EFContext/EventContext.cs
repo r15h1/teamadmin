@@ -8,6 +8,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
 
         public DbSet<Event> Events { get; set; }
         public DbSet<ClubTeamEvent> ClubTeamEvents { get; set; }
+        public DbSet<Team> Teams { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +25,8 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                 .WithMany(e => e.ClubTeamEvents)
                 .HasForeignKey(e => e.EventId)
                 .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Cascade);
+
+            //modelBuilder.Entity<ClubTeamEvent>().HasOne(t => t.Team);
 
             modelBuilder.Entity<ClubTeamEvent>().ForSqlServerToTable("ClubTeamEvents").HasKey("ClubTeamEventId");
         }

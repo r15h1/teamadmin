@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using TeamAdmin.Core.Repositories;
 using TeamAdmin.Web.Models;
 
@@ -21,7 +22,11 @@ namespace TeamAdmin.Web.Controllers
         {
             var news = postRepository.GetPosts(clubId);
             var events = eventRepository.GetEvents(new Core.Club { ClubId = clubId });
-            var model = new HomePageModel { Events = events, News = news };
+            var model = new HomePageModel {
+                Games = events.Where(e => e.EventType == Core.EventType.GAME).GroupBy(e => e.StartDate.Date, e => e).OrderBy(k => k.Key),
+                TrainingSessions = events.Where(e => e.EventType == Core.EventType.TRAINING).GroupBy(e => e.StartDate.Date, e => e).OrderBy(k => k.Key),
+                News = news
+            };
             return View(model);
         }
 

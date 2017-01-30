@@ -26,5 +26,6 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         public int? TeamId { get; set; }
         public long? EventId { get; set; }
         public Event Event { get; set; }
+        public Team Team { get; set; }
     }
 }

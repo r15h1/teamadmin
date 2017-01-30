@@ -41,7 +41,7 @@ namespace TeamAdmin.Lib.Repositories
             if (evnt.Teams.Count > 0)
             {
                 foreach (var t in evnt.Teams)
-                    ev.ClubTeamEvents.Add(new ClubTeamEvent { ClubId = club.ClubId.Value, TeamId = t });
+                    ev.ClubTeamEvents.Add(new ClubTeamEvent { ClubId = club.ClubId.Value, TeamId = t.TeamId });
             }
             else
             {
@@ -56,7 +56,7 @@ namespace TeamAdmin.Lib.Repositories
                     context.Events.Add(ev);
                     context.SaveChanges();
                     transaction.Commit();
-                    return mapper.Map<Core.Event>(evnt);
+                    return mapper.Map<Core.Event>(ev);
                 }
                 catch (Exception ex)
                 {
@@ -89,7 +89,7 @@ namespace TeamAdmin.Lib.Repositories
                     if (evnt.Teams != null && evnt.Teams.Count > 0)
                     {
                         foreach (var t in evnt.Teams)
-                            eventItem.ClubTeamEvents.Add(new ClubTeamEvent { ClubId = club.ClubId.Value, TeamId = t });
+                            eventItem.ClubTeamEvents.Add(new ClubTeamEvent { ClubId = club.ClubId.Value, TeamId = t.TeamId });
                     }
                     else {
                         eventItem.ClubTeamEvents.Add(new ClubTeamEvent { ClubId = club.ClubId.Value });
@@ -131,23 +131,39 @@ namespace TeamAdmin.Lib.Repositories
 
         public IEnumerable<Core.Event> GetEvents(Core.Club club)
         {
+            //using (var context = ContextFactory.Create<EventContext>())
+            //{
+            //    return (from e in context.Events 
+            //            join cte in context.ClubTeamEvents on e.EventId equals cte.EventId                                                                                         
+            //            join tm in context.Teams on cte.TeamId equals tm.TeamId
+            //            into t1
+            //            where cte.ClubId == club.ClubId 
+            //            select new Core.Event
+            //            {
+            //                Description = e.Description,
+            //                EndDate = e.EndDate,
+            //                EventId = e.EventId,
+            //                EventType = (EventType)Enum.Parse(typeof(EventType), e.EventType.ToString()),
+            //                StartDate = e.StartDate,
+            //                Title = e.Title,
+            //                Teams = t1.Select(t => new Core.Team(club.ClubId.Value)).ToList()
+            //            }
+            //            ).GroupBy(x => x.EventId).Select(x => x.First()).ToList();
+            //}
+
             using (var context = ContextFactory.Create<EventContext>())
             {
-                return (from e in context.Events 
-                        join t in context.ClubTeamEvents on e.EventId equals t.EventId into te
-                        from t1 in te
-                        where t1.ClubId == club.ClubId
-                        select new Core.Event
-                        {
-                            Description = e.Description,
-                            EndDate = e.EndDate,
-                            EventId = e.EventId,
-                            EventType = (EventType)Enum.Parse(typeof(EventType), e.EventType.ToString()),
-                            StartDate = e.StartDate,
-                            Title = e.Title                            
-                        }
-                            ).GroupBy(x => x.EventId).Select(x => x.First()).ToList();
-            }
+                return context.ClubTeamEvents.Include(c => c.Event).Include(c => c.Team).Where(c => c.ClubId == club.ClubId.Value)
+                    .Select(e => new Core.Event {
+                        Description = e.Event.Description,
+                        EndDate = e.Event.EndDate,
+                        EventId = e.EventId,
+                        EventType = (EventType)e.Event.EventType,
+                        StartDate = e.Event.StartDate,
+                        Title = e.Event.Title,
+                        Teams = new List<Core.Team> { new Core.Team(club.ClubId.Value) { Name = e.Team.Name, TeamId = e.TeamId }}
+                    }).ToList();                    
+            }            
         }
 
         public IEnumerable<Core.Event> GetEvents(Core.Team team)

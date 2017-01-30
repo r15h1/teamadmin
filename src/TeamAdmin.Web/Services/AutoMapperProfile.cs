@@ -16,10 +16,11 @@ namespace TeamAdmin.Web.Services
             CreateMap<Core.Post, Models.AdminViewModels.News>()
                 .ForMember(dest => dest.Images, opt => opt.ResolveUsing<NewsMediaResolver>());
 
-            CreateMap<Models.AdminViewModels.Event, Core.Event>();
+            CreateMap<Models.AdminViewModels.Event, Core.Event>()
+                .ForMember(dest => dest.Teams, opt => opt.ResolveUsing<ViewModelTeamEventResolver>());
 
             CreateMap<Core.Event, Models.AdminViewModels.Event>()
-                .ForMember(dest => dest.Teams, opt => opt.ResolveUsing<TeamEventResolver>());
+                .ForMember(dest => dest.Teams, opt => opt.ResolveUsing<CoreTeamEventResolver>());
 
             CreateMap<Models.AdminViewModels.Team, Core.Team>().ReverseMap();
         }
@@ -52,14 +53,27 @@ namespace TeamAdmin.Web.Services
         }
     }
 
-    public class TeamEventResolver : IValueResolver<Core.Event, Models.AdminViewModels.Event, List<int>>
+    public class CoreTeamEventResolver : IValueResolver<Core.Event, Models.AdminViewModels.Event, List<int>>
     {
         public List<int> Resolve(Core.Event source, Models.AdminViewModels.Event destination, List<int> destMember, ResolutionContext context)
         {
             var teams = new List<int>();
             if (source.Teams != null && source.Teams.Count > 0)
                 foreach (var team in source.Teams)
-                    teams.Add(team);
+                    teams.Add(team.TeamId.Value);
+
+            return teams;
+        }
+    }
+
+    public class ViewModelTeamEventResolver : IValueResolver<Models.AdminViewModels.Event, Core.Event, IList<Core.Team>>
+    {
+        public IList<Core.Team> Resolve(Models.AdminViewModels.Event source, Core.Event destination, IList<Core.Team> destMember, ResolutionContext context)
+        {
+            var teams = new List<Core.Team>();
+            if (source.Teams != null && source.Teams.Count > 0)
+                foreach (var teamid in source.Teams)
+                    teams.Add(new Core.Team(1) { TeamId = teamid });
 
             return teams;
         }

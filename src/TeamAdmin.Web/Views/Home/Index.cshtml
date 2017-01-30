@@ -54,23 +54,61 @@
 </div>
 <hr />
 <div class="row">
-    <h2>Events</h2>
-    @if (Model != null && Model.Events != null && Model.Events.Count() > 0)
+    <h2>Upcoming Games</h2>
+    @if (Model != null && Model.Games != null && Model.Games.Count() > 0)
     {
-        @foreach (var evnt in Model.Events.Take(6))
+        @foreach (var evnt in Model.Games.Take(6))
         {
             <div class="col-sm-6 col-md-4">
                 <div class="panel panel-default">
                     <div class="media">
                         <div class="media-left">
                             <div class="media-object calendar-item">
-                                <div class="calendar-month">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(evnt.StartDate.Month).ToUpper())</div>
-                                <div class="calendar-date">23</div>
-                                <div class="calendar-day">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedDayName(evnt.StartDate.DayOfWeek).ToUpper())</div>
+                                <div class="calendar-month">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(evnt.Key.Month).ToUpper())</div>
+                                <div class="calendar-date">@evnt.Key.Day.ToString("00")</div>
+                                <div class="calendar-day">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedDayName(evnt.Key.DayOfWeek).ToUpper())</div>
                             </div>
                         </div>
                         <div class="media-body">
-                            <div class="media-heading"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> @evnt.StartDate.ToString("hh:mmtt") - @evnt.EndDate.ToString("hh:mmtt"): @evnt.EventType @evnt.Title</div>                            
+                            @foreach (var item in evnt)
+                            {
+                                <div class="media-heading">
+                                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span> @item.StartDate.ToString("hh:mmtt") - @item.EndDate.ToString("hh:mmtt"):
+                                    <div>@item.Teams.FirstOrDefault().Name vs @item.Title</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<div class="row">
+    <h2>Upcoming Training Sessions</h2>
+    @if (Model != null && Model.TrainingSessions != null && Model.TrainingSessions.Count() > 0)
+    {
+        @foreach (var evnt in Model.TrainingSessions.Take(6))
+        {
+            <div class="col-sm-6 col-md-4">
+                <div class="panel panel-default">
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="media-object calendar-item">
+                                <div class="calendar-month">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(evnt.Key.Month).ToUpper())</div>
+                                <div class="calendar-date">@evnt.Key.Day.ToString("00")</div>
+                                <div class="calendar-day">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedDayName(evnt.Key.DayOfWeek).ToUpper())</div>
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            @foreach (var item in evnt)
+                            {
+                                <div class="media-heading">
+                                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span> @item.StartDate.ToString("hh:mmtt") - @item.EndDate.ToString("hh:mmtt"):
+                                    <div>@item.Teams.FirstOrDefault().Name vs @item.Title</div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

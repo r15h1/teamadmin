@@ -82,15 +82,15 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         }
     }
 
-    internal class TeamEventResolver : IValueResolver<EFContext.Event, Core.Event, IList<int>>
+    internal class TeamEventResolver : IValueResolver<EFContext.Event, Core.Event, IList<Core.Team>>
     {
-        public IList<int> Resolve(Event source, Core.Event destination, IList<int> destMember, ResolutionContext context)
+        public IList<Core.Team> Resolve(Event source, Core.Event destination, IList<Core.Team> destMember, ResolutionContext context)
         {
-            var teams = new List<int>();
+            var teams = new List<Core.Team>();
             if (source.ClubTeamEvents != null && source.ClubTeamEvents.Count > 0)
                 foreach (var team in source.ClubTeamEvents)
                     if(team.TeamId.HasValue)
-                        teams.Add(team.TeamId.Value);
+                        teams.Add(new Core.Team(team.ClubId) { TeamId = team.TeamId.Value });
 
             return teams;
         }
