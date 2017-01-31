@@ -164,7 +164,7 @@ namespace TeamAdmin.Lib.Repositories
                         Title = e.Event.Title,
                         Address = e.Event.Address,
                         Teams = new List<Core.Team> { new Core.Team(club.ClubId.Value) { Name = e.Team.Name, TeamId = e.TeamId }}
-                    }).ToList();                    
+                    }).GroupBy(x => x.EventId).Select(x => x.First()).ToList();
             }            
         }
 
