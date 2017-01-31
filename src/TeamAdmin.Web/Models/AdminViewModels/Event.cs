@@ -35,5 +35,7 @@ namespace TeamAdmin.Web.Models.AdminViewModels
         public List<int> Teams { get; set; }
 
         public List<Team> TeamList{ get; set; }
+
+        public string Address { get; set; }
     }
 }

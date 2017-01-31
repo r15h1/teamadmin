@@ -81,6 +81,7 @@ namespace TeamAdmin.Lib.Repositories
                     eventItem.EventType = (byte) evnt.EventType;
                     eventItem.StartDate = evnt.StartDate;
                     eventItem.Title = evnt.Title;
+                    eventItem.Address = evnt.Address;
                     
                     if (eventItem.ClubTeamEvents != null && eventItem.ClubTeamEvents.Count > 0)
                         foreach (var cev in eventItem.ClubTeamEvents)
@@ -161,6 +162,7 @@ namespace TeamAdmin.Lib.Repositories
                         EventType = (EventType)e.Event.EventType,
                         StartDate = e.Event.StartDate,
                         Title = e.Event.Title,
+                        Address = e.Event.Address,
                         Teams = new List<Core.Team> { new Core.Team(club.ClubId.Value) { Name = e.Team.Name, TeamId = e.TeamId }}
                     }).ToList();                    
             }            

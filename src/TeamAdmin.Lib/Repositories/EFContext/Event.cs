@@ -17,6 +17,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public ICollection<ClubTeamEvent> ClubTeamEvents { get; set; }
+        public string Address { get; set; }
     }
 
     internal class ClubTeamEvent
