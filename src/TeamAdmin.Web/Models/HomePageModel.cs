@@ -8,7 +8,6 @@ namespace TeamAdmin.Web.Models
     public class HomePageModel
     {
         public IEnumerable<Post> News{ get; set; }
-        public IEnumerable<IGrouping<DateTime, Event>> Games { get; set; }
-        public IEnumerable<IGrouping<DateTime, Event>> TrainingSessions { get; set; }
+        public IEnumerable<IGrouping<DateTime, Event>> Events { get; set; }
     }
 }

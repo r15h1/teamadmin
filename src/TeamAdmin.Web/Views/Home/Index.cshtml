@@ -54,10 +54,10 @@
 </div>
 <hr />
 <div class="row">
-    <h2>Upcoming Games</h2>
-    @if (Model != null && Model.Games != null && Model.Games.Count() > 0)
+    <h2>Upcoming Events</h2>
+    @if (Model != null && Model.Events != null && Model.Events.Count() > 0)
     {
-        @foreach (var evnt in Model.Games.Take(6))
+        @foreach (var evnt in Model.Events.Take(6))
         {
             <div class="col-sm-6 col-md-4">
                 <div class="panel panel-default">
@@ -69,44 +69,16 @@
                                 <div class="calendar-day">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedDayName(evnt.Key.DayOfWeek).ToUpper())</div>
                             </div>
                         </div>
-                        <div class="media-body">
+                        <div class="media-body list-group">
                             @foreach (var item in evnt)
                             {
-                                <div class="media-heading">
-                                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span> @item.StartDate.ToString("hh:mmtt") - @item.EndDate.ToString("hh:mmtt"):
-                                    <div>@item.Teams.FirstOrDefault().Name vs @item.Title</div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    }
-</div>
-
-<div class="row">
-    <h2>Upcoming Training Sessions</h2>
-    @if (Model != null && Model.TrainingSessions != null && Model.TrainingSessions.Count() > 0)
-    {
-        @foreach (var evnt in Model.TrainingSessions.Take(6))
-        {
-            <div class="col-sm-6 col-md-4">
-                <div class="panel panel-default">
-                    <div class="media">
-                        <div class="media-left">
-                            <div class="media-object calendar-item">
-                                <div class="calendar-month">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(evnt.Key.Month).ToUpper())</div>
-                                <div class="calendar-date">@evnt.Key.Day.ToString("00")</div>
-                                <div class="calendar-day">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedDayName(evnt.Key.DayOfWeek).ToUpper())</div>
-                            </div>
-                        </div>
-                        <div class="media-body">
-                            @foreach (var item in evnt)
-                            {
-                                <div class="media-heading">
-                                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span> @item.StartDate.ToString("hh:mmtt") - @item.EndDate.ToString("hh:mmtt"):
-                                    <div>@item.Teams.FirstOrDefault().Name vs @item.Title</div>
+                                <div class="media-heading list-group-item" style="background-color:white;">
+                                    <div style="color:darkred;font-weight:700;"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> @item.StartDate.ToString("hh:mmtt") - @item.EndDate.ToString("hh:mmtt") - @item.EventType </div>
+                                    <div>@item.Address</div>
+                                    @foreach (var team in item.Teams)
+                                    {
+                                        <span style="margin-right:10px;font-weight:700;">@team.Name @(item.EventType == TeamAdmin.Core.EventType.GAME ? "vs " + @item.Title : "")</span>
+                                    }
                                 </div>
                             }
                         </div>

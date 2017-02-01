@@ -132,39 +132,21 @@ namespace TeamAdmin.Lib.Repositories
 
         public IEnumerable<Core.Event> GetEvents(Core.Club club)
         {
-            //using (var context = ContextFactory.Create<EventContext>())
-            //{
-            //    return (from e in context.Events 
-            //            join cte in context.ClubTeamEvents on e.EventId equals cte.EventId                                                                                         
-            //            join tm in context.Teams on cte.TeamId equals tm.TeamId
-            //            into t1
-            //            where cte.ClubId == club.ClubId 
-            //            select new Core.Event
-            //            {
-            //                Description = e.Description,
-            //                EndDate = e.EndDate,
-            //                EventId = e.EventId,
-            //                EventType = (EventType)Enum.Parse(typeof(EventType), e.EventType.ToString()),
-            //                StartDate = e.StartDate,
-            //                Title = e.Title,
-            //                Teams = t1.Select(t => new Core.Team(club.ClubId.Value)).ToList()
-            //            }
-            //            ).GroupBy(x => x.EventId).Select(x => x.First()).ToList();
-            //}
-
             using (var context = ContextFactory.Create<EventContext>())
             {
-                return context.ClubTeamEvents.Include(c => c.Event).Include(c => c.Team).Where(c => c.ClubId == club.ClubId.Value)
-                    .Select(e => new Core.Event {
-                        Description = e.Event.Description,
-                        EndDate = e.Event.EndDate,
-                        EventId = e.EventId,
-                        EventType = (EventType)e.Event.EventType,
-                        StartDate = e.Event.StartDate,
-                        Title = e.Event.Title,
-                        Address = e.Event.Address,
-                        Teams = new List<Core.Team> { new Core.Team(club.ClubId.Value) { Name = e.Team.Name, TeamId = e.TeamId }}
-                    }).GroupBy(x => x.EventId).Select(x => x.First()).ToList();
+                return context.ClubTeamEvents.Include(c => c.Event).Include(c => c.Team)
+                        .Where(c => c.ClubId == club.ClubId.Value)
+                        .GroupBy(x => x.Event, (e, cte) => new Core.Event
+                        {
+                            Description = e.Description,
+                            EndDate = e.EndDate,
+                            EventId = e.EventId,
+                            EventType = (EventType)e.EventType,
+                            StartDate = e.StartDate,
+                            Title = e.Title,
+                            Address = e.Address,
+                            Teams = cte.Select(x => new Core.Team(club.ClubId.Value) { Name = x.Team.Name }).ToList()
+                        }).ToList();
             }            
         }
 
