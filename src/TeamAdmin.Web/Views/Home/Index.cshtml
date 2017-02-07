@@ -1,5 +1,6 @@
 ﻿@model TeamAdmin.Web.Models.HomePageModel
 @using System.Globalization
+@using TeamAdmin.Lib.Util
 
 @{
     ViewData["Title"] = "Home Page";
@@ -20,7 +21,7 @@
                 @foreach (var news in Model.News.Take(3))
                 {
                     <div class='item @(i == 0 ? "active" : "")'>
-                        <a href="/news/@news.PostId/@news.Title">
+                        <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()">
                             <img style="max-height:400px;" src="@news.Media.FirstOrDefault().Url?w=230&h=70&mode=crop" srcset="@news.Media.FirstOrDefault().Url?w=1200&h=400&mode=crop 1200w, @news.Media.FirstOrDefault().Url?w=800&h=266&mode=crop 800w, @news.Media.FirstOrDefault().Url?w=600&h=200&mode=crop 600w, @news.Media.FirstOrDefault().Url?w=400&h=133&mode=crop 400w" alt="@news.Title" class="img-responsive" />
                             <div class="carousel-caption" role="option"><p>@news.Title</p></div>
                         </a>
@@ -46,7 +47,7 @@
             @foreach (var news in Model.News.Take(8))
             {
                 <div class="col-sm-6 col-md-3">
-                    <a href="/news/@news.PostId/@news.Title" class="thumbnail">
+                    <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()" class="thumbnail">
                         <img class="media-object" src="@news.Media.FirstOrDefault().Url?w=200&h=117&mode=crop" srcset="@news.Media.FirstOrDefault().Url?w=200&h=117&mode=crop 200w, @news.Media.FirstOrDefault().Url?w=360&h=210&mode=crop 360w" alt="@news.Title">
                         <h4 class="caption media-heading">@news.Title</h4>
                     </a>
@@ -73,13 +74,14 @@
                             <div class="media-body list-group">
                                 @foreach (var item in evnt)
                                 {
-                                    <div class="media-heading list-group-item" style="background-color:white;">
-                                        <div style="color:darkred;font-weight:700;"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> @item.StartDate.ToString("hh:mmtt") - @item.EndDate.ToString("hh:mmtt") - @item.EventType </div>
-                                        <div>@item.Address</div>
+                                    <div class="media-heading list-group-item" style="background-color:white;"><span style="color:darkred;font-weight:700; text-transform:capitalize;">@item.EventType:</span>
                                         @foreach (var team in item.Teams)
                                         {
-                                            <span style="margin-right:10px;font-weight:700;">@team.Name @(item.EventType == TeamAdmin.Core.EventType.GAME ? "vs " + @item.Title : "")</span>
+                                            <span style="margin-right:5px;font-weight:700;">@team.Name @(item.EventType == TeamAdmin.Core.EventType.GAME ? "vs " + @item.Title : "")</span>
                                         }
+                                        <div style="color:darkred;font-weight:700;"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> @item.StartDate.ToString("hh:mmtt") - @item.EndDate.ToString("hh:mmtt")</div>
+                                        <div>@item.Address</div>
+
                                     </div>
                                 }
                             </div>

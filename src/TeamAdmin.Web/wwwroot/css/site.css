@@ -73,18 +73,18 @@ textarea {
 }
 
 /* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner > .item > a > img
+.carousel-inner > .item > a > img, .carousel-inner > .item > img
 {
      margin: 0 auto;
 }
 
-
+h4{text-shadow:none;}
 
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
   /* Hide captions */
   .carousel-caption {
-    display: none
+    /*display: none*/
   }
 }
 
@@ -97,6 +97,15 @@ textarea {
     padding:7px 7px 7px 7px;
     background-color:white;
     color:black;
+}
+
+.thumbnail, .thumbnail > h4.media-heading{
+    background-color:white;
+    color:black;
+}
+
+.thumbnail > h4.media-heading {
+    min-height: 75px;
 }
 
 ul.Dropdown{

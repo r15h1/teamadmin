@@ -53,6 +53,8 @@ namespace TeamAdmin.Web
                 .AddDefaultTokenProviders();
 
             services.AddAutoMapper();
+
+            services.AddRouting(options => options.LowercaseUrls = true);
             services.AddMvc();
 
             // Add application services.
