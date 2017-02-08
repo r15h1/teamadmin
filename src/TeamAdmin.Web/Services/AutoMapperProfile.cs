@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TeamAdmin.Core;
 using TeamAdmin.Web.Models.AdminViewModels;
 using System;
+using System.Linq;
 
 namespace TeamAdmin.Web.Services
 {
@@ -22,7 +23,37 @@ namespace TeamAdmin.Web.Services
             CreateMap<Core.Event, Models.AdminViewModels.Event>()
                 .ForMember(dest => dest.Teams, opt => opt.ResolveUsing<CoreTeamEventResolver>());
 
-            CreateMap<Models.AdminViewModels.Team, Core.Team>().ReverseMap();
+            CreateMap<Models.AdminViewModels.Team, Core.Team>().ReverseMap()
+                .ForMember(dest => dest.Images, opt => opt.ResolveUsing<TeamViewModelImageResolver>())
+                .ForMember(dest => dest.Uniforms, opt => opt.ResolveUsing<TeamViewModelUniformResolver>());
+        }
+    }
+
+    public class TeamViewModelImageResolver : IValueResolver<Core.Team, Models.AdminViewModels.Team, IEnumerable<string>>
+    {
+        public IEnumerable<string> Resolve(Core.Team source, Models.AdminViewModels.Team destination, IEnumerable<string> destMember, ResolutionContext context)
+        {
+            var imagelist = new List<string>();
+            if (source.Media != null)
+                foreach (var image in source.Media.Where(x => x.MediaType == MediaType.PICTURE))
+                    if (!string.IsNullOrWhiteSpace(image.Url))
+                        imagelist.Add(image.Url);
+
+            return imagelist;
+        }
+    }
+
+    public class TeamViewModelUniformResolver : IValueResolver<Core.Team, Models.AdminViewModels.Team, IEnumerable<string>>
+    {
+        public IEnumerable<string> Resolve(Core.Team source, Models.AdminViewModels.Team destination, IEnumerable<string> destMember, ResolutionContext context)
+        {            
+            var imagelist = new List<string>();
+            if (source.Media != null)
+                foreach (var image in source.Media.Where(x => x.MediaType == MediaType.UNIFORM))
+                    if (!string.IsNullOrWhiteSpace(image.Url))
+                        imagelist.Add(image.Url);
+
+            return imagelist;
         }
     }
 

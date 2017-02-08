@@ -2,6 +2,8 @@
 {
     internal class TeamMedia : Media
     {
-        public int TeamId { get; set; }
+        public int? TeamId { get; set; }
+
+        public virtual Team Team { get; set; }
     }
 }

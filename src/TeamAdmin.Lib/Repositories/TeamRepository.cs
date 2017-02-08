@@ -5,6 +5,7 @@ using TeamAdmin.Core.Repositories;
 using TeamAdmin.Lib.Repositories.EFContext;
 using System;
 using TeamAdmin.Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace TeamAdmin.Lib.Repositories
 {
@@ -52,11 +53,30 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {
-                var teaminfo = context.Teams.FirstOrDefault(t => t.ClubId == team.ClubId && t.TeamId == team.TeamId);
+                var teaminfo = context.Teams.Include(m => m.TeamMedia).FirstOrDefault(t => t.ClubId == team.ClubId && t.TeamId == team.TeamId);
                 if (teaminfo == null)
                     return team;
 
                 teaminfo.Name = team.Name;
+                teaminfo.DisplayName = team.DisplayName;
+
+                if (teaminfo.TeamMedia != null && teaminfo.TeamMedia.Count > 0)
+                    foreach (var media in teaminfo.TeamMedia)
+                        context.Remove(media);
+
+                if (team.Media != null && team.Media.Count() > 0)
+                    foreach (var media in team.Media)
+                        teaminfo.TeamMedia.Add(
+                            new TeamMedia()
+                            {
+                                Caption = media.Caption,
+                                MediaType = (byte) media.MediaType,
+                                Position = media.Position,
+                                TeamId = team.TeamId,
+                                Url = media.Url
+                            }
+                        );
+
                 context.Entry(teaminfo).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 context.SaveChanges();
                 return MapTeamFromDB(teaminfo);
@@ -65,11 +85,20 @@ namespace TeamAdmin.Lib.Repositories
 
         private Core.Team MapTeamFromDB(EFContext.Team teamInfo)
         {
-            return new Core.Team(teamInfo.ClubId)
+            var team = new Core.Team(teamInfo.ClubId)
             {
                 TeamId = teamInfo.TeamId,
-                Name = teamInfo.Name
+                Name = teamInfo.Name,
+                DisplayName = teamInfo.DisplayName                
             };
+
+            var media = new List<Core.Media>();
+            if(teamInfo.TeamMedia != null && teamInfo.TeamMedia.Count > 0)
+                foreach (var m in teamInfo.TeamMedia)
+                    media.Add(new Core.Media { Position = m.Position, MediaType = (MediaType)m.MediaType, Url = m.Url, MediaId = m.MediaId, Caption = m.Caption });
+
+            team.Media = media;
+            return team;
         }
 
         public bool DeleteTeam(int clubId, int teamId)
@@ -90,7 +119,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {
-                var team = context.Teams.FirstOrDefault(t => t.ClubId == clubId && t.TeamId == teamId && (!t.Deleted.HasValue || !t.Deleted.Value));
+                var team = context.Teams.Include(t => t.TeamMedia).FirstOrDefault(t => t.ClubId == clubId && t.TeamId == teamId && (!t.Deleted.HasValue || !t.Deleted.Value));
                 if (team != null)
                         return MapTeamFromDB(team);
             }

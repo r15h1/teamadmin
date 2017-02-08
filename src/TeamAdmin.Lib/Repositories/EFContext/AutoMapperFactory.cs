@@ -28,7 +28,9 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                         .ForMember(d => d.Street, opt => opt.MapFrom(src => src.Address.Street))
                         .ForMember(d => d.PostalCode, opt => opt.MapFrom(src => src.Address.PostalCode));
 
-                    cfg.CreateMap<Core.Team, EFContext.Team>();
+                    cfg.CreateMap<Core.Team, EFContext.Team>()
+                        .ForMember(m => m.TeamMedia, opt => opt.ResolveUsing<CoreTeamMediaResolver>());
+
                     cfg.CreateMap<Core.Media, EFContext.ClubMedia>().ForMember(m => m.MediaType, opt => opt.MapFrom(src => (byte)src.MediaType));
                     cfg.CreateMap<EFContext.ClubMedia, Core.Media>().ForMember(m => m.MediaType, opt => opt.MapFrom(src => (int)src.MediaType));
 
@@ -54,6 +56,18 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         internal static IMapper GetMapper()
         {
             return mapper;
+        }
+    }
+
+    internal class CoreTeamMediaResolver : IValueResolver<Core.Team, EFContext.Team, ICollection<TeamMedia>>
+    {
+        public ICollection<TeamMedia> Resolve(Core.Team source, Team destination, ICollection<TeamMedia> destMember, ResolutionContext context)
+        {
+            var mediaSet = new List<TeamMedia>();
+            foreach (var m in source.Media)
+                mediaSet.Add(new TeamMedia { Position = m.Position, MediaType = (byte)m.MediaType, Url = m.Url, MediaId = m.MediaId, Caption = m.Caption, TeamId = source.TeamId });
+
+            return mediaSet;
         }
     }
 

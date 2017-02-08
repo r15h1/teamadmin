@@ -10,6 +10,8 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         public int ClubId { get; set; }
         public int TeamId { get; set; }
         public string Name { get; set; }
+        public string DisplayName { get; set; }
         public bool? Deleted { get; set; }
+        public ICollection<TeamMedia> TeamMedia { get; set; }
     }
 }
