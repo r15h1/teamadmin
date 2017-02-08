@@ -24,7 +24,7 @@ namespace TeamAdmin.Lib.Repositories
             var list = new List<Core.Team>();
             using (var context = ContextFactory.Create<ClubContext>())
             {
-                var teams = context.Teams.Where( t => !t.Deleted.HasValue || !t.Deleted.Value).ToList();
+                var teams = context.Teams.Include(t => t.TeamMedia).Where( t => !t.Deleted.HasValue || !t.Deleted.Value).ToList();
                 teams.ForEach((t) => list.Add(MapTeamFromDB(t)));
                 return list;
             }
