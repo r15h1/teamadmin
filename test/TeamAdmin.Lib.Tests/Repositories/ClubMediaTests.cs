@@ -16,14 +16,14 @@ namespace TeamAdmin.Lib.Tests.Repositories
         private IMediaRepository<Club> mediaRepo;
 
         private List<Media> mediaList1 = new List<Media> {
-                new Media {  MediaType = MediaType.IMAGE, Url = "http://www.images.com/image1", Position = 1, Caption = "first image" },
-                new Media {  MediaType = MediaType.IMAGE, Url = "http://www.images.com/image2", Position = 2 },
+                new Media {  MediaType = MediaType.PICTURE, Url = "http://www.images.com/image1", Position = 1, Caption = "first image" },
+                new Media {  MediaType = MediaType.PICTURE, Url = "http://www.images.com/image2", Position = 2 },
                 new Media {  MediaType = MediaType.VIDEO, Url = "http://www.youtube.com/video1", Position = 3 }
             };
 
         private List<Media> mediaList2 = new List<Media> {
-                new Media {  MediaType = MediaType.IMAGE, Url = "http://www.images.com/image3", Position = 1, Caption = "third image" },
-                new Media {  MediaType = MediaType.IMAGE, Url = "http://www.images.com/image4", Position = 2 },
+                new Media {  MediaType = MediaType.PICTURE, Url = "http://www.images.com/image3", Position = 1, Caption = "third image" },
+                new Media {  MediaType = MediaType.PICTURE, Url = "http://www.images.com/image4", Position = 2 },
                 new Media {  MediaType = MediaType.VIDEO, Url = "http://www.youtube.com/video5", Position = 3 , Caption = "1st video" },
                 new Media {  MediaType = MediaType.VIDEO, Url = "http://www.youtube.com/video6", Position = 4 }
             };
@@ -78,7 +78,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
         [Fact]
         public void MediaCanBeRetrivedAfterAddition()
         {
-            var media = new Media { MediaType = MediaType.IMAGE, Url = "http://www.images.com/myimage001.jpg", Position = 1, Caption = "awesome image" };
+            var media = new Media { MediaType = MediaType.PICTURE, Url = "http://www.images.com/myimage001.jpg", Position = 1, Caption = "awesome image" };
             var newId = mediaRepo.AddMedia(club.ClubId.Value, new List<Media> { media }).FirstOrDefault().MediaId;
             var retrievedMedia = mediaRepo.GetMedia(club.ClubId.Value).FirstOrDefault(m => m.MediaId == newId);
             Assert.NotNull(retrievedMedia);
@@ -118,7 +118,7 @@ namespace TeamAdmin.Lib.Tests.Repositories
         public void MediaCaptionIsUpdated()
         {
             string updatedCaption = "Updated the awesome caption";
-            var originalMedia = new Media { MediaType = MediaType.IMAGE, Url = "http://www.images.com/myimage001.jpg", Position = 1, Caption = "awesome image" };
+            var originalMedia = new Media { MediaType = MediaType.PICTURE, Url = "http://www.images.com/myimage001.jpg", Position = 1, Caption = "awesome image" };
             var newId = mediaRepo.AddMedia(club.ClubId.Value, new List<Media> { originalMedia }).FirstOrDefault().MediaId;
             var retrievedMedia = mediaRepo.GetMedia(club.ClubId.Value).FirstOrDefault(m => m.MediaId == newId);
             Assert.True(retrievedMedia.Caption.Equals(originalMedia.Caption));

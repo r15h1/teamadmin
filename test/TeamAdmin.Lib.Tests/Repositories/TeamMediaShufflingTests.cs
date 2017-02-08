@@ -17,10 +17,10 @@ namespace TeamAdmin.Lib.Tests.Repositories
         private IMediaRepository<Team> mediaRepo;
 
         private List<Media> mediaList1 = new List<Media> {
-                new Media {  MediaType = MediaType.IMAGE, Url = "http://www.images.com/image1", Position = 1, Caption = "first image" },
-                new Media {  MediaType = MediaType.IMAGE, Url = "http://www.images.com/image2", Position = 2 },                
-                new Media {  MediaType = MediaType.IMAGE, Url = "http://www.images.com/image3", Position = 3, Caption = "third image" },
-                new Media {  MediaType = MediaType.IMAGE, Url = "http://www.images.com/image4", Position = 4 },
+                new Media {  MediaType = MediaType.PICTURE, Url = "http://www.images.com/image1", Position = 1, Caption = "first image" },
+                new Media {  MediaType = MediaType.PICTURE, Url = "http://www.images.com/image2", Position = 2 },                
+                new Media {  MediaType = MediaType.PICTURE, Url = "http://www.images.com/image3", Position = 3, Caption = "third image" },
+                new Media {  MediaType = MediaType.PICTURE, Url = "http://www.images.com/image4", Position = 4 },
 
                 new Media {  MediaType = MediaType.VIDEO, Url = "http://www.youtube.com/video1", Position = 1 },
                 new Media {  MediaType = MediaType.VIDEO, Url = "http://www.youtube.com/video5", Position = 2 , Caption = "1st video" },
@@ -40,13 +40,13 @@ namespace TeamAdmin.Lib.Tests.Repositories
         public void MediaPositionCanBeIncreasedIndependentOfOtherTypes()
         {
             var allMedia = mediaRepo.GetMedia(team.TeamId.Value);
-            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.IMAGE).OrderBy(o => o.Position);
+            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.PICTURE).OrderBy(o => o.Position);
             var videosBefore = allMedia.Where(t => t.MediaType == MediaType.VIDEO).OrderBy(o => o.Position);
 
             var imageAtPosn2Before = imagesBefore.ElementAt(1);
             var result = mediaRepo.SetMediaPosition(imageAtPosn2Before.MediaId.Value, 4);
 
-            var imagesAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.IMAGE).OrderBy(x => x.Position);
+            var imagesAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.PICTURE).OrderBy(x => x.Position);
             var videosAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.VIDEO).OrderBy(x => x.Position);
 
             Assert.True(result);
@@ -75,13 +75,13 @@ namespace TeamAdmin.Lib.Tests.Repositories
         public void MediaPositionCanBeDecreasedIndependentOfOtherTypes()
         {
             var allMedia = mediaRepo.GetMedia(team.TeamId.Value);
-            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.IMAGE).OrderBy(o => o.Position);
+            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.PICTURE).OrderBy(o => o.Position);
             var videosBefore = allMedia.Where(t => t.MediaType == MediaType.VIDEO).OrderBy(o => o.Position);
 
             var imageAtPosn4Before = imagesBefore.ElementAt(3);
             var result = mediaRepo.SetMediaPosition(imageAtPosn4Before.MediaId.Value, 2);
 
-            var imagesAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.IMAGE).OrderBy(x => x.Position);
+            var imagesAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.PICTURE).OrderBy(x => x.Position);
             var videosAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.VIDEO).OrderBy(x => x.Position);
 
             Assert.True(result);
@@ -110,13 +110,13 @@ namespace TeamAdmin.Lib.Tests.Repositories
         public void MediaPositionCannotBeIncreasedBeyondCount()
         {
             var allMedia = mediaRepo.GetMedia(team.TeamId.Value);
-            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.IMAGE).OrderBy(o => o.Position);
+            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.PICTURE).OrderBy(o => o.Position);
             var videosBefore = allMedia.Where(t => t.MediaType == MediaType.VIDEO).OrderBy(o => o.Position);
 
             var imageAtPosn2Before = imagesBefore.ElementAt(1);
             var result = mediaRepo.SetMediaPosition(imageAtPosn2Before.MediaId.Value, imagesBefore.Count() + 1);
 
-            var imagesAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.IMAGE).OrderBy(x => x.Position);
+            var imagesAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.PICTURE).OrderBy(x => x.Position);
             var videosAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.VIDEO).OrderBy(x => x.Position);
 
             Assert.False(result);
@@ -145,13 +145,13 @@ namespace TeamAdmin.Lib.Tests.Repositories
         public void MediaPositionCannotBeDecreasedBeyondOne()
         {
             var allMedia = mediaRepo.GetMedia(team.TeamId.Value);
-            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.IMAGE).OrderBy(o => o.Position);
+            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.PICTURE).OrderBy(o => o.Position);
             var videosBefore = allMedia.Where(t => t.MediaType == MediaType.VIDEO).OrderBy(o => o.Position);
 
             var imageAtPosn4Before = imagesBefore.ElementAt(3);
             var result = mediaRepo.SetMediaPosition(imageAtPosn4Before.MediaId.Value, 0);
 
-            var imagesAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.IMAGE).OrderBy(x => x.Position);
+            var imagesAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.PICTURE).OrderBy(x => x.Position);
             var videosAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.VIDEO).OrderBy(x => x.Position);
 
             Assert.False(result);
@@ -180,13 +180,13 @@ namespace TeamAdmin.Lib.Tests.Repositories
         public void BoundaryMediaPositionIncrease()
         {
             var allMedia = mediaRepo.GetMedia(team.TeamId.Value);
-            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.IMAGE).OrderBy(o => o.Position);
+            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.PICTURE).OrderBy(o => o.Position);
             var videosBefore = allMedia.Where(t => t.MediaType == MediaType.VIDEO).OrderBy(o => o.Position);
 
             var imageAtPosn1Before = imagesBefore.ElementAt(0);
             var result = mediaRepo.SetMediaPosition(imageAtPosn1Before.MediaId.Value, imagesBefore.Count());
 
-            var imagesAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.IMAGE).OrderBy(x => x.Position);
+            var imagesAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.PICTURE).OrderBy(x => x.Position);
             var videosAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.VIDEO).OrderBy(x => x.Position);
 
             Assert.True(result);
@@ -215,13 +215,13 @@ namespace TeamAdmin.Lib.Tests.Repositories
         public void BoundaryMediaPositionDecrease()
         {
             var allMedia = mediaRepo.GetMedia(team.TeamId.Value);
-            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.IMAGE).OrderBy(o => o.Position);
+            var imagesBefore = allMedia.Where(t => t.MediaType == MediaType.PICTURE).OrderBy(o => o.Position);
             var videosBefore = allMedia.Where(t => t.MediaType == MediaType.VIDEO).OrderBy(o => o.Position);
 
             var imageAtPosn4Before = imagesBefore.ElementAt(3);
             var result = mediaRepo.SetMediaPosition(imageAtPosn4Before.MediaId.Value, 1);
 
-            var imagesAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.IMAGE).OrderBy(x => x.Position);
+            var imagesAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.PICTURE).OrderBy(x => x.Position);
             var videosAfter = mediaRepo.GetMedia(team.TeamId.Value).Where(t => t.MediaType == MediaType.VIDEO).OrderBy(x => x.Position);
 
             Assert.True(result);

@@ -14,6 +14,8 @@ namespace TeamAdmin.Core
 
         public int ClubId { get; private set; }
         public string Name { get; set; }
+        public string DisplayName { get; set; }
+        public IEnumerable<Media> Media { get; set; }
         public int? TeamId { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace TeamAdmin.Web.Services
             int position = 1;
             var mediaSet = new List<Media>();
             foreach(var image in news.Images)            
-                mediaSet.Add(new Media { Position = position++, MediaType = MediaType.IMAGE, Url = image });
+                mediaSet.Add(new Media { Position = position++, MediaType = MediaType.PICTURE, Url = image });
 
             return mediaSet;
         }        

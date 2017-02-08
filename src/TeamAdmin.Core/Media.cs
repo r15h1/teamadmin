@@ -7,9 +7,10 @@ namespace TeamAdmin.Core
 {
     public enum MediaType
     {
-        IMAGE = 1,
+        PICTURE = 1,
         VIDEO = 2,
-        LOGO = 3
+        LOGO = 3,
+        UNIFORM = 4
     }
 
     public class Media

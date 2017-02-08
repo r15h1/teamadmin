@@ -5,22 +5,58 @@
 <form asp-action="Add" name="myform" id="myform" method="post">
     <hr />
     <div class="form-horizontal">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>        
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Name" class="col-md-1 control-label"></label>
             <div class="col-md-11">
-                <input asp-for="Name" class="form-control" style="max-width:100%" name="Name" id="Name"/>
+                <input asp-for="Name" class="form-control" style="max-width:100%" name="Name" id="Name" />
                 <span asp-validation-for="Name" class="text-danger" />
             </div>
-        </div>        
+        </div>
+        <div class="form-group">
+            <label asp-for="DisplayName" class="col-md-1 control-label"></label>
+            <div class="col-md-11">
+                <input asp-for="DisplayName" class="form-control" style="max-width:100%" name="DisplayName" id="DisplayName" />
+                <span asp-validation-for="DisplayName" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Images" class="col-md-1 control-label"></label>
+            <div class="col-md-11">
+                <input type="file" class="form-control" name="fileUploader" id="fileUploader" multiple />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Uniforms" class="col-md-1 control-label"></label>
+            <div class="col-md-11">
+                <input type="file" class="form-control" name="imageUploader" id="imageUploader" multiple />
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-md-offset-1 col-md-1">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
     <input type="hidden" name="ClubId" asp-for="ClubId" />
     <input type="hidden" name="TeamId" asp-for="TeamId" />
+    @{
+        if (Model != null && Model.Images != null && Model.Images.Count() > 0)
+        {
+            foreach (var image in Model.Images)
+            {
+                <input type="hidden" name='images' value="@image" />
+            }
+        }
+
+        if (Model != null && Model.Uniforms != null && Model.Uniforms.Count() > 0)
+        {
+            foreach (var uniform in Model.Uniforms)
+            {
+                <input type="hidden" name='images' value="@uniform" />
+            }
+        }
+    }
 </form>
 
 <div>
@@ -32,6 +68,80 @@
 }
 
 @section scripts {
-<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/bootstrap-fileinput/js/fileinput.min.js"></script>
+    <script>
+        $(function () {
+            var validator = $("#myform").submit(function () {}).validate({
+                ignore: "",
+                rules: {
+                    title: "required",
+                    content: "required"
+                },
+                errorPlacement: function (label, element) {
+                    // position error label after generated textarea
+                    if (element.is("textarea")) {
+                        label.insertAfter(element.next());
+                    } else {
+                        label.insertAfter(element)
+                    }
+                }
+            });
+            validator.focusInvalid = function () {
+                // put focus on tinymce on submit validation
+                if (this.settings.focusInvalid) {
+                    try {
+                        var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
+                        if (toFocus.is("textarea")) {
+                            tinyMCE.get(toFocus.attr("id")).focus();
+                        } else {
+                            toFocus.filter(":visible").focus();
+                        }
+                    } catch (e) {
+                        // ignore IE throwing errors when focusing hidden elements
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#fileUploader").fileinput({
+                'showUpload': true, 'previewFileType': 'jpg', 'uploadUrl': '/api/upload', 'uploadAsync': false,
+                'initialPreview': [
+                    @{
+                        if(Model != null && Model.Images != null && Model.Images.Count() > 0)
+                        {
+                            int i = 0;
+                            foreach(var image in Model.Images)
+                            {
+                                if (i == 0)
+                                {
+                                    <text>'<img src= "@image?w=200" class="file-preview-image">'</text>
+                                }
+                                else
+                                {
+                                    <text >, '<img src= "@image?w=200" class="file-preview-image">'</text>
+                                }
+                                i++;
+                            }
+                        }
+                        }
+                ]
+            });
+            $('#fileUploader').on('filebatchuploadsuccess', function (event, data, previewId, index) {
+                var response = data.response;
+                if (response && response.initialPreview && response.initialPreview.length > 0) {
+                    for (i = 0; i < response.initialPreview.length; i++) {
+                        var img = $.parseHTML(response.initialPreview[i]);
+                        var hidden = $("<input type='hidden' name='images' value='" + $(img).attr("src") + "'>");
+                        $('#myform').append(hidden);
+                        response.initialPreview[i] = "<img src='" + $(img).attr("src") + "?w=200'>";
+                    }
+                }
+            });
+        });
+    </script>
 }
