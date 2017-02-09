@@ -1,4 +1,10 @@
 ﻿@model TeamAdmin.Core.Team
 
 <h1 style="border-bottom:solid 1px rgba(255,255,255,0.3);">@Model.Name</h1>
+@if (Model != null && Model.Media != null && Model.Media.Count() > 0)
+{
+    <img style="max-height:400px;" src="@Model.Media.FirstOrDefault().Url?w=230&h=70&mode=max" srcset="@Model.Media.FirstOrDefault().Url?w=1200&h=400&mode=max 1200w, @Model.Media.FirstOrDefault().Url?w=800&h=266&mode=max 800w, @Model.Media.FirstOrDefault().Url?w=600&h=200&mode=max 600w, @Model.Media.FirstOrDefault().Url?w=400&h=133&mode=max 400w" alt="@Model.Name" class="img-responsive center-block" />
+
+}
+
 <div><a href="/teams" class="right">Go to teams list</a></div>

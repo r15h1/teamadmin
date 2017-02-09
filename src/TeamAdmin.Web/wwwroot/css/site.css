@@ -80,14 +80,6 @@ textarea {
 
 h4{text-shadow:none;}
 
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-  /* Hide captions */
-  .carousel-caption {
-    /*display: none*/
-  }
-}
-
 .navbar-brand {
     width: 80px;
     padding-top:0;
@@ -97,6 +89,10 @@ h4{text-shadow:none;}
     padding:7px 7px 7px 7px;
     background-color:white;
     color:black;
+}
+
+.tile{
+    min-height:258px;
 }
 
 .thumbnail, .thumbnail > h4.media-heading{
@@ -119,4 +115,20 @@ div.Tokenize, ul.TokensContainer {
 
 ul.TokensContainer > li.Token > span{
     color:rgb(0,0,0);
+}
+
+@media screen and (max-width: 1200px) {
+   .tile{ min-height:258px; }
+}
+
+@media screen and (max-width: 991px) {
+    .tile{ min-height:306px; }
+}
+
+@media screen and (max-width: 767px) {
+    /*.tile{ min-height:505px; }*/
+}
+
+@media screen and (max-width: 576px) { 
+
 }

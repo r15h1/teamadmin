@@ -9,7 +9,8 @@
             <thead>
                 <tr class="bg-primary">
                     <th class="col-md-1 col-sm-1 col-xs-1">Id</th>
-                    <th class="col-md-10 col-sm-4 col-xs-10">Name</th>
+                    <th class="col-md-5 col-sm-5 col-xs-5">Name</th>
+                    <th class="col-md-5 col-sm-5 col-xs-5">Display Name</th>
                     <th class="col-md-1 col-sm-1 col-xs-1">Edit</th>
                 </tr>
             </thead>
@@ -18,6 +19,7 @@
                 <tr>
                     <td>@team.TeamId</td>
                     <td>@team.Name</td>
+                    <td>@team.DisplayName</td>
                     <td class="text-center"><a href="/admin/teams/@team.TeamId"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="edit"></i></a></td>
                 </tr>
             }
