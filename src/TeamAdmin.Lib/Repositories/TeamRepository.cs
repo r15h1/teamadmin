@@ -101,11 +101,11 @@ namespace TeamAdmin.Lib.Repositories
             return team;
         }
 
-        public bool DeleteTeam(int clubId, int teamId)
+        public bool DeleteTeam(int teamId)
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {
-                var teamInfo = context.Teams.FirstOrDefault(t => t.ClubId == clubId && t.TeamId == teamId);
+                var teamInfo = context.Teams.FirstOrDefault(t => t.TeamId == teamId);
                 if (teamInfo == null) return false;
 
                 teamInfo.Deleted = true;
@@ -115,11 +115,11 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        public Core.Team GetTeam(int clubId, int teamId)
+        public Core.Team GetTeam(int teamId)
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {
-                var team = context.Teams.Include(t => t.TeamMedia).FirstOrDefault(t => t.ClubId == clubId && t.TeamId == teamId && (!t.Deleted.HasValue || !t.Deleted.Value));
+                var team = context.Teams.Include(t => t.TeamMedia).FirstOrDefault(t => t.TeamId == teamId && (!t.Deleted.HasValue || !t.Deleted.Value));
                 if (team != null)
                         return MapTeamFromDB(team);
             }

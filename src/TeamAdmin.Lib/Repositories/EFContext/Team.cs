@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TeamAdmin.Lib.Repositories.EFContext
 {
@@ -13,5 +10,6 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         public string DisplayName { get; set; }
         public bool? Deleted { get; set; }
         public ICollection<TeamMedia> TeamMedia { get; set; }
+        public ICollection<Player> Players { get; set; }
     }
 }

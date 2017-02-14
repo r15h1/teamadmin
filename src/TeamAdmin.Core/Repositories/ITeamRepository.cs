@@ -6,7 +6,7 @@ namespace TeamAdmin.Core.Repositories
     {
         Team SaveTeam(Team team);
         IEnumerable<Team> GetTeams();
-        Team GetTeam(int clubId, int teamId);
-        bool DeleteTeam(int clubId, int teamId);
+        Team GetTeam(int teamId);
+        bool DeleteTeam(int teamId);
     }
 }

@@ -75,9 +75,9 @@
                                 @foreach (var item in evnt)
                                 {
                                     <div class="media-heading list-group-item" style="background-color:white;"><span style="color:darkred;font-weight:700; text-transform:capitalize;">@item.EventType:</span>
-                                        @foreach (var team in item.Teams)
+                                        @foreach (var t in item.Teams)
                                         {
-                                            <span style="margin-right:5px;font-weight:700;">@team.Name @(item.EventType == TeamAdmin.Core.EventType.GAME ? "vs " + @item.Title : "")</span>
+                                            <span style="margin-right:5px;font-weight:700;">@(string.IsNullOrWhiteSpace(t.DisplayName) ? t.Name : t.DisplayName) @(item.EventType == TeamAdmin.Core.EventType.GAME ? "vs " + @item.Title : "")</span>
                                         }
                                         <div style="color:darkred;font-weight:700;"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> @item.StartDate.ToString("hh:mmtt") - @item.EndDate.ToString("hh:mmtt")</div>
                                         <div>@item.Address</div>

@@ -49,6 +49,10 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                     cfg.CreateMap<EFContext.Post, Core.Post>()
                         .ForMember(m => m.Media, opt => opt.ResolveUsing<DBPostMediaResolver>())
                         .ForMember(m => m.PostStatus, opt => opt.MapFrom(src => (int)src.PostStatus));
+
+                    cfg.CreateMap<Player, Core.Player>().ForMember(m => m.Address, opt => opt.ResolveUsing<CorePlayerAddressResolver>());
+                    cfg.CreateMap<Core.Player, EFContext.Player>().ForMember(m => m.Address, opt => opt.ResolveUsing<DBPlayerAddressResolver>());
+
                 });
             }
         }
@@ -57,6 +61,29 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         {
             return mapper;
         }
+    }
+
+    internal class CorePlayerAddressResolver : IValueResolver<EFContext.Player, Core.Player, Address>
+    {
+        public Address Resolve(Player source, Core.Player destination, Address address, ResolutionContext context)
+        {
+            return new Address
+            {
+                City = source.City,
+                Country = source.Country,
+                PostalCode = source.PostalCode,
+                Province = source.Province,
+                Street = source.Address
+            };
+        }
+    }
+
+    internal class DBPlayerAddressResolver : IValueResolver<Core.Player, EFContext.Player, string>
+    {
+        public string Resolve(Core.Player source, Player destination, string destMember, ResolutionContext context)
+        {
+            throw new NotImplementedException();
+        }        
     }
 
     internal class CoreTeamMediaResolver : IValueResolver<Core.Team, EFContext.Team, ICollection<TeamMedia>>

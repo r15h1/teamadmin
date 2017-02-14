@@ -145,7 +145,7 @@ namespace TeamAdmin.Lib.Repositories
                             StartDate = e.StartDate,
                             Title = e.Title,
                             Address = e.Address,
-                            Teams = cte.Select(x => new Core.Team(club.ClubId.Value) { Name = x.Team.Name }).ToList()
+                            Teams = cte.Select(x => new Core.Team(club.ClubId.Value) { Name = x.Team.Name, DisplayName = x.Team.DisplayName }).ToList()
                         }).ToList();
             }            
         }
@@ -154,20 +154,19 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<EventContext>())
             {
-                return  (from e in context.Events
-                            join t in context.ClubTeamEvents on e.EventId equals t.EventId into te
-                            from t1 in te
-                            where t1.TeamId == team.TeamId
-                            select new Core.Event
-                            {
-                                Description = e.Description,
-                                EndDate = e.EndDate,
-                                EventId = e.EventId,
-                                EventType = (EventType)Enum.Parse(typeof(EventType), e.EventType.ToString()),
-                                StartDate = e.StartDate,
-                                Title = e.Title
-                            }
-                            ).ToList();
+                return context.ClubTeamEvents.Include(c => c.Event).Include(c => c.Team)
+                        .Where(c => c.TeamId == team.TeamId.Value)
+                        .GroupBy(x => x.Event, (e, cte) => new Core.Event
+                        {
+                            Description = e.Description,
+                            EndDate = e.EndDate,
+                            EventId = e.EventId,
+                            EventType = (EventType)e.EventType,
+                            StartDate = e.StartDate,
+                            Title = e.Title,
+                            Address = e.Address,
+                            Teams = cte.Select(x => new Core.Team(team.ClubId) { Name = x.Team.Name, DisplayName = x.Team.DisplayName }).ToList()
+                        }).ToList();
             }
         }        
     }

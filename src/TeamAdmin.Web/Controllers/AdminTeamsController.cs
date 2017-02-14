@@ -6,6 +6,7 @@ using TeamAdmin.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using TeamAdmin.Core;
+using TeamAdmin.Web.Models;
 
 namespace TeamAdmin.Web.Controllers
 {
@@ -13,13 +14,15 @@ namespace TeamAdmin.Web.Controllers
     [Route("admin/teams")]
     public class AdminTeamsController : Controller
     {
-        ITeamRepository teamRepository;
-        int clubId = 1;
+        private ITeamRepository teamRepository;
+        private IPlayerRepository playerRepository;
         private IMapper mapper;
+        private int clubId = 1;
 
-        public AdminTeamsController(ITeamRepository teamRepository, IMapper mapper)
+        public AdminTeamsController(ITeamRepository teamRepository, IPlayerRepository playerRepository, IMapper mapper)
         {
             this.teamRepository = teamRepository;
+            this.playerRepository = playerRepository;
             this.mapper = mapper;
         }
 
@@ -30,12 +33,25 @@ namespace TeamAdmin.Web.Controllers
             return View(teamsList);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Index(int id)
+        [HttpGet("{teamid}")]
+        public IActionResult Index(int teamId)
         {
-            var t = teamRepository.GetTeam(clubId, id);
+            var t = teamRepository.GetTeam(teamId);
             var team = mapper.Map<Models.AdminViewModels.Team>(t);
             return View("Details", team);
+        }
+
+        [HttpGet("{teamid}/players")]
+        public IActionResult Players(int teamId)
+        {
+            var team = teamRepository.GetTeam(teamId);
+            var players = playerRepository.GetPlayers(teamId);
+            var model = new PlayersListModel
+            {
+                Team = team,
+                Players = players
+            };
+            return View("Players", model);
         }
 
         [HttpGet("add")]
