@@ -80,6 +80,19 @@ textarea {
 
 h4{text-shadow:none;}
 
+/*input:valid,
+input:in-range {
+    background:hsl(120, 50%, 90%);
+    border-color:hsl(120, 50%, 50%);
+}*/
+
+input:invalid,
+input:out-of-range {
+    border-color:darkred;
+    background:hsl(0, 50%, 90%);
+}
+
+
 .navbar-brand {
     width: 80px;
     padding-top:0;

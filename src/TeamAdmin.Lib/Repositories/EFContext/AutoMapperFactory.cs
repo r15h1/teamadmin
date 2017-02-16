@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System;
 using TeamAdmin.Core;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace TeamAdmin.Lib.Repositories.EFContext
 {
@@ -50,8 +52,17 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                         .ForMember(m => m.Media, opt => opt.ResolveUsing<DBPostMediaResolver>())
                         .ForMember(m => m.PostStatus, opt => opt.MapFrom(src => (int)src.PostStatus));
 
-                    cfg.CreateMap<Player, Core.Player>().ForMember(m => m.Address, opt => opt.ResolveUsing<CorePlayerAddressResolver>());
-                    cfg.CreateMap<Core.Player, EFContext.Player>().ForMember(m => m.Address, opt => opt.ResolveUsing<DBPlayerAddressResolver>());
+                    cfg.CreateMap<Player, Core.Player>()
+                        .ForMember(m => m.ContactInfo, opt => opt.ResolveUsing<CorePlayerContactInfoResolver>())
+                        .ForMember(m => m.Address, opt => opt.ResolveUsing<CorePlayerAddressResolver>());
+
+                    cfg.CreateMap<Core.Player, EFContext.Player>()
+                        .ForMember(m => m.Address, opt => opt.MapFrom(a => a.Address.Street))
+                        .ForMember(m => m.City, opt => opt.MapFrom(a => a.Address.City))
+                        .ForMember(m => m.Country, opt => opt.MapFrom(a => a.Address.Country))
+                        .ForMember(m => m.Province, opt => opt.MapFrom(a => a.Address.Province))
+                        .ForMember(m => m.PostalCode, opt => opt.MapFrom(a => a.Address.PostalCode))
+                        .ForMember(m => m.ContactInfo, opt => opt.ResolveUsing<DBPlayerContactInfoResolver>());
 
                 });
             }
@@ -60,6 +71,38 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         internal static IMapper GetMapper()
         {
             return mapper;
+        }
+    }
+
+    internal class DBPlayerContactInfoResolver : IValueResolver<Core.Player, Player, string>
+    {
+        public string Resolve(Core.Player source, Player destination, string destMember, ResolutionContext context)
+        {
+            if(source.ContactInfo != null)   {
+                var serializer = new  XmlSerializer(source.ContactInfo.GetType());
+                using (StringWriter textWriter = new StringWriter())
+                {
+                    serializer.Serialize(textWriter, source.ContactInfo);
+                    return textWriter.ToString();
+                }
+            }
+            return null;
+        }        
+    }
+
+    internal class CorePlayerContactInfoResolver : IValueResolver<Player, Core.Player, List<ContactInfo>>
+    {
+        public List<ContactInfo> Resolve(Player source, Core.Player destination, List<ContactInfo> destMember, ResolutionContext context)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<ContactInfo>));
+            if(!string.IsNullOrWhiteSpace(source.ContactInfo))
+            {
+                using (TextReader reader = new StringReader(source.ContactInfo))
+                {
+                    return (List<ContactInfo>)serializer.Deserialize(reader);
+                }
+            }
+            return null;
         }
     }
 
@@ -76,14 +119,6 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                 Street = source.Address
             };
         }
-    }
-
-    internal class DBPlayerAddressResolver : IValueResolver<Core.Player, EFContext.Player, string>
-    {
-        public string Resolve(Core.Player source, Player destination, string destMember, ResolutionContext context)
-        {
-            throw new NotImplementedException();
-        }        
     }
 
     internal class CoreTeamMediaResolver : IValueResolver<Core.Team, EFContext.Team, ICollection<TeamMedia>>

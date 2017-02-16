@@ -24,7 +24,11 @@ namespace TeamAdmin.Lib.Repositories
 
         public Core.Player GetPlayer(int playerId)
         {
-            throw new NotImplementedException();
+            using (var context = ContextFactory.Create<ClubContext>())
+            {
+                var player = context.Players.FirstOrDefault(p => p.PlayerId == playerId && (!p.Deleted.HasValue || !p.Deleted.Value));
+                return mapper.Map<Core.Player>(player);
+            }
         }
 
         public IEnumerable<Core.Player> GetPlayers(int teamId)
@@ -40,7 +44,43 @@ namespace TeamAdmin.Lib.Repositories
 
         public Core.Player SavePlayer(Core.Player player)
         {
-            throw new NotImplementedException();
+            if (player.PlayerId.HasValue)
+                return UpdatePlayer(player);
+
+            return CreatePlayer(player);            
+        }
+
+        private Core.Player UpdatePlayer(Core.Player player)
+        {
+            if (IsDeleted(player)) return player;
+
+            using (var context = ContextFactory.Create<ClubContext>())
+            {
+                var targetPlayer = mapper.Map<EFContext.Player>(player);   
+                context.Entry(targetPlayer).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                context.SaveChanges();
+                return mapper.Map<Core.Player>(targetPlayer);
+            }
+        }
+
+        private bool IsDeleted(Core.Player player)
+        {
+            using (var context = ContextFactory.Create<ClubContext>())
+            {
+                var playerinfo = context.Players.FirstOrDefault(p => p.PlayerId == player.PlayerId && (!p.Deleted.HasValue || !p.Deleted.Value));
+                return playerinfo == null;
+            }
+        }
+
+        private Core.Player CreatePlayer(Core.Player player)
+        {
+            using (var context = ContextFactory.Create<ClubContext>())
+            {
+                var playerinfo = mapper.Map<EFContext.Player>(player);
+                context.Players.Add(playerinfo);
+                context.SaveChanges();
+                return mapper.Map<Core.Player>(playerinfo);
+            }
         }
     }
 }

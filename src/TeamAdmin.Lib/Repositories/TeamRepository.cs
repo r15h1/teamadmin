@@ -53,7 +53,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {
-                var teaminfo = context.Teams.Include(m => m.TeamMedia).FirstOrDefault(t => t.ClubId == team.ClubId && t.TeamId == team.TeamId);
+                var teaminfo = context.Teams.Include(m => m.TeamMedia).FirstOrDefault(t => t.ClubId == team.ClubId && t.TeamId == team.TeamId && (!t.Deleted.HasValue || !t.Deleted.Value));
                 if (teaminfo == null)
                     return team;
 

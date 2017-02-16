@@ -26,6 +26,30 @@ namespace TeamAdmin.Web.Services
             CreateMap<Models.AdminViewModels.Team, Core.Team>().ReverseMap()
                 .ForMember(dest => dest.Images, opt => opt.ResolveUsing<TeamViewModelImageResolver>())
                 .ForMember(dest => dest.Uniforms, opt => opt.ResolveUsing<TeamViewModelUniformResolver>());
+
+            CreateMap<Models.AdminViewModels.Player, Core.Player>()
+                .ForMember(m => m.Address, opt => opt.ResolveUsing<CorePlayerAddressResolver>());
+
+            CreateMap<Core.Player, Models.AdminViewModels.Player>()
+                .ForMember(m => m.Address, opt => opt.MapFrom(p => p.Address.Street))
+                .ForMember(m => m.City, opt => opt.MapFrom(p => p.Address.City))
+                .ForMember(m => m.PostalCode, opt => opt.MapFrom(p => p.Address.PostalCode))
+                .ForMember(m => m.Province, opt => opt.MapFrom(p => p.Address.Province));
+        }
+    }
+
+    public class CorePlayerAddressResolver : IValueResolver<Models.AdminViewModels.Player, Core.Player, Address>
+    {
+        public Address Resolve(Models.AdminViewModels.Player source, Core.Player destination, Address address, ResolutionContext context)
+        {
+            return new Address
+            {
+                City = source.City,
+                //Country = source.Country,
+                PostalCode = source.PostalCode,
+                Province = source.Province,
+                Street = source.Address
+            };
         }
     }
 

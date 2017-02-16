@@ -14,6 +14,6 @@ namespace TeamAdmin.Core
         public byte? SquadNumber { get; set; }
         public string Position { get; set; }
         public Address Address { get; set; }
-        public List<PlayerContactInfo> ContactInfo { get; set; }
+        public List<ContactInfo> ContactInfo { get; set; }
     }
 }

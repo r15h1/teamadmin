@@ -27,7 +27,7 @@ namespace TeamAdmin.Web.Controllers
         }
         
         [HttpGet("{id}")]
-        public IActionResult Index(long id)
+        public IActionResult Details(long id)
         {
             var post = postRepository.GetPost(id);
             var news = mapper.Map<Models.AdminViewModels.News>(post);

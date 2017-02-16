@@ -31,7 +31,7 @@ namespace TeamAdmin.Web.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Index(long id)
+        public IActionResult Details(long id)
         {
             var teams = teamRepository.GetTeams();
             var ev = eventRepository.GetEvent(id);

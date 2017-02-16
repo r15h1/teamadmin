@@ -1,8 +1,8 @@
-﻿@model TeamAdmin.Web.Models.PlayersListModel
+﻿@model TeamAdmin.Web.Models.AdminViewModels.PlayersListModel
 
 <h2>@Model.Team.Name@(!string.IsNullOrWhiteSpace(Model.Team.DisplayName) ? " - " + Model.Team.DisplayName : "" ) Players</h2>
 <hr />
-<div class="btn-toolbar" role="toolbar"><a class="btn btn-default pull-right" asp-controller="AdminPlayers" asp-action="Add">Add a Player</a></div>
+<div class="btn-toolbar" role="toolbar"><a class="btn btn-default pull-right" href="/admin/teams/@Model.Team.TeamId/players/add">Add a Player</a></div>
 @if (Model !=null && Model.Players != null && Model.Players.Count() > 0)
 {
     <div class="table-responsive">
@@ -19,13 +19,21 @@
             @foreach (var player in Model.Players)
             {
                 <tr>
-                    <td><img src="@player.PhotoUrl?w=50" class="img-thumbnail" alt="@player.FirstName"/></td>
+                    <td>@(!string.IsNullOrWhiteSpace(player.PhotoUrl) ? Html.Raw("<img src=\"" + @player.PhotoUrl + "?w=50\" class='img-thumbnail' alt=\"" + @player.FirstName + "\"/>"):null)</td>
                     <td>@player.FirstName @player.LastName</td>
                     <td>@player.SquadNumber</td>
                     <td>@player.Position</td> 
-                    <td class="text-center"><a href="/admin/players/@player.PlayerId"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="edit"></i></a></td>
+                    <td class="text-center"><a href="/admin/teams/@player.TeamId/players/@player.PlayerId"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="edit"></i></a></td>
                 </tr>
             }
         </table>
     </div>
 }
+else
+{
+    <div>No players registered yet.</div><br/><br />
+}
+
+<div>
+    <a href="/admin/teams">Back to Teams</a>
+</div>

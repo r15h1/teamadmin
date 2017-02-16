@@ -1,0 +1,179 @@
+@model TeamAdmin.Web.Models.AdminViewModels.Player
+
+<h2>@(Model == null || !Model.PlayerId.HasValue ? "New Player" : @Model.FirstName + @Model.LastName )</h2>
+<h5>@ViewData["Team"]</h5>
+<form asp-action=@(Model == null || !Model.PlayerId.HasValue ? "NewPlayer" : "PlayerDetails") name="myform" id="myform" method="post">
+    <hr />
+    <div class="form-horizontal">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="FirstName" class="col-md-2 control-label">First Name*</label>
+            <div class="col-md-10">
+                <input asp-for="FirstName" class="form-control" name="FirstName" id="FirstName" title="First Name is a required field" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName" class="col-md-2 control-label">Last Name*</label>
+            <div class="col-md-10">
+                <input asp-for="LastName" class="form-control" name="LastName" id="LastName" title="Last Name is a required field" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DateOfBirth" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input type="date" asp-for="DateOfBirth" class="form-control" name="DateOfBirth" id="DateOfBirth" min="@DateTime.Today.AddYears(-70).ToString("yyyy-MM-dd")" max="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            </div>
+        </div>
+        <fieldset name="contacts">
+            <legend>Address</legend>
+            <div class="form-group">
+                <label asp-for="Address" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Address" class="form-control" name="Address" id="Address" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="City" class="form-control" name="City" id="City" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Province" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Province" class="form-control" name="Province" id="Province" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostalCode" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="PostalCode" class="form-control" name="PostalCode" id="PostalCode" pattern="[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$" title="Postal Code may be specified in the following formats: No Space - 'M9R1S5', With a single space - 'M9R 1S5''" />
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset name="contacts">
+            <legend>Primary Contact Information</legend>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Contact Name</label>
+                    <div class="col-md-10">
+                        <input class="form-control" name="contactinfo[0].contactname" id="contactinfo[0].contactname" type="text" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 0 ? Model.ContactInfo[0].ContactName : null)"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Telephone</label>
+                    <div class="col-md-10">
+                        <input class="form-control" name="contactinfo[0].telephone" id="contactinfo[0].telephone" type="tel" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 0 ? Model.ContactInfo[0].Telephone : null)"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Email</label>
+                    <div class="col-md-10">
+                        <input class="form-control" name="contactinfo[0].email" id="contactinfo[0].email" type="email" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 0 ? Model.ContactInfo[0].Email : null)"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Notes</label>
+                    <div class="col-md-10">
+                        <input class="form-control" name="contactinfo[0].notes" id="contactinfo[0].notes" type="text" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 0 ? Model.ContactInfo[0].Notes : null)"/>
+                    </div>
+                </div>
+        </fieldset>
+
+        <fieldset name="contacts">
+            <legend>Alternate Contact Information</legend>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Contact Name</label>
+                <div class="col-md-10">
+                    <input class="form-control" name="contactinfo[1].contactname" id="contactinfo[1].contactname" type="text" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 1 ? Model.ContactInfo[0].ContactName : null)"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Telephone</label>
+                <div class="col-md-10">
+                    <input class="form-control" name="contactinfo[1].telephone" id="contactinfo[1].telephone" type="tel"  value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 1 ? Model.ContactInfo[0].Telephone : null)"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Email</label>
+                <div class="col-md-10">
+                    <input class="form-control" name="contactinfo[1].email" id="contactinfo[1].email" type="email"  value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 1 ? Model.ContactInfo[0].Email : null)"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Notes</label>
+                <div class="col-md-10">
+                    <input class="form-control" name="contactinfo[1].notes" id="contactinfo[1].notes" type="text"  value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 1 ? Model.ContactInfo[0].Notes : null)"/>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Other</legend>
+            <div class="form-group">
+                <label asp-for="SquadNumber" class="col-md-2 control-label">Squad Number</label>
+                <div class="col-md-10">
+                    <input type="number" min="1" max="254" asp-for="SquadNumber" class="form-control" name="SquadNumber" id="SquadNumber"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Position" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Position" class="form-control" name="Position" id="Position" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhotoUrl" class="col-md-2 control-label">Picture</label>
+                <div class="col-md-4">
+                    <input type="file" class="form-control" name="pictureUploader" id="pictureUploader" />
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-1">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+            <div class="col-md-2">
+                <a asp-action="Players" class="btn btn-primary">Back to Players</a>
+            </div>
+        </div>
+        </div>
+
+</form>
+@section headerlinks{
+<link href="~/lib/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+}
+
+@section scripts {
+<script src="~/lib/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script>
+        $(document).ready(function () {
+            $("#pictureUploader").fileinput({
+                'showUpload': true, 'previewFileType': 'jpg', 'uploadUrl': '/api/upload', 'uploadAsync': false, 'overwriteInitial': true,
+
+                'initialPreview': [
+                    @{
+                        if(Model != null && !string.IsNullOrWhiteSpace(Model.PhotoUrl))
+                        {
+                            <text>'<img src= "@Model.PhotoUrl?w=200" class="file-preview-image">'</text>                            
+                        }
+                    }
+                ]
+            });
+
+
+            $('#pictureUploader').on('filebatchuploadsuccess', function (event, data, previewId, index) {
+                var response = data.response;
+                if (response && response.initialPreview && response.initialPreview.length > 0) {
+                    for (i = 0; i < response.initialPreview.length; i++) {
+                        var img = $.parseHTML(response.initialPreview[i]);
+                        var hidden = $("<input type='hidden' name='photourl' value='" + $(img).attr("src") + "'>");
+                        $('#myform').append(hidden);
+                        response.initialPreview[i] = "<img src='" + $(img).attr("src") + "?w=200'>";
+                    }
+                }
+            });
+        });
+</script>
+
+}

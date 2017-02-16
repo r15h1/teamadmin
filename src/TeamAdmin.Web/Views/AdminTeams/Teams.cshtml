@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<TeamAdmin.Core.Team>
 <h2>News</h2>
 <hr />
-<div class="btn-toolbar" role="toolbar"><a class="btn btn-default pull-right" asp-controller="AdminTeams" asp-action="Add">Add a Team</a></div>
+<div class="btn-toolbar" role="toolbar"><a class="btn btn-default pull-right" asp-controller="AdminTeams" asp-action="NewTeam">Add a Team</a></div>
 @if (Model != null && Model.Count() > 0)
 {
     <div class="table-responsive">
@@ -10,7 +10,8 @@
                 <tr class="bg-primary">
                     <th class="col-md-1 col-sm-1 col-xs-1">Id</th>
                     <th class="col-md-5 col-sm-5 col-xs-5">Name</th>
-                    <th class="col-md-5 col-sm-5 col-xs-5">Display Name</th>
+                    <th class="col-md-5 col-sm-5 col-xs-4">Display Name</th>
+                    <th class="col-md-1 col-sm-1 col-xs-1">Players</th>
                     <th class="col-md-1 col-sm-1 col-xs-1">Edit</th>
                 </tr>
             </thead>
@@ -20,6 +21,7 @@
                     <td>@team.TeamId</td>
                     <td>@team.Name</td>
                     <td>@team.DisplayName</td>
+                    <td class="text-center"><a href="/admin/teams/@team.TeamId/players"><i class="glyphicon glyphicon-user" data-toggle="tooltip" title="edit"></i></a></td>
                     <td class="text-center"><a href="/admin/teams/@team.TeamId"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="edit"></i></a></td>
                 </tr>
             }

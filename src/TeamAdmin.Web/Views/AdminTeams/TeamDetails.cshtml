@@ -2,7 +2,7 @@
 
 <h2>@(Model == null || !Model.TeamId.HasValue ? "Add a Team" : "Edit Team Details")</h2>
 
-<form asp-action="Add" name="myform" id="myform" method="post">
+<form asp-action=@(Model == null || !Model.TeamId.HasValue ? "NewTeam" : "TeamDetails") name="myform" id="myform" method="post">
     <hr />
     <div class="form-horizontal">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -33,8 +33,11 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-1 col-md-2">
+            <div class="col-md-offset-2 col-md-1">
                 <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+            <div class="col-md-2">
+                <a asp-action="Teams" class="btn btn-primary">Back to Teams</a>
             </div>
         </div>
     </div>
@@ -58,10 +61,6 @@
         }
     }
 </form>
-
-<div>
-    <a href="/admin/teams">Back to List</a>
-</div>
 
 @section headerlinks{
     <link href="~/lib/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
