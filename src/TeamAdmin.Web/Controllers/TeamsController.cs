@@ -9,12 +9,14 @@ namespace TeamAdmin.Web.Controllers
     {
         private ITeamRepository teamRepository;
         private IEventRepository eventRepository;
+        private IPlayerRepository playerRepository;
         private const int clubId = 1;
 
-        public TeamsController(ITeamRepository teamRepository, IEventRepository eventRepository)
+        public TeamsController(ITeamRepository teamRepository, IEventRepository eventRepository, IPlayerRepository playerRepository)
         {
             this.teamRepository = teamRepository;
             this.eventRepository = eventRepository;
+            this.playerRepository = playerRepository;
         }
 
         public IActionResult Index()
@@ -28,15 +30,13 @@ namespace TeamAdmin.Web.Controllers
         {
             var team = teamRepository.GetTeam(teamid);
             var events = eventRepository.GetEvents(new Core.Team(clubId) { TeamId = teamid });
-            return View(new TeamAdmin.Web.Models.TeamDetailsModel { Team = team, Events = events.GroupBy(e => e.StartDate.Date, e => e).OrderBy(k => k.Key) });
-        }
-
-        [Route("{teamid}/{name}/players")]
-        public IActionResult Players(int teamid)
-        {
-            var team = teamRepository.GetTeam(teamid);
-            var events = eventRepository.GetEvents(new Core.Team(clubId) { TeamId = teamid });
-            return View(new TeamAdmin.Web.Models.TeamDetailsModel { Team = team, Events = events.GroupBy(e => e.StartDate.Date, e => e).OrderBy(k => k.Key) });
-        }
+            var players = playerRepository.GetPlayers(teamid);
+            return View(
+                new TeamAdmin.Web.Models.TeamDetailsModel {
+                    Team = team,
+                    Events = events.GroupBy(e => e.StartDate.Date, e => e).OrderBy(k => k.Key),
+                    Players = players
+                });
+        }        
     }
 }

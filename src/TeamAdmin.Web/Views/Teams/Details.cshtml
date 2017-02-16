@@ -1,5 +1,6 @@
 ﻿@model TeamAdmin.Web.Models.TeamDetailsModel
 @using System.Globalization;
+@using TeamAdmin.Lib.Util;
 @{
     var team = Model.Team;
     var events = Model.Events;
@@ -56,6 +57,32 @@
 </div>
 <div class="row">
     <h2 style="border-bottom:solid 1px rgba(255,255,255,0.3);">Players</h2>
+    @if (Model != null && Model.Players != null && Model.Players.Count() > 0)
+    {
+            @foreach (var player in Model.Players)
+            {
+                <div class="col-xs-12 col-sm-4 col-md-3 playertile">
+                    <div class="media">
+                        <div class="media-left">
+                            @if (!string.IsNullOrWhiteSpace(player.PhotoUrl))
+                            {
+                                <img style="max-height:80px;" class="media-object img-rounded" src="@player.PhotoUrl?w=80&h=80" alt="@player.FirstName">
+                            }
+                            else
+                            {
+                                <img style="max-height:80px;" class="media-object img-rounded" src="@Settings.ImageUrlRoot/no_image.jpeg?w=80&h=80" alt="@player.FirstName">
+                            }
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">@player.FirstName @player.LastName.FirstOrDefault()</h4>
+                            <div>@player.Position</div>
+                            <div>#@player.SquadNumber</div>
+                        </div>
+                    </div>
+                </div>
+            }
+    }
+
 </div>
 <br /><br />
 <div class="row"><a href="/teams" class="right">Go to teams list</a></div>

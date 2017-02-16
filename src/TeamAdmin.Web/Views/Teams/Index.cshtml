@@ -13,6 +13,10 @@
                     {
                         <img class="media-object" src="@team.Media.FirstOrDefault().Url?w=200&h=117&mode=crop" srcset="@team.Media.FirstOrDefault().Url?w=200&h=117&mode=crop 200w, @team.Media.FirstOrDefault().Url?w=360&h=210&mode=crop 360w" alt="@team.DisplayName">
                     }
+                    else
+                    {
+                        <img class="media-object" src="@Settings.ImageUrlRoot/no_image.jpeg?w=200&h=117&mode=crop" srcset="@Settings.ImageUrlRoot/no_image.jpeg?w=200&h=117&mode=crop 200w, @Settings.ImageUrlRoot/no_image.jpeg?w=360&h=210&mode=crop 360w" alt="@team.DisplayName">
+                    }
                     <h4 class="caption media-heading">@(string.IsNullOrWhiteSpace(team.DisplayName) ? team.Name : team.Name + " - " + team.DisplayName)</h4>
                 </a>
             </div>
