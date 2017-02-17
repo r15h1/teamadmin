@@ -3,11 +3,13 @@
   "private": true,
   "dependencies": {
     "bootstrap": "3.3.6",
+    "fullcalendar": "3.2.0",
     "jquery": "2.2.0",
     "jquery-validation": "1.14.0",
     "jquery-validation-unobtrusive": "3.2.6",
+    "moment": "2.17.1",
     "tinymce": "4.3.7",
     "bootstrap-fileinput": "4.3.5",
-    "jquery-tokenize" : "2.5.2"
+    "jquery-tokenize": "2.5.2"
   }
 }
