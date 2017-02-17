@@ -1,0 +1,26 @@
+﻿    .span.fc-day-number{
+        color:black;
+    }
+
+    .fc-widget-content{
+        background-color:white;
+        color:black;
+    }
+
+    .fc-widget-header {
+        background-color:darkred;
+    }
+
+    .fc-content-skeleton table{
+        background-color:rgb(245,245,245);
+    }
+
+    .fc-content-skeleton table thead tr td.fc-day-top{
+        border-left:solid 1px rgb(221, 221, 221);
+        border-right:solid 1px rgb(221, 221, 221);
+        border-top:solid 1px rgb(221, 221, 221);    
+    }
+
+    .fc-unthemed td.fc-today{
+        border:solid 2px rgb(221, 221, 221);
+    }

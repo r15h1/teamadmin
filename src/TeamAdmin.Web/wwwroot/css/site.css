@@ -109,6 +109,12 @@ input:out-of-range {
     margin-bottom:20px;
 }
 
+select{
+    color:black;
+    min-height:30px;
+    border-radius:5px;
+}
+
 .tile{
     min-height:258px;
 }

@@ -1,59 +1,50 @@
-﻿<h2 style="border-bottom:solid 1px rgba(255,255,255,0.3);">Events</h2>
+﻿@model TeamAdmin.Web.Models.EventsCalendarModel
+<h2 style="border-bottom:solid 1px rgba(255,255,255,0.3);">Events</h2>
+<div class="row">
+    <form id="myform">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label for="Teams" class="col-md-1 col-sm-1 col-xs-2 control-label pull-left">Teams</label>
+                <div class="col-md-6 col-sm-8 col-xs-10">
+                    <select name="team" id="team" asp-items="@(new SelectList(Model.Teams, "TeamId", "Name"))" style="width:100%"></select>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="row">
     <div id="calendar"></div>
 </div>
 
 @section headerlinks{
-<link href="~/lib/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
-<link href="~/css/jquery-ui.theme.min.css" rel="stylesheet" />
-<style>
-    span.fc-day-number{
-        color:black;
-    }
-
-    .fc-widget-content{
-        background-color:white;
-        color:black;
-    }
-
-    .fc-widget-header {
-        background-color:darkred;
-    }
-
-    .fc-content-skeleton table{
-        background-color:rgb(245,245,245);
-    }
-
-    .fc-content-skeleton table thead tr td.fc-day-top{
-        border-left:solid 1px rgb(221, 221, 221);
-        border-right:solid 1px rgb(221, 221, 221);
-        border-top:solid 1px rgb(221, 221, 221);    
-    }
-
-    .fc-unthemed td.fc-today{
-        border:solid 2px rgb(221, 221, 221);
-    }
-
-</style>
+    <link href="~/lib/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
+    <link href="~/css/eventscalendar.css" rel="stylesheet" />
 }
 
-@section scripts {    
-<script src="~/js/jquery-ui.min.js"></script>
-<script src="~/lib/moment/min/moment.min.js"></script>
-<script src="~/lib/fullcalendar/dist/fullcalendar.min.js"></script>
+@section scripts {
+    <script src="~/lib/moment/min/moment.min.js"></script>
+    <script src="~/lib/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script src="~/lib/purl/purl.js"></script>
     <script>
         $(document).ready(function () {
-
-            // page is now ready, initialize the calendar...
-
             $('#calendar').fullCalendar({
                 header: {
                     left: 'prev,next today',
                     center: 'title',
                     right: 'month,basicWeek,basicDay'
                 },
-            })
+            });
 
+            $('#team').removeAttr("multiple");
+            $('#team').change(function (e) {
+                console.log('searching ' + $('#team').val());
+                e.preventDefault();
+            });
+            
+            if ($.url().param('team'))
+            {
+                $('#team').val($.url().param('team'));
+            }
         });
     </script>
 }

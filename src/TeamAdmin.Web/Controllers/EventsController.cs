@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using TeamAdmin.Core;
 using TeamAdmin.Core.Repositories;
+using TeamAdmin.Web.Models;
 
 namespace TeamAdmin.Web.Controllers
 {
@@ -18,8 +22,11 @@ namespace TeamAdmin.Web.Controllers
 
         public IActionResult Index()
         {
-            var teams = teamRepository.GetTeams();
-            return View(teams);
+            var teams = new List<Team>() { new Team(1) };
+            teams.AddRange(teamRepository.GetTeams().ToList());
+            var model = new EventsCalendarModel { Teams = teams, EventTypes = Enum.GetNames(typeof(Core.EventType)).ToList()
+        };
+            return View(model);
         }        
     }
 }
