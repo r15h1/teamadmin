@@ -1,26 +1,59 @@
-﻿    .span.fc-day-number{
-        color:black;
-    }
+﻿
+a.event, a.event:hover{
+    background-color:white;
+    padding:2px 0 2px 0;
+    color:darkred;
+    text-decoration:none;
+}
 
-    .fc-widget-content{
-        background-color:white;
-        color:black;
-    }
+.eventLocation{
+    white-space:normal;
+}
 
-    .fc-widget-header {
-        background-color:darkred;
-    }
+span.fc-title{
+    white-space:normal;
+    font-weight:bolder;
+    font-size:1.2rem;
+    border-bottom:dotted 1px rgb(221, 221, 221);
+}
 
-    .fc-content-skeleton table{
-        background-color:rgb(245,245,245);
-    }
+span.fc-day-number{
+    color:black;
+}
 
-    .fc-content-skeleton table thead tr td.fc-day-top{
-        border-left:solid 1px rgb(221, 221, 221);
-        border-right:solid 1px rgb(221, 221, 221);
-        border-top:solid 1px rgb(221, 221, 221);    
-    }
+td.fc-widget-content{
+    background-color:white;
+    color:black;
+}
 
-    .fc-unthemed td.fc-today{
-        border:solid 2px rgb(221, 221, 221);
-    }
+td.fc-day{
+    border-left:dotted 1px rgb(221, 221, 221);
+    border-right:dotted 1px rgb(221, 221, 221);
+    border-top:dotted 1px rgb(221, 221, 221);    
+
+}
+
+.fc-widget-header {
+    background-color:darkred;
+}
+
+.fc-content-skeleton table{
+    background-color:white;
+}
+
+.fc-content-skeleton table thead tr td.fc-day-top{
+    border-left:solid 1px rgb(221, 221, 221);
+    border-right:solid 1px rgb(221, 221, 221);
+    border-top:solid 1px rgb(221, 221, 221);    
+}
+
+.fc-row .fc-content-skeleton td, .fc-row .fc-helper-skeleton td
+{
+    border-left:solid 1px rgb(221, 221, 221);
+    border-right:solid 1px rgb(221, 221, 221);
+    border-top:solid 1px rgb(221, 221, 221);    
+}
+
+.fc-unthemed td.fc-today{
+    border:solid 1px rgb(221, 221, 221);
+}

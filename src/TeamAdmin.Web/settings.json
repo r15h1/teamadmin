@@ -6,5 +6,9 @@
   "Images": {
     "Directory": "C:\\inetpub\\wwwroot\\TeamAdmin\\cdn\\images",
     "UrlRoot": "http://teamadmin.club/cdn/images/"
+  },
+
+  "Site": {
+    "Url": "http://localhost:63398/"
   }
 }

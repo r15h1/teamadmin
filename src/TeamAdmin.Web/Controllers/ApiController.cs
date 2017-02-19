@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using TeamAdmin.Core;
 using TeamAdmin.Core.Repositories;
@@ -18,11 +19,13 @@ namespace TeamAdmin.Web.Controllers
     {
         private IHostingEnvironment environment;
         private ITeamRepository teamRepository;
+        private IEventRepository eventRepository;
 
-        public ApiController(IHostingEnvironment environment, ITeamRepository teamRepository)
+        public ApiController(IHostingEnvironment environment, ITeamRepository teamRepository, IEventRepository eventRepository)
         {
             this.environment = environment;
             this.teamRepository = teamRepository;
+            this.eventRepository = eventRepository;
         }
 
         [HttpPost("upload")]
@@ -65,6 +68,22 @@ namespace TeamAdmin.Web.Controllers
         {
             var teams = teamRepository.GetTeams();
             return new JsonResult(teams);
+        }
+
+        [HttpGet("events")]
+        public IActionResult GetEvents(int? team)
+        {
+            if (!team.HasValue || team.Value <= 0) return null;
+
+            var events = eventRepository.GetEvents(new Team(1) { TeamId = team.Value }).Select(e => new {
+                start = e.StartDate, end = e.EndDate, id = e.EventId,
+                title = $"{e.EventType.ToString()}: {string.Join(",", e.Teams.Select(t => t.DisplayName))} {(e.EventType == EventType.GAME ? " vs " : " | ")} {e.Title}",
+                description = e.Description,
+                location = e.Address,
+                url = $"{Settings.SiteUrl}events/{e.EventId}",
+                className = "event"
+            });
+            return new JsonResult(events);
         }
     }
 }

@@ -29,5 +29,13 @@ namespace TeamAdmin.Lib.Util
                 return Config["ConnectionStrings:DefaultConnection"];
             }
         }
+
+        public static string SiteUrl
+        {
+            get
+            {
+                return Config["Site:Url"];
+            }
+        }
     }
 }

@@ -12,6 +12,7 @@
         </div>
     </form>
 </div>
+<div class="row"><span id='loading'>loading...</span></div>
 <div class="row">
     <div id="calendar"></div>
 </div>
@@ -33,18 +34,49 @@
                     center: 'title',
                     right: 'month,basicWeek,basicDay'
                 },
+
+                events: {
+                    url: '/api/events?team=1619',
+                    error: function () {
+                        alert('error');
+                    }
+                },                
+
+                eventClick: function (event) {
+                    if (event.url) {
+                        window.open(event.url);
+                        return false;
+                    }
+                },
+
+                eventRender: function (event, element) {
+                    var div = document.createElement("div");
+                    div.className = "eventLocation";
+                    var location = document.createTextNode(event.location);
+                    div.appendChild(location);
+                    element[0].childNodes[0].appendChild(div);
+                },
+
+                loading: function (bool) {
+                    $('#loading').toggle(bool);
+                }
             });
 
             $('#team').removeAttr("multiple");
             $('#team').change(function (e) {
-                console.log('searching ' + $('#team').val());
+                updateCalendar();
                 e.preventDefault();
             });
             
-            if ($.url().param('team'))
+            if ($.url().param('team') && !isNaN($.url().param('team')))
             {
                 $('#team').val($.url().param('team'));
+                updateCalendar();
             }
         });
+
+        function updateCalendar() {
+            console.log('searching ' + $('#team').val());
+        }
     </script>
 }
