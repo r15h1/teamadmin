@@ -73,7 +73,7 @@ namespace TeamAdmin.Web.Controllers
         [HttpGet("events")]
         public IActionResult GetEvents(int? team)
         {
-            if (!team.HasValue || team.Value <= 0) return null;
+            if (!team.HasValue || team.Value <= 0) return new JsonResult(null);
 
             var events = eventRepository.GetEvents(new Team(1) { TeamId = team.Value }).Select(e => new {
                 start = e.StartDate, end = e.EndDate, id = e.EventId,

@@ -36,7 +36,12 @@
                 },
 
                 events: {
-                    url: '/api/events?team=1619',
+                    url: '/api/events',
+                    data: function() { 
+                        return {
+                            'team': $('#team').val()
+                        };
+                    },
                     error: function () {
                         alert('error');
                     }
@@ -76,7 +81,8 @@
         });
 
         function updateCalendar() {
-            console.log('searching ' + $('#team').val());
+            console.log($('#team').val())
+            $("#calendar").fullCalendar('refetchEvents');
         }
     </script>
 }

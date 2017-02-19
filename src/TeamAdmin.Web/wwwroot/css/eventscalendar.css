@@ -6,8 +6,9 @@ a.event, a.event:hover{
     text-decoration:none;
 }
 
-.eventLocation{
+div.eventLocation{
     white-space:normal;
+    color:black;
 }
 
 span.fc-title{
