@@ -30,8 +30,8 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                         .ForMember(d => d.Street, opt => opt.MapFrom(src => src.Address.Street))
                         .ForMember(d => d.PostalCode, opt => opt.MapFrom(src => src.Address.PostalCode));
 
-                    cfg.CreateMap<Core.Team, EFContext.Team>()
-                        .ForMember(m => m.TeamMedia, opt => opt.ResolveUsing<CoreTeamMediaResolver>());
+                    cfg.CreateMap<Core.Team, EFContext.Team>().ForMember(m => m.TeamMedia, opt => opt.ResolveUsing<CoreTeamMediaResolver>());
+                    cfg.CreateMap<EFContext.Team, Core.Team>();
 
                     cfg.CreateMap<Core.Media, EFContext.ClubMedia>().ForMember(m => m.MediaType, opt => opt.MapFrom(src => (byte)src.MediaType));
                     cfg.CreateMap<EFContext.ClubMedia, Core.Media>().ForMember(m => m.MediaType, opt => opt.MapFrom(src => (int)src.MediaType));
@@ -164,9 +164,9 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         {
             var teams = new List<Core.Team>();
             if (source.ClubTeamEvents != null && source.ClubTeamEvents.Count > 0)
-                foreach (var team in source.ClubTeamEvents)
-                    if(team.TeamId.HasValue)
-                        teams.Add(new Core.Team(team.ClubId) { TeamId = team.TeamId.Value });
+                foreach (var ev in source.ClubTeamEvents)
+                    if(ev.TeamId.HasValue)
+                        teams.Add(context.Mapper.Map<Core.Team>(ev.Team));
 
             return teams;
         }

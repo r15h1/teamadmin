@@ -125,8 +125,13 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<EventContext>())
             {
-                var evnt = context.Events.Include(c => c.ClubTeamEvents).FirstOrDefault(m => m.EventId == eventId);
-                return mapper.Map<Core.Event>(evnt);
+                var ev = context.ClubTeamEvents.Include(c => c.Event)
+                        .Include(c => c.Team)
+                        .Where(c => c.EventId == eventId);
+
+                var evnt = mapper.Map<Core.Event>(ev.Select(c => c.Event).ToList().FirstOrDefault());
+                evnt.Teams = mapper.Map<List<Core.Team>>(ev.Select(c => c.Team).ToList());
+                return evnt;
             }
         }
 

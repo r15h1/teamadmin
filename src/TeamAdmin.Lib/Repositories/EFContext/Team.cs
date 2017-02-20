@@ -11,5 +11,6 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         public bool? Deleted { get; set; }
         public ICollection<TeamMedia> TeamMedia { get; set; }
         public ICollection<Player> Players { get; set; }
+        public ICollection<ClubTeamEvent> ClubTeamEvents { get; set; }
     }
 }

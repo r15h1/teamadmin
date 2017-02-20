@@ -23,10 +23,12 @@ namespace TeamAdmin.Lib.Repositories.EFContext
             modelBuilder.Entity<ClubTeamEvent>()
                 .HasOne(c => c.Event)
                 .WithMany(e => e.ClubTeamEvents)
-                .HasForeignKey(e => e.EventId)
-                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Cascade);
+                .HasForeignKey(e => e.EventId).OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Cascade);
 
-            //modelBuilder.Entity<ClubTeamEvent>().HasOne(t => t.Team);
+            modelBuilder.Entity<ClubTeamEvent>()
+                .HasOne(c => c.Team)
+                .WithMany(e => e.ClubTeamEvents)
+                .HasForeignKey(e => e.TeamId);
 
             modelBuilder.Entity<ClubTeamEvent>().ForSqlServerToTable("ClubTeamEvents").HasKey("ClubTeamEventId");
         }

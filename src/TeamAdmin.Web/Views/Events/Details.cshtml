@@ -1,0 +1,55 @@
+﻿@model TeamAdmin.Core.Event
+
+<h1 style="border-bottom:solid 1px rgba(255,255,255,0.3);">Event Details</h1>
+@if (Model != null)
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label asp-for="EventType" class="col-md-2 control-label">What</label>
+            <div class="col-md-10">
+                <label class="form-control">@Model.EventType: @(Model.EventType == TeamAdmin.Core.EventType.GAME ? $" vs {Model.Title}" : Model.Title)</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="StartDate" class="col-md-2 control-label">Starts</label>
+            <div class="col-md-10">
+                <label class="form-control">@Model.StartDate.ToString("ddd, dd MMM yyyy @h:mm tt")</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="EndDate" class="col-md-2 control-label">Ends</label>
+            <div class="col-md-10">
+                <label class="form-control">@Model.EndDate.ToString("ddd, dd MMM yyyy @h:mm tt")</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Teams</label>
+            <div class="col-md-10">
+                <label class="form-control">@(string.Join(", ", Model.Teams.Select(t => $"{t.DisplayName}").ToArray()))</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Notes</label>
+            <div class="col-md-10">
+                <label class="form-control">@Model.Description</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Location</label>
+            <div class="col-md-10">
+                <label class="form-control">@Model.Address</label>
+            </div>
+        </div>
+
+        <div class="form-group" id="mapHolder">
+            <div class="col-md-2"></div>
+            <div class="col-md-10" id="mapDiv">
+                <img id="map" class="img-responsive" src="https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyAzy5wXJVUmq5QGP1XilEOFKIl1lxaG1Z8&center=@Model.Address&size=400x300&zoom=14&maptype=roadmap&markers=color:red|@Model.Address"/>                
+                <a target="_blank" href="https://maps.google.com?q=@Model.Address">View larger map</a>
+            </div>
+        </div>   
+    </div>
+}
