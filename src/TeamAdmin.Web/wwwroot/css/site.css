@@ -82,7 +82,9 @@ textarea {
     background-color:rgb(130,130,130);
 }
 
-
+h1, h2, h3, h4{
+    border-bottom:solid 1px rgb(130,130,130);
+}
 h4{text-shadow:none;}
 
 /*input:valid,
@@ -90,7 +92,7 @@ input:in-range {
     background:hsl(120, 50%, 90%);
     border-color:hsl(120, 50%, 50%);
 }*/
-
+textarea:invalid,
 input:invalid,
 input:out-of-range {
     border-color:darkred;
@@ -101,6 +103,10 @@ input:out-of-range {
 .navbar-brand {
     width: 80px;
     padding-top:0;
+}
+
+p{
+    text-align:justify;
 }
 
 .panel-default{

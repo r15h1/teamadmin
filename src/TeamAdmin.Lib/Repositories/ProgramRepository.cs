@@ -45,7 +45,7 @@ Our team age 9 – 14 plays in SAAC that mea ns we travel the GTA for most of ou
             programs.Add(new Program
             {
                 ProgramId = 4,
-                Title = "Futsal",
+                Title = "Curriculum",
                 Body = @"<h3>MFC Academy for Age Groups 7-11 <br/>Years Old Development (Vertical Educational Integration)</h3>
                          <p><ul>
                             <li>Provide a fun environment focused on holistic child development (emotional, physiological , social, cultural, physical, mental)</li>

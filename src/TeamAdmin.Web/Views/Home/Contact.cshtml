@@ -1,17 +1,70 @@
-﻿@{
-    ViewData["Title"] = "Contact";
+﻿<h1>Contact</h1>
+<address>
+    Marcus Laquie<br />
+    <strong>Email:</strong> <a href="mailto:mapolafc@gmail.com">mapolafc@gmail.com</a><br />
+    <strong>Phone:</strong> <span>647-391-0429</span>
+</address>
+
+<h3>Have a question?</h3>
+
+<form asp-action="Add" name="myform" id="myform" method="post">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-md-1 col-sm-1 control-label">Name</label>
+            <div class="col-md-8 col-sm-9">
+                <input class="form-control" style="max-width:100%" name="name" id="name" required title="Please enter your name"/>
+            </div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-md-1 col-sm-1 control-label">Email</label>
+            <div class="col-md-8 col-sm-9">
+                <input type="email" class="form-control" style="max-width:100%" name="email" id="email" required />
+            </div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-md-1 col-sm-1 control-label">Subject</label>
+            <div class="col-md-8 col-sm-9">
+                <input class="form-control" style="max-width:100%" name="subject" id="subject" required />
+            </div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-md-1 col-sm-1 control-label" required>Message</label>
+            <div class="col-md-8 col-sm-9">
+                <textarea class="form-control" style="max-width:100%" name="message" id="message" rows="7" required></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-1 col-sm-1 col-xs-2"></div>
+            <div class="col-md-8 col-sm-9 g-recaptcha" data-sitekey="6LfClBYUAAAAAG_GVgQ1DiqEw0G4Ce78YSLFuoGW"></div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-1 col-sm-1 col-xs-2"></div>            
+            <input type="submit" class="btn btn-default" />
+        </div>
+    </div>
+</form>
+@section headerlinks{
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 }
-<h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
-
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
-
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+@section scripts{
+    <script>
+        $('#myform').on('submit', function (e) {
+              if(grecaptcha.getResponse() == "") {
+                e.preventDefault();
+                alert("You can't proceed!");
+              } else {
+                alert("Thank you");
+              }
+        });
+    </script>
+}
