@@ -64,6 +64,7 @@ namespace TeamAdmin.Web
             services.AddScoped<ITeamRepository, TeamRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<IProgramRepository, ProgramRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

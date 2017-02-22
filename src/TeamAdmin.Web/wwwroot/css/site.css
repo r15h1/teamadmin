@@ -78,6 +78,11 @@ textarea {
      margin: 0 auto;
 }
 
+.dropdown-menu .divider {
+    background-color:rgb(130,130,130);
+}
+
+
 h4{text-shadow:none;}
 
 /*input:valid,
@@ -114,6 +119,7 @@ select{
     min-height:30px;
     border-radius:5px;
 }
+
 
 .tile{
     min-height:258px;
