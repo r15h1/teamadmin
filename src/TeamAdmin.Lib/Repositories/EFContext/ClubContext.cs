@@ -16,6 +16,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         public DbSet<ClubMedia> ClubMedia { get; set; }
         public DbSet<TeamMedia> TeamMedia { get; set; }
         public DbSet<Player> Players { get; set; }
+        public DbSet<Core.Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -231,5 +231,29 @@ namespace TeamAdmin.Lib.Repositories
             }
             return true;
         }
+
+        public Message SaveMessage(Message message)
+        {
+            if (message == null) throw new ArgumentNullException();            
+            using (var context = ContextFactory.Create<ClubContext>())
+            {
+                context.Messages.Add(message);
+                context.SaveChanges();
+                return message;
+            }
+        }
+
+        public IEnumerable<Message> GetMessages()
+        {
+            using (var context = ContextFactory.Create<ClubContext>())
+            {
+                return context.Messages.OrderByDescending(m => m.DateCreated).ToList();
+            }
+        }
+
+        public void UpdateMessageViewedStatus(long messageId, bool viewed)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

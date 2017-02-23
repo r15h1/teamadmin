@@ -1,0 +1,139 @@
+@model TeamAdmin.Web.Models.AdminViewModels.Event
+
+<h2>Add an Event</h2>
+
+<form asp-action="Add" name="myform" id="myform" method="post">
+    <hr />
+    <div class="form-horizontal">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="EventType" class="col-md-2 control-label">What</label>
+            <div class="col-md-10">
+                <select class="btn btn-default" id="eventtype" name="eventtype" asp-for="EventType" asp-items="Html.GetEnumSelectList<TeamAdmin.Core.EventType>()"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="StartDate" class="col-md-2 control-label">Starts on/at</label>
+            <div class="col-md-10">
+                <input asp-for="StartDate" class="form-control" name="StartDate" id="StartDate" type="datetime-local" required value="@(Model.StartDate.HasValue ? Model.StartDate.Value.ToString("yyyy-MM-ddThh:mm") : DateTime.Now.ToString("yyyy-MM-ddThh:mm"))" />
+                <span asp-validation-for="StartDate" class="text-danger"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="EndDate" class="col-md-2 control-label">Ends on/at</label>
+            <div class="col-md-10">
+                <input asp-for="EndDate" class="form-control" name="EndDate" id="EndDate" type="datetime-local" required  value="@(Model.EndDate.HasValue ? Model.StartDate.Value.ToString("yyyy-MM-ddThh:mm") : DateTime.Now.ToString("yyyy-MM-ddThh:mm"))" />
+                <span asp-validation-for="EndDate" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Teams</label>
+            <div class="col-md-10">
+                <select name="Teams" id="Teams"  asp-items="@(new SelectList(Model.TeamList, "TeamId", "Name"))" multiple asp-for="Teams">
+                </select>                
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Title" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Title" class="form-control" style="max-width:100%" name="title" id="title" />
+                <span asp-validation-for="Title" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Address" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Address" class="form-control" style="max-width:100%" name="address" id="address" />
+                <span asp-validation-for="Address" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group" id="mapHolder">
+            <div class="col-md-2"></div>
+            <div class="col-md-10" id="mapDiv">
+                <img id="map" class="img-responsive" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <textarea autofocus class="form-control" name="body" id="body" asp-for="Description" rows="10" style="max-width:100%">@Model.Description</textarea>
+                <span asp-validation-for="Description" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-2">
+                <input type="submit" value="Save" class="btn btn-default"/>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" asp-for="EventId" />
+</form>
+
+<div>
+    <a href="/admin/events">Back to List</a>
+</div>
+
+
+@section scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script> 
+    <script src="~/lib/jquery-tokenize/jquery.tokenize.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Teams').tokenize({
+                autosize:true,
+                datas: 'select',
+                displayDropdownOnFocus: true
+            });
+
+            $(function () {
+                var validator = $("#myform").submit(function () {
+                    // update underlying textarea before submit validation
+
+                }).validate({
+                    ignore: "",
+                    rules: {
+                        title: "required",
+                        content: "required"
+                    },
+                    errorPlacement: function (label, element) {
+                        label.insertAfter(element);
+                    }
+                });
+                validator.focusInvalid = function () {
+                    // put focus on tinymce on submit validation
+                    if (this.settings.focusInvalid) {
+                        try {
+                            var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
+                            toFocus.filter(":visible").focus();                            
+                        } catch (e) {
+                            // ignore IE throwing errors when focusing hidden elements
+                        }
+                    }
+                }
+            });
+
+            //location
+            //$("#location").change(updateMap);
+            //$("#location").keyup(updateMap);
+            $("#address").on('input', updateMap);
+            updateMap();
+            function updateMap() {
+                if ($("#address").val().trim().length < 5)
+                {
+                    $("#mapHolder").attr("style", "display:none;");
+                } else {
+                    $("#mapHolder").attr("style", "display:block;");
+                    var src = "https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyAzy5wXJVUmq5QGP1XilEOFKIl1lxaG1Z8&center=" + $("#address").val() + "&size=400x300&zoom=14&maptype=roadmap&markers=color:red|" + $("#address").val();
+                    $("#map").attr("src", src);
+                }
+            }
+        });                
+    </script>
+}
+
+@section headerlinks{    
+    <link href="~/lib/jquery-tokenize/jquery.tokenize.css" rel="stylesheet" />
+}

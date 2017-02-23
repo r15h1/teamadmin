@@ -37,5 +37,21 @@ namespace TeamAdmin.Lib.Util
                 return Config["Site:Url"];
             }
         }
+
+        public static string GoogleRecaptchaDataSiteKey
+        {
+            get
+            {
+                return Config["GoogleRecaptcha:Data-Site-Key"];
+            }
+        }
+
+        public static string GoogleRecaptchaSecret
+        {
+            get
+            {
+                return Config["GoogleRecaptcha:Secret"];
+            }
+        }
     }
 }

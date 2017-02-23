@@ -10,5 +10,8 @@ namespace TeamAdmin.Core.Repositories
         IEnumerable<Club> GetClubs();
         Club GetClub(int clubId);
         bool DeleteClub(int clubId);
+        Message SaveMessage(Message message);
+        IEnumerable<Message> GetMessages();
+        void UpdateMessageViewedStatus(long messageId, bool viewed);
     }
 }

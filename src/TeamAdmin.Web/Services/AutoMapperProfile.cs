@@ -35,6 +35,8 @@ namespace TeamAdmin.Web.Services
                 .ForMember(m => m.City, opt => opt.MapFrom(p => p.Address.City))
                 .ForMember(m => m.PostalCode, opt => opt.MapFrom(p => p.Address.PostalCode))
                 .ForMember(m => m.Province, opt => opt.MapFrom(p => p.Address.Province));
+
+            CreateMap<TeamAdmin.Web.Models.Message, Core.Message>().ReverseMap();
         }
     }
 

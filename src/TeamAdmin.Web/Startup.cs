@@ -58,8 +58,9 @@ namespace TeamAdmin.Web
             services.AddMvc();
 
             // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<IEmailSender, MessageSender>();
+            services.AddTransient<ISmsSender, MessageSender>();
+            services.AddTransient<IClubRepository, ClubRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<ITeamRepository, TeamRepository>();
             services.AddScoped<IEventRepository, EventRepository>();

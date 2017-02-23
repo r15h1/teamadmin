@@ -3,6 +3,15 @@
     "DefaultConnection": "data source=.\\SQL2012; initial catalog=TeamAdmin;user id=sa;password=Cr@2yHor5e;MultipleActiveResultSets=true"
   },
 
+  "ContactForm": {
+    "RecipientEmail": "tapsee.rishi@gmail.com"
+  },
+
+  "GoogleRecaptcha": {
+    "Data-Site-Key": "6LfClBYUAAAAAG_GVgQ1DiqEw0G4Ce78YSLFuoGW",
+    "Secret": "6LfClBYUAAAAAOa4-NNjj_CpcQObnNakb83rBlN6"
+  },
+
   "Images": {
     "Directory": "C:\\inetpub\\wwwroot\\TeamAdmin\\cdn\\images",
     "UrlRoot": "http://teamadmin.club/cdn/images/"
