@@ -1,9 +1,7 @@
 @model TeamAdmin.Web.Models.AdminViewModels.Player
-
-<h2>@(Model == null || !Model.PlayerId.HasValue ? "New Player" : @Model.FirstName + @Model.LastName )</h2>
+<h1>@(Model == null || !Model.PlayerId.HasValue ? "New Player" : @Model.FirstName + @Model.LastName )</h1>
 <h5>@ViewData["Team"]</h5>
 <form asp-action=@(Model == null || !Model.PlayerId.HasValue ? "NewPlayer" : "PlayerDetails") name="myform" id="myform" method="post">
-    <hr />
     <div class="form-horizontal">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">

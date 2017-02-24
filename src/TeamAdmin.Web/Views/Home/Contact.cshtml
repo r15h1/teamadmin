@@ -18,7 +18,7 @@ else
         <div class="form-group">
             <label for="Name" class="col-md-2 col-sm-2 control-label">Your Name</label>
             <div class="col-md-8 col-sm-9">
-                <input asp-for="Name" class="form-control" style="max-width:100%" name="name" id="name" required title="Please enter your name" maxlength="50"/>
+                <input asp-for="Name" class="form-control" style="max-width:100%" name="name" id="name" required title="Please enter your name" placeholder="Your name" maxlength="50"/>
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@ else
         <div class="form-group">
             <label for="Email" class="col-md-2 col-sm-2 control-label">Your Email</label>
             <div class="col-md-8 col-sm-9">
-                <input asp-for="Email" type="email" class="form-control" style="max-width:100%" name="email" id="email" required  maxlength="100"/>
+                <input asp-for="Email" type="email" class="form-control" style="max-width:100%" name="email" id="email" required  maxlength="100" placeholder="Your email address"/>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@ else
         <div class="form-group">
             <label for="Subject" class="col-md-2 col-sm-2 control-label">Subject</label>
             <div class="col-md-8 col-sm-9">
-                <input asp-for="Subject" class="form-control" style="max-width:100%" name="subject" id="subject" required maxlength="150"/>
+                <input asp-for="Subject" class="form-control" style="max-width:100%" name="subject" id="subject" required maxlength="150" placeholder="Reason for contacting"/>
             </div>
         </div>
     </div>
@@ -42,7 +42,7 @@ else
         <div class="form-group">
             <label for="Body" class="col-md-2 col-sm-2 control-label" required>Message</label>
             <div class="col-md-8 col-sm-9">
-                <textarea asp-for="Body" class="form-control" style="max-width:100%" name="body" id="body" rows="7" required data-val-required="The Message field is required."></textarea>
+                <textarea asp-for="Body" class="form-control" style="max-width:100%" name="body" id="body" rows="7" required data-val-required="The Message field is required." placeholder="Your question or feedback"></textarea>
             </div>
         </div>
     </div>

@@ -1,7 +1,5 @@
 ﻿@model TeamAdmin.Web.Models.AdminViewModels.PlayersListModel
-
-<h2>@Model.Team.Name@(!string.IsNullOrWhiteSpace(Model.Team.DisplayName) ? " - " + Model.Team.DisplayName : "" ) Players</h2>
-<hr />
+<h1>@Model.Team.Name@(!string.IsNullOrWhiteSpace(Model.Team.DisplayName) ? " - " + Model.Team.DisplayName : "" ) Players</h1>
 <div class="btn-toolbar" role="toolbar"><a class="btn btn-default pull-right" href="/admin/teams/@Model.Team.TeamId/players/add">Add a Player</a></div>
 @if (Model !=null && Model.Players != null && Model.Players.Count() > 0)
 {

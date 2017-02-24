@@ -1,13 +1,6 @@
 @model TeamAdmin.Web.Models.AdminViewModels.News
-
-@{
-    ViewData["Title"] = "AddNews";
-}
-
-<h2>Add a News Item</h2>
-
+<h1>Add/Edit News</h1>
 <form asp-action="Add" name="myform" id="myform" method="post">
-    <hr />
     <div class="form-horizontal">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
