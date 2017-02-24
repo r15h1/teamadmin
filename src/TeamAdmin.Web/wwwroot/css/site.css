@@ -99,6 +99,15 @@ input:out-of-range {
     background:hsl(0, 50%, 90%);
 }
 
+.message-unread{
+    font-size:1.1em;
+    font-weight:bolder;
+    color:#efefac;
+}
+
+.message-read{
+    
+}
 
 .navbar-brand {
     width: 80px;

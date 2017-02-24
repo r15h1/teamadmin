@@ -247,13 +247,28 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {
-                return context.Messages.OrderByDescending(m => m.DateCreated).ToList();
+                return context.Messages.OrderBy(m => m.Viewed).ThenByDescending(m => m.DateCreated).ToList();
             }
         }
 
         public void UpdateMessageViewedStatus(long messageId, bool viewed)
         {
             throw new NotImplementedException();
+        }
+
+        public Message GetMessage(long messageId)
+        {
+            using (var context = ContextFactory.Create<ClubContext>())
+            {
+                var message = context.Messages.SingleOrDefault(m => m.MessageId == messageId);
+                if (message != null && (!message.Viewed.HasValue || !message.Viewed.Value))
+                {
+                    message.Viewed = true;
+                    context.Entry(message).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    context.SaveChanges();
+                }
+                return message;
+            }
         }
     }
 }

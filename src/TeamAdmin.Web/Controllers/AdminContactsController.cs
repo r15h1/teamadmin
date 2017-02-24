@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TeamAdmin.Core.Repositories;
@@ -19,6 +20,13 @@ namespace TeamAdmin.Web.Controllers
         {
             var messages = clubRepository.GetMessages();
             return View(messages);
+        }
+
+        [HttpGet("{messageId}")]
+        public IActionResult Details(long messageId)
+        {
+            var message = clubRepository.GetMessage(messageId);
+            return View(message);
         }
     }
 }

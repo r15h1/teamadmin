@@ -14,7 +14,7 @@
             </thead>
             @foreach (var message in Model)
             {
-                <tr>
+                <tr class="@(message.Viewed.HasValue && message.Viewed.Value ? "message-read" : "message-unread")">
                     <td>@message.Name</td>
                     <td>@message.Email</td>
                     <td><a href="/admin/contacts/@message.MessageId.Value" rel="nofollow">@message.Subject</a></td>                   
