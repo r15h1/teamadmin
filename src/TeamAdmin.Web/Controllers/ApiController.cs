@@ -1,14 +1,19 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using TeamAdmin.Core;
 using TeamAdmin.Core.Repositories;
 using TeamAdmin.Lib.Util;
+using TeamAdmin.Web.Models;
 using TeamAdmin.Web.Models.ApiViewModels;
 
 namespace TeamAdmin.Web.Controllers
@@ -85,5 +90,35 @@ namespace TeamAdmin.Web.Controllers
             });
             return new JsonResult(events);
         }
+
+        [HttpPost("recaptcha")]
+        public async Task<CaptchaVerification> ReCaptcha(ReCaptcha recaptcha)
+        {
+            if (!ModelState.IsValid) return new CaptchaVerification { Errors = { "Invalid captcha" }, Success = false };
+
+            var verification = await IsCaptchaVerified(recaptcha);
+            return verification;
+        }
+
+        private async Task<CaptchaVerification> IsCaptchaVerified(ReCaptcha recaptcha)
+        {
+            string userIP = string.Empty;
+            var ipAddress = Request.HttpContext.Connection.RemoteIpAddress;
+            if (ipAddress != null) userIP = ipAddress.MapToIPv4().ToString();
+
+            var payload = string.Format("&secret={0}&remoteip={1}&response={2}",      
+               Settings.GoogleRecaptchaSecret,
+               userIP,
+               recaptcha.CaptchaResponse
+            );
+
+            var client = new HttpClient();
+            client.BaseAddress = new Uri("https://www.google.com");
+            var request = new HttpRequestMessage(HttpMethod.Post, "/recaptcha/api/siteverify");
+            request.Content = new StringContent(payload, Encoding.UTF8, "application/x-www-form-urlencoded");
+            var response = await client.SendAsync(request);
+            return JsonConvert.DeserializeObject<CaptchaVerification>(response.Content.ReadAsStringAsync().Result); ;
+        }
+
     }
 }

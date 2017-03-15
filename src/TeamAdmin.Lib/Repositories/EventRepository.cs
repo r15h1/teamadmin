@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TeamAdmin.Core;
 using TeamAdmin.Core.Repositories;
 using TeamAdmin.Lib.Repositories.EFContext;
-using TeamAdmin.Core;
 
 namespace TeamAdmin.Lib.Repositories
 {
@@ -140,7 +140,7 @@ namespace TeamAdmin.Lib.Repositories
             using (var context = ContextFactory.Create<EventContext>())
             {
                 return context.ClubTeamEvents.Include(c => c.Event).Include(c => c.Team)
-                        .Where(c => c.ClubId == club.ClubId.Value)
+                        .Where(c => c.ClubId == club.ClubId.Value && c.Event.EndDate >= DateTime.Today)
                         .GroupBy(x => x.Event, (e, cte) => new Core.Event
                         {
                             Description = e.Description,
@@ -151,7 +151,7 @@ namespace TeamAdmin.Lib.Repositories
                             Title = e.Title,
                             Address = e.Address,
                             Teams = cte.Select(x => new Core.Team(club.ClubId.Value) { Name = x.Team.Name, DisplayName = x.Team.DisplayName }).ToList()
-                        }).ToList();
+                        }).OrderBy(e => e.StartDate).ThenBy(e => e.EndDate).ToList();
             }            
         }
 
@@ -160,7 +160,7 @@ namespace TeamAdmin.Lib.Repositories
             using (var context = ContextFactory.Create<EventContext>())
             {
                 return context.ClubTeamEvents.Include(c => c.Event).Include(c => c.Team)
-                        .Where(c => c.TeamId == team.TeamId.Value)
+                        .Where(c => c.TeamId == team.TeamId.Value && c.Event.EndDate >= DateTime.Today)
                         .GroupBy(x => x.Event, (e, cte) => new Core.Event
                         {
                             Description = e.Description,
@@ -171,8 +171,8 @@ namespace TeamAdmin.Lib.Repositories
                             Title = e.Title,
                             Address = e.Address,
                             Teams = cte.Select(x => new Core.Team(team.ClubId) { Name = x.Team.Name, DisplayName = x.Team.DisplayName }).ToList()
-                        }).ToList();
-            }
-        }        
+                        }).OrderBy(e => e.StartDate).ThenBy(e => e.EndDate).ToList();
+            }        
+        }
     }
 }

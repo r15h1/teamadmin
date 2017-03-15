@@ -89,8 +89,9 @@ namespace TeamAdmin.Web.Services
         {
             int position = 1;
             var mediaSet = new List<Media>();
-            foreach(var image in news.Images)            
-                mediaSet.Add(new Media { Position = position++, MediaType = MediaType.PICTURE, Url = image });
+            if(news != null && news.Images != null)
+                foreach(var image in news.Images)            
+                    mediaSet.Add(new Media { Position = position++, MediaType = MediaType.PICTURE, Url = image });
 
             return mediaSet;
         }        

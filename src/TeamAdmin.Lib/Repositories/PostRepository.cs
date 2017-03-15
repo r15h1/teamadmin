@@ -44,7 +44,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<PostContext>())
             {
-                List<EFContext.Post> posts = context.Posts.Include(m => m.PostMedia).Where(p => p.ClubId == clubId).ToList();
+                List<EFContext.Post> posts = context.Posts.Include(m => m.PostMedia).Where(p => p.ClubId == clubId).OrderByDescending(p => p.DatePublished).ToList();
                 if (posts != null && posts.Count() > 0)
                     return mapper.Map<List<Core.Post>>(posts);
             }
@@ -61,6 +61,7 @@ namespace TeamAdmin.Lib.Repositories
 
         private Core.Post CreatePost(Core.Post post)
         {
+            if (post.PostStatus == PostStatus.PUBLISHED) post.DatePublished = DateTime.UtcNow;
             var p = mapper.Map<EFContext.Post>(post);
             using (var context = ContextFactory.Create<PostContext>())
             {
@@ -78,7 +79,8 @@ namespace TeamAdmin.Lib.Repositories
                 if (p == null) return null;
 
                 p.Body = post.Body;
-                p.DatePublished = post.DatePublished;
+                if (p.PostStatus != (byte)post.PostStatus && post.PostStatus == PostStatus.PUBLISHED) p.DatePublished = DateTime.UtcNow;
+
                 p.PostStatus = (byte) post.PostStatus;
                 p.Title = post.Title;
 
