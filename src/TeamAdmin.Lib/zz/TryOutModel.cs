@@ -5,7 +5,8 @@ namespace TeamAdmin.Lib.zz
 {
     public enum Forms
     {
-        TryOut = 1
+        TryOut = 1,
+        SummerCampRegistration = 2
     }
 
     public class TryOutModel

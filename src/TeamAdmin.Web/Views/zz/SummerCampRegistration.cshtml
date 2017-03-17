@@ -1,0 +1,223 @@
+@model TeamAdmin.Web.SummerCampRegistration
+
+@{
+    ViewData["Title"] = "SummerCampRegistration";
+}
+
+<h2>SummerCampRegistration</h2>
+
+<form asp-action="SummerCampRegistration">
+    <div class="form-horizontal">
+        <h4>SummerCampRegistration</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Ages5To7_9amTo11am_120" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Ages5To7_9amTo11am_120" class="form-control" />
+                <span asp-validation-for="Ages5To7_9amTo11am_120" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Ages8To18_9amTo12pm_150" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Ages8To18_9amTo12pm_150" class="form-control" />
+                <span asp-validation-for="Ages8To18_9amTo12pm_150" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Ages8To18_9amTo3pm_250" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Ages8To18_9amTo3pm_250" class="form-control" />
+                <span asp-validation-for="Ages8To18_9amTo3pm_250" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="TeamTraining_4pmTo6pm_45" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="TeamTraining_4pmTo6pm_45" class="form-control" />
+                <span asp-validation-for="TeamTraining_4pmTo6pm_45" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="CoachesClinics_6pmTo8pm_110" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CoachesClinics_6pmTo8pm_110" class="form-control" />
+                <span asp-validation-for="CoachesClinics_6pmTo8pm_110" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ParentsEducationSession" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ParentsEducationSession" class="form-control" />
+                <span asp-validation-for="ParentsEducationSession" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PlayerFullName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PlayerFullName" class="form-control" />
+                <span asp-validation-for="PlayerFullName" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DateOfBirth" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DateOfBirth" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="StreetAddress" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="StreetAddress" class="form-control" />
+                <span asp-validation-for="StreetAddress" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="AddressLine2" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="AddressLine2" class="form-control" />
+                <span asp-validation-for="AddressLine2" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="City" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="State" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="State" class="form-control" />
+                <span asp-validation-for="State" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PostalOrZipCode" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PostalOrZipCode" class="form-control" />
+                <span asp-validation-for="PostalOrZipCode" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Country" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Country" class="form-control" />
+                <span asp-validation-for="Country" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Phone" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="TShirtSize" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="TShirtSize" class="form-control" />
+                <span asp-validation-for="TShirtSize" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="MedicalCondition" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="MedicalCondition" class="form-control" />
+                <span asp-validation-for="MedicalCondition" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Gender" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Gender" class="form-control" />
+                <span asp-validation-for="Gender" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PlayerGradeAndSchool" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PlayerGradeAndSchool" class="form-control" />
+                <span asp-validation-for="PlayerGradeAndSchool" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="HowDidYouHearAboutSummerCamp" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="HowDidYouHearAboutSummerCamp" class="form-control" />
+                <span asp-validation-for="HowDidYouHearAboutSummerCamp" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="WaiverForm" />
+                    <label asp-for="WaiverForm"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="MapolaFCRangersFCCanUseChildImage" />
+                    <label asp-for="MapolaFCRangersFCCanUseChildImage"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="ParentLegalGuardianAffirmParticipationOfChild" />
+                    <label asp-for="ParentLegalGuardianAffirmParticipationOfChild"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="CancellationPolicy" />
+                    <label asp-for="CancellationPolicy"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="FullPaymentAgreementWithin24HrsOfApplication" />
+                    <label asp-for="FullPaymentAgreementWithin24HrsOfApplication"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="TypesOfPaymentAccepted" />
+                    <label asp-for="TypesOfPaymentAccepted"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -30,8 +30,8 @@ namespace TeamAdmin.Web.Controllers
             return View(model);
         }
 
-        [HttpGet("celtic-fc-camp-registration")]
-        public IActionResult SummerCamp()
+        [HttpGet("summer-camp-registration")]
+        public IActionResult SummerCampRegistration()
         {
             return View();
         }
