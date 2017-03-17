@@ -4,6 +4,7 @@ using System;
 using TeamAdmin.Core;
 using System.Xml.Serialization;
 using System.IO;
+using TeamAdmin.Lib.zz;
 
 namespace TeamAdmin.Lib.Repositories.EFContext
 {
@@ -64,6 +65,9 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                         .ForMember(m => m.PostalCode, opt => opt.MapFrom(a => a.Address.PostalCode))
                         .ForMember(m => m.ContactInfo, opt => opt.ResolveUsing<DBPlayerContactInfoResolver>());
 
+                    cfg.CreateMap<Lib.zz.TryOutModel, EFContext.zzFormData>()
+                        .ForMember(m => m.Data, opt => opt.ResolveUsing<TryOutFormDataResolver>());
+                        
                 });
             }
         }
@@ -71,6 +75,23 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         internal static IMapper GetMapper()
         {
             return mapper;
+        }
+
+        private class TryOutFormDataResolver : IValueResolver<Lib.zz.TryOutModel, EFContext.zzFormData, string>
+        {
+            public string Resolve(TryOutModel source, zzFormData destination, string destMember, ResolutionContext context)
+            {
+                if (source != null)
+                {
+                    var serializer = new XmlSerializer(source.GetType());
+                    using (StringWriter textWriter = new StringWriter())
+                    {
+                        serializer.Serialize(textWriter, source);
+                        return textWriter.ToString();
+                    }
+                }
+                return null;
+            }
         }
     }
 
