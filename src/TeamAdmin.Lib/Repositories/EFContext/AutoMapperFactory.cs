@@ -67,7 +67,10 @@ namespace TeamAdmin.Lib.Repositories.EFContext
 
                     cfg.CreateMap<Lib.zz.TryOutModel, EFContext.zzFormData>()
                         .ForMember(m => m.Data, opt => opt.ResolveUsing<TryOutFormDataResolver>());
-                        
+
+                    cfg.CreateMap<Lib.zz.SummerCampRegistration, EFContext.zzFormData>()
+                        .ForMember(m => m.Data, opt => opt.ResolveUsing<SummerCampRegistrationFormDataResolver>());
+
                 });
             }
         }
@@ -75,23 +78,40 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         internal static IMapper GetMapper()
         {
             return mapper;
-        }
+        }       
+    }
 
-        private class TryOutFormDataResolver : IValueResolver<Lib.zz.TryOutModel, EFContext.zzFormData, string>
+    internal class TryOutFormDataResolver : IValueResolver<Lib.zz.TryOutModel, EFContext.zzFormData, string>
+    {
+        public string Resolve(TryOutModel source, zzFormData destination, string destMember, ResolutionContext context)
         {
-            public string Resolve(TryOutModel source, zzFormData destination, string destMember, ResolutionContext context)
+            if (source != null)
             {
-                if (source != null)
+                var serializer = new XmlSerializer(source.GetType());
+                using (StringWriter textWriter = new StringWriter())
                 {
-                    var serializer = new XmlSerializer(source.GetType());
-                    using (StringWriter textWriter = new StringWriter())
-                    {
-                        serializer.Serialize(textWriter, source);
-                        return textWriter.ToString();
-                    }
+                    serializer.Serialize(textWriter, source);
+                    return textWriter.ToString();
                 }
-                return null;
             }
+            return null;
+        }
+    }
+
+    internal class SummerCampRegistrationFormDataResolver : IValueResolver<Lib.zz.SummerCampRegistration, EFContext.zzFormData, string>
+    {
+        public string Resolve(SummerCampRegistration source, zzFormData destination, string destMember, ResolutionContext context)
+        {
+            if (source != null)
+            {
+                var serializer = new XmlSerializer(source.GetType());
+                using (StringWriter textWriter = new StringWriter())
+                {
+                    serializer.Serialize(textWriter, source);
+                    return textWriter.ToString();
+                }
+            }
+            return null;
         }
     }
 
