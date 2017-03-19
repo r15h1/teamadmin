@@ -24,7 +24,7 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        public void Save(SummerCampRegistration model)
+        public void Save(SummerCamp model)
         {
             var formdata = mapper.Map<EFContext.zzFormData>(model);
             using (var context = ContextFactory.Create<zzContext>())
@@ -33,6 +33,11 @@ namespace TeamAdmin.Lib.Repositories
                 context.FormData.Add(formdata);
                 context.SaveChanges();
             }
+        }
+
+        public void Save(Registration model)
+        {
+            throw new NotImplementedException();
         }
     }
 }

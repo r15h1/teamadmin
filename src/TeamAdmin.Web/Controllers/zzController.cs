@@ -31,22 +31,29 @@ namespace TeamAdmin.Web.Controllers
         }
 
         [HttpGet("summer-camp-registration")]
-        public IActionResult SummerCampRegistration()
+        public IActionResult SummerCamp()
         {
             return View();
         }
 
         [HttpPost("summer-camp-registration")]
-        public IActionResult SummerCampRegistration(SummerCampRegistration model)
+        public IActionResult SummerCamp(SummerCamp model)
         {
             repository.Save(model);
             return View(model);
         }
 
         [HttpGet("2006-to-2009")]
-        public IActionResult Register()
+        public IActionResult Registration()
         {
             return View();
+        }
+
+        [HttpPost("2006-to-2009")]
+        public IActionResult Registration(Registration model)
+        {
+            repository.Save(model);
+            return View(model);
         }
     }
 }

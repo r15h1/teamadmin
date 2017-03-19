@@ -68,7 +68,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                     cfg.CreateMap<Lib.zz.TryOutModel, EFContext.zzFormData>()
                         .ForMember(m => m.Data, opt => opt.ResolveUsing<TryOutFormDataResolver>());
 
-                    cfg.CreateMap<Lib.zz.SummerCampRegistration, EFContext.zzFormData>()
+                    cfg.CreateMap<Lib.zz.SummerCamp, EFContext.zzFormData>()
                         .ForMember(m => m.Data, opt => opt.ResolveUsing<SummerCampRegistrationFormDataResolver>());
 
                 });
@@ -98,9 +98,9 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         }
     }
 
-    internal class SummerCampRegistrationFormDataResolver : IValueResolver<Lib.zz.SummerCampRegistration, EFContext.zzFormData, string>
+    internal class SummerCampRegistrationFormDataResolver : IValueResolver<Lib.zz.SummerCamp, EFContext.zzFormData, string>
     {
-        public string Resolve(SummerCampRegistration source, zzFormData destination, string destMember, ResolutionContext context)
+        public string Resolve(SummerCamp source, zzFormData destination, string destMember, ResolutionContext context)
         {
             if (source != null)
             {

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TeamAdmin.Lib.zz
 {
-    public class SummerCampRegistration
+    public class SummerCamp
     {
         public int FormId { get; set; } = (int)Forms.SummerCampRegistration;
 

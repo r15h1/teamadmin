@@ -1,0 +1,388 @@
+@model TeamAdmin.Lib.zz.Registration
+@using TeamAdmin.Lib.Util
+<h1>Online Registration (2006 - 2009) - Fall, Winter, & Spring Session</h1>
+
+
+@if (Model != null)
+{
+    <p>Thank you for registering for the try out!</p>
+    <p>Should you have any question, please do not hesitate to contact us.</p>
+    <p>Have a great day ahead, see you soon!</p>
+    <a rel="nofollow" href="/">Go to Home Page</a>
+}
+else
+{
+    <form method="post" id="myform">
+        <div class="form-horizontal">
+            <p>This registration form must be completely filled out for the registrant to be able to participate in a Mapola Football Club Academy program.</p>
+            <p style="font-weight:700;font-style:italic;text-decoration:underline;">Each applicant will be registered with the OSA/SAAC under Mapola FC Academy (MFC). A copy of the player's Birth Certificate or other Legal Age Document is required at attendance of first MFC session.</p>
+            <p>This form is required for player participation in any MFC program or tournament.</p>
+            <p style="font-weight:700;font-style:italic;text-decoration:underline;">A copy of your registration confirmation must be available at all Tryouts for administration and insurance purposes.</p>
+            <p>No formal contract or written commitment may be signed by or on behalf of the player to a commit a player to an academy team. Players may participate with any academy program regardless of their home address. Player participation in academy competitions does not guarantee playing time and players may be moved to other academy teams at any time. Academy players must practice weekly with their assigned team. U-5 thru U-7 players may participate with an Academy Practice but may not compete in any SAAC Sanctioned games. MFC will arrange for other Games/Tournaments for these groups.</p>
+            <fieldset>
+                <legend>Academy Selection</legend>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="Academy" class="control-label"></label>
+                    <div>
+                        <select asp-for="Academy" class="form-control" required>
+                            <option value="" disabled selected>Select Academy Type</option>
+                            <option>Full Time Academy</option>
+                            <option>Practice Only Academy</option>
+                        </select>
+                        <span asp-validation-for="Academy" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="AgeGroup" class="control-label"></label>
+                    <div>
+                        <select asp-for="AgeGroup" class="form-control" required>
+                            <option value="" disabled selected>Select Age Group</option>
+                            <option>U11 Boys (2006)</option>
+                            <option>U11 Girls (2006)</option>
+                            <option>U10 Boys (2007)</option>
+                            <option>U10 Girls (2007)</option>
+                            <option>U9 Boys (2008)</option>
+                            <option>U9 Girls (2008)</option>
+                            <option>U8 Boys (2009)</option>
+                            <option>U8 Girls (2009)</option>
+                        </select>
+                        <span asp-validation-for="AgeGroup" class="text-danger" />
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Player's Information</legend>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerGender" class="control-label"></label>
+                    <div>
+                        <select asp-for="PlayerGender" class="form-control" required>
+                            <option value="" disabled selected>Select Gender</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                        <span asp-validation-for="PlayerGender" class="text-danger" />
+                    </div>
+                </div>                
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerLastName" class="control-label"></label>
+                    <div>
+                        <input asp-for="PlayerLastName" class="form-control" placeholder="player's last name" required />
+                        <span asp-validation-for="PlayerLastName" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerFirstName" class="control-label"></label>
+                    <div>
+                        <input asp-for="PlayerFirstName" class="form-control" placeholder="player's first name'" required />
+                        <span asp-validation-for="PlayerFirstName" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="Address" class="control-label"></label>
+                    <div>
+                        <input asp-for="Address" class="form-control" placeholder="street address" required />
+                        <span asp-validation-for="Address" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="City" class="control-label"></label>
+                    <div>
+                        <input asp-for="City" class="form-control" placeholder="city" required />
+                        <span asp-validation-for="City" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="Province" class="control-label"></label>
+                    <div>
+                        <select asp-for="Province" class="form-control" required>
+                            <option selected>ON</option>
+                            <option>AB</option>
+                            <option>BC</option>
+                            <option>MB</option>
+                            <option>NB</option>
+                            <option>NL</option>
+                            <option>NS</option>
+                            <option>NT</option>
+                            <option>PEI</option>
+                            <option>QC</option>
+                            <option>SK</option>
+                            <option>YK</option>
+                            <option>NWT</option>
+                        </select>
+                        <span asp-validation-for="Province" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PrimaryContactNumber" class="control-label"></label>
+                    <div>
+                        <input asp-for="PrimaryContactNumber" class="form-control" style="min-width:200px !important;" type="tel" placeholder="primary telephone #" required />
+                        <span asp-validation-for="PrimaryContactNumber" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerEmail" class="control-label"></label>
+                    <div>
+                        <input asp-for="PlayerEmail" class="form-control" style="min-width:200px !important;" type="email" required />
+                        <span asp-validation-for="PlayerEmail" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerDateOfBirth" class="control-label"></label>
+                    <div>
+                        <input asp-for="PlayerDateOfBirth" class="form-control" style="min-width:200px !important;" type="date" required />
+                        <span asp-validation-for="PlayerDateOfBirth" class="text-danger" />
+                    </div>
+                </div>
+                
+            </fieldset>
+
+            <fieldset>
+                <legend>Legal Guardian Information</legend>
+
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PrimaryGuardianFullName" class="control-label"></label>
+                    <div>
+                        <input asp-for="PrimaryGuardianFullName" class="form-control" required />
+                        <span asp-validation-for="PrimaryGuardianFullName" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PrimaryGuardianContactNumber" class="control-label"></label>
+                    <div>
+                        <input asp-for="PrimaryGuardianContactNumber" class="form-control" style="min-width:200px !important;" type="tel" required />
+                        <span asp-validation-for="PrimaryGuardianContactNumber" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PrimaryGuardianAltContactNumber" class="control-label"></label>
+                    <div>
+                        <input asp-for="PrimaryGuardianAltContactNumber" class="form-control" style="min-width:200px !important;" type="tel" />
+                        <span asp-validation-for="PrimaryGuardianAltContactNumber" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PrimaryGuardianEmail" class="control-label"></label>
+                    <div>
+                        <input asp-for="PrimaryGuardianEmail" class="form-control" style="min-width:200px !important;" type="email" required />
+                        <span asp-validation-for="PrimaryGuardianEmail" class="text-danger" />
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="SecondaryGuardianFullName" class="control-label"></label>
+                    <div>
+                        <input asp-for="SecondaryGuardianFullName" class="form-control" required/>
+                        <span asp-validation-for="SecondaryGuardianFullName" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="SecondaryGuardianContactNumber" class="control-label"></label>
+                    <div>
+                        <input asp-for="SecondaryGuardianContactNumber" class="form-control" style="min-width:200px !important;" type="tel" required/>
+                        <span asp-validation-for="SecondaryGuardianContactNumber" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="SecondaryGuardianContactNumber2" class="control-label"></label>
+                    <div>
+                        <input asp-for="SecondaryGuardianContactNumber2" class="form-control" style="min-width:200px !important;" type="tel" required />
+                        <span asp-validation-for="SecondaryGuardianContactNumber2" class="text-danger" />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Emergency Contact</legend>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="EmergencyContactFullName" class="control-label"></label>
+                    <div>
+                        <input asp-for="EmergencyContactFullName" class="form-control" required />
+                        <span asp-validation-for="EmergencyContactFullName" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="EmergencyContactNumber" class="control-label"></label>
+                    <div>
+                        <input asp-for="EmergencyContactNumber" class="form-control" style="min-width:200px !important;" type="tel" required />
+                        <span asp-validation-for="EmergencyContactNumber" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="DoctorFullName" class="control-label"></label>
+                    <div>
+                        <input asp-for="DoctorFullName" class="form-control" required />
+                        <span asp-validation-for="DoctorFullName" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="DoctorContactNumber" class="control-label"></label>
+                    <div>
+                        <input asp-for="DoctorContactNumber" class="form-control" style="min-width:200px !important;" type="tel" required />
+                        <span asp-validation-for="DoctorContactNumber" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="MedicalConditions" class="control-label"></label>
+                    <div>
+                        <input asp-for="MedicalConditions" class="form-control" required />
+                        <span asp-validation-for="MedicalConditions" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>As the parent or legal guardian of the above-named player, I hereby give consent for emergency medical care prescribed by a duly licensed Doctor of Medicine or Doctor of Dentistry. This care may be given under whatever conditions are necessary to preserve life, limb or well-being of my dependent.</label>
+                    <div>
+                        <div class="checkbox">
+                            <input asp-for="ConsentToMedicalTreatmentOfMinor" required />
+                            <label asp-for="ConsentToMedicalTreatmentOfMinor"></label><br/>
+                            <span asp-validation-for="ConsentToMedicalTreatmentOfMinor" class="text-danger" />
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Terms & Conditions Acknowledgement</legend>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <input asp-for="LiabilityWaiverAgreement" required />
+                        <label asp-for="LiabilityWaiverAgreement">* I have read and agree to the terms outlined in the <a href='#'>MFC Liability Waiver Agreement.</a></label><br />
+                        <span asp-validation-for="LiabilityWaiverAgreement" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <input asp-for="PlayerCommitmentAgreement" required />
+                        <label asp-for="PlayerCommitmentAgreement">* I have read and agree to the terms outlined in the <a href='#'>MFC Player Commitment Agreement.</a></label><br />
+                        <span asp-validation-for="PlayerCommitmentAgreement" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <input asp-for="ModelImageReleaseAgreement" required />
+                        <label asp-for="ModelImageReleaseAgreement">* I have read and agree to the terms outlined in the <a href='#'>MFC Model & Image Release Agreement.</a></label><br />
+                        <span asp-validation-for="ModelImageReleaseAgreement" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <input asp-for="HarassmentPolicy" required />
+                        <label asp-for="HarassmentPolicy">* I have read and agree to the terms outlined in the <a href='#'>MFC Harassment Policy.</a></label><br />
+                        <span asp-validation-for="HarassmentPolicy" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <input asp-for="FinancialContractAgreement" required />
+                        <label asp-for="FinancialContractAgreement">* I have read and agree to the terms outlined in the <a href='#'>MFC Financial Contract Agreement.</a></label><br />
+                        <span asp-validation-for="FinancialContractAgreement" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <input asp-for="ConcussionPolicy" required />
+                        <label asp-for="ConcussionPolicy">* I have read and agree to the terms outlined in the <a href='#'>MFC Concussion Policy.</a></label><br />
+                        <span asp-validation-for="ConcussionPolicy" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <input asp-for="PlayerAndParentsCodeOfConduct" required />
+                        <label asp-for="PlayerAndParentsCodeOfConduct">* I have read and agree to the terms outlined in the <a href='#'>MFC Player Code of Conduct</a> and the <a href='#'>Parent's Code of Conduct</a>.</label><br />
+                        <span asp-validation-for="PlayerAndParentsCodeOfConduct" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <input asp-for="CompetetiveUniformsPolicy" required />
+                        <label asp-for="CompetetiveUniformsPolicy">* I have read and agree to the terms outlined in the <a href='#'>MFC Competetive Uniforms Policy</a>.</label><br />
+                        <span asp-validation-for="CompetetiveUniformsPolicy" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h4>Summer Camp Participation Agreement</h4>
+                    <div class="checkbox">
+                        <input asp-for="SummerCampParticipationAgreement" required />
+                        <label asp-for="SummerCampParticipationAgreement">* As a full time registered member of Mapola FC Academy, I hereby commit my registered child to participate in one (1) soccer skills camp hosted by MFC and it's overseas coaches, during the summer of the registrant's year of enrollment.</label><br />
+                        <span asp-validation-for="SummerCampParticipationAgreement" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h4>IMPORTANT</h4>
+                    <div class="checkbox">
+                        <input asp-for="GeneralTermsAgreement" required />
+                        <label asp-for="GeneralTermsAgreement">* I, the parent/guardian of the registrant, a minor, agree that the registrant and I will abide by the rules of the MFC, its affiliated organizations and sponsors. Recognizing the possibility of physical injury associated with soccer and in consideration for the MFC accepting the registrant for its soccer programs and activities (Programs). I hereby release, discharge and/or otherwise indemnify the MFC, it's affiliated organizations and sponsors, their employees and associated personnel, including the registrant as a result of the registrant's participation in the Programs and/or being transported to or from the same, which transportation I hereby authorize. I further grant MFC Parties the right to use the player's name, pictures and/or likeness in printed, broadcast and other material concerning Programs provided as such use is related to the player's status as a participant in the Programs.</label><br />
+                        <span asp-validation-for="GeneralTermsAgreement" class="text-danger" />
+                    </div>
+                </div>
+            </fieldset>
+
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="HowDidYouHearAboutUs" class="control-label"></label>
+                    <div>
+                        <input asp-for="HowDidYouHearAboutUs" class="form-control" required />
+                        <span asp-validation-for="HowDidYouHearAboutUs" class="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="g-recaptcha" data-sitekey="@Settings.GoogleRecaptchaDataSiteKey"></div>
+                    <div id="captchavalidation" class="text-danger" style="display:none;padding-bottom:0;margin-bottom:0;">Please click on the "I'm not a robot" checkbox</div>
+                </div>
+
+
+                <div class="form-group">
+                    <div>
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+</div>
+    </form>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="~/js/recaptcha.js"></script>
+}
+
+@section headerlinks{
+    <style>
+        .form-horizontal .form-group {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        input.form-control {
+            min-width: 100%;
+            width: 100%;
+        }
+
+        .checkbox input[type=checkbox] {
+            padding-top: 5px;
+            margin-left: 0;
+        }
+
+        .checkbox input[type=checkbox] + label {
+            margin-left: 5px;
+            display:inline;
+        }
+
+
+        fieldset {
+            border: 1px solid #ddd !important;
+            margin-top: 25px !important;
+            /*margin-bottom: 25px !important;*/
+            padding: 10px;
+            position: relative;
+            border-radius: 4px;
+            padding-left: 10px !important;
+        }
+
+        legend {
+            font-size: 1.5em;
+            font-weight: bold;
+            width: auto;
+            border-bottom: none;
+        }
+    </style>
+}
