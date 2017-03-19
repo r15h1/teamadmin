@@ -5,10 +5,10 @@ namespace TeamAdmin.Lib.zz
 {
     public class Registration
     {
-        public int FormId { get; set; } =(int) Forms.TryOut;
+        public int FormId { get; set; } =(int) Forms.Registration;
 
         [Required]
-        [Display(Name = "Would like to try out for")]
+        [Display(Name = "Academy")]
         public string Academy { get; set; }
 
         [Required]

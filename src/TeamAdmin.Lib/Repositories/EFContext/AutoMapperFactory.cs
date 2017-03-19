@@ -71,6 +71,9 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                     cfg.CreateMap<Lib.zz.SummerCamp, EFContext.zzFormData>()
                         .ForMember(m => m.Data, opt => opt.ResolveUsing<SummerCampRegistrationFormDataResolver>());
 
+                    cfg.CreateMap<Lib.zz.Registration, EFContext.zzFormData>()
+                        .ForMember(m => m.Data, opt => opt.ResolveUsing<RegistrationFormDataResolver>());
+
                 });
             }
         }
@@ -79,6 +82,23 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         {
             return mapper;
         }       
+    }
+
+    internal class RegistrationFormDataResolver : IValueResolver<Lib.zz.Registration, EFContext.zzFormData, string>
+    {
+        public string Resolve(Registration source, zzFormData destination, string destMember, ResolutionContext context)
+        {
+            if (source != null)
+            {
+                var serializer = new XmlSerializer(source.GetType());
+                using (StringWriter textWriter = new StringWriter())
+                {
+                    serializer.Serialize(textWriter, source);
+                    return textWriter.ToString();
+                }
+            }
+            return null;
+        }
     }
 
     internal class TryOutFormDataResolver : IValueResolver<Lib.zz.TryOutModel, EFContext.zzFormData, string>

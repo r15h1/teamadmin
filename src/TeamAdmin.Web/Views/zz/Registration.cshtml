@@ -5,7 +5,7 @@
 
 @if (Model != null)
 {
-    <p>Thank you for registering for the try out!</p>
+    <p>Thank you for registering!</p>
     <p>Should you have any question, please do not hesitate to contact us.</p>
     <p>Have a great day ahead, see you soon!</p>
     <a rel="nofollow" href="/">Go to Home Page</a>
@@ -245,56 +245,56 @@ else
                 <div class="form-group">
                     <div class="checkbox">
                         <input asp-for="LiabilityWaiverAgreement" required />
-                        <label asp-for="LiabilityWaiverAgreement">* I have read and agree to the terms outlined in the <a href='#'>MFC Liability Waiver Agreement.</a></label><br />
+                        <label asp-for="LiabilityWaiverAgreement">* I have read and agree to the terms outlined in the <a href='~/forms/LiabilityWaiver.pdf'>MFC Liability Waiver Agreement.</a></label><br />
                         <span asp-validation-for="LiabilityWaiverAgreement" class="text-danger" />
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
                         <input asp-for="PlayerCommitmentAgreement" required />
-                        <label asp-for="PlayerCommitmentAgreement">* I have read and agree to the terms outlined in the <a href='#'>MFC Player Commitment Agreement.</a></label><br />
+                        <label asp-for="PlayerCommitmentAgreement">* I have read and agree to the terms outlined in the <a href='~/forms/PlayerCommitmentAgreement.pdf'>MFC Player Commitment Agreement.</a></label><br />
                         <span asp-validation-for="PlayerCommitmentAgreement" class="text-danger" />
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
                         <input asp-for="ModelImageReleaseAgreement" required />
-                        <label asp-for="ModelImageReleaseAgreement">* I have read and agree to the terms outlined in the <a href='#'>MFC Model & Image Release Agreement.</a></label><br />
+                        <label asp-for="ModelImageReleaseAgreement">* I have read and agree to the terms outlined in the <a href='~/forms/ModelAndImageReleaseAgreement.pdf'>MFC Model & Image Release Agreement.</a></label><br />
                         <span asp-validation-for="ModelImageReleaseAgreement" class="text-danger" />
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
                         <input asp-for="HarassmentPolicy" required />
-                        <label asp-for="HarassmentPolicy">* I have read and agree to the terms outlined in the <a href='#'>MFC Harassment Policy.</a></label><br />
+                        <label asp-for="HarassmentPolicy">* I have read and agree to the terms outlined in the <a href='~/forms/HarassmentPolicy.pdf'>MFC Harassment Policy.</a></label><br />
                         <span asp-validation-for="HarassmentPolicy" class="text-danger" />
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
                         <input asp-for="FinancialContractAgreement" required />
-                        <label asp-for="FinancialContractAgreement">* I have read and agree to the terms outlined in the <a href='#'>MFC Financial Contract Agreement.</a></label><br />
+                        <label asp-for="FinancialContractAgreement">* I have read and agree to the terms outlined in the <a href='~/forms/FinancialContract.pdf'>MFC Financial Contract Agreement.</a></label><br />
                         <span asp-validation-for="FinancialContractAgreement" class="text-danger" />
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
                         <input asp-for="ConcussionPolicy" required />
-                        <label asp-for="ConcussionPolicy">* I have read and agree to the terms outlined in the <a href='#'>MFC Concussion Policy.</a></label><br />
+                        <label asp-for="ConcussionPolicy">* I have read and agree to the terms outlined in the <a href='~/forms/ConcussionPolicy.pdf'>MFC Concussion Policy.</a></label><br />
                         <span asp-validation-for="ConcussionPolicy" class="text-danger" />
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
                         <input asp-for="PlayerAndParentsCodeOfConduct" required />
-                        <label asp-for="PlayerAndParentsCodeOfConduct">* I have read and agree to the terms outlined in the <a href='#'>MFC Player Code of Conduct</a> and the <a href='#'>Parent's Code of Conduct</a>.</label><br />
+                        <label asp-for="PlayerAndParentsCodeOfConduct">* I have read and agree to the terms outlined in the <a href='~/forms/PlayerCodeOfConduct.pdf'>MFC Player Code of Conduct</a> and the <a href='~/forms/ParentCodeOfConduct.pdf'>Parent's Code of Conduct</a>.</label><br />
                         <span asp-validation-for="PlayerAndParentsCodeOfConduct" class="text-danger" />
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
                         <input asp-for="CompetetiveUniformsPolicy" required />
-                        <label asp-for="CompetetiveUniformsPolicy">* I have read and agree to the terms outlined in the <a href='#'>MFC Competetive Uniforms Policy</a>.</label><br />
+                        <label asp-for="CompetetiveUniformsPolicy">* I have read and agree to the terms outlined in the <a href='~/forms/UniformsPolicy.pdf'>MFC Competitive Uniforms Policy</a>.</label><br />
                         <span asp-validation-for="CompetetiveUniformsPolicy" class="text-danger" />
                     </div>
                 </div>

@@ -37,7 +37,13 @@ namespace TeamAdmin.Lib.Repositories
 
         public void Save(Registration model)
         {
-            throw new NotImplementedException();
+            var formdata = mapper.Map<EFContext.zzFormData>(model);
+            using (var context = ContextFactory.Create<zzContext>())
+            {
+                formdata.DateCreated = DateTime.UtcNow;
+                context.FormData.Add(formdata);
+                context.SaveChanges();
+            }
         }
     }
 }
