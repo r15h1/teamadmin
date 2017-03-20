@@ -36,6 +36,9 @@ namespace TeamAdmin.Lib.Repositories.EFContext
 
             modelBuilder.Entity<TeamMedia>().HasOne(p => p.Team)
                 .WithMany(p => p.TeamMedia).HasForeignKey(f => f.TeamId);
+
+            modelBuilder.Entity<Core.Message>().ForSqlServerToTable("Messages")
+                .Property(b => b.MessageType).HasColumnName("MessageTypeId");
         }
     }
 }

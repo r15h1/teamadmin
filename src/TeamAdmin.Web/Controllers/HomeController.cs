@@ -61,6 +61,7 @@ namespace TeamAdmin.Web.Controllers
             if (!ModelState.IsValid) return  View(message);            
 
             var msg = mapper.Map<Core.Message>(message);
+            msg.MessageType = Core.MessageType.General_Information;
             msg.DateCreated = DateTime.UtcNow;
             var savedMsg = clubRepository.SaveMessage(msg);
             return View(mapper.Map<Web.Models.Message>(savedMsg));

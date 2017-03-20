@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
-using System;
-using TeamAdmin.Core;
-using System.Xml.Serialization;
 using System.IO;
-using TeamAdmin.Lib.zz;
+using System.Xml.Serialization;
+using TeamAdmin.Core;
 
 namespace TeamAdmin.Lib.Repositories.EFContext
 {
@@ -64,16 +62,6 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                         .ForMember(m => m.Province, opt => opt.MapFrom(a => a.Address.Province))
                         .ForMember(m => m.PostalCode, opt => opt.MapFrom(a => a.Address.PostalCode))
                         .ForMember(m => m.ContactInfo, opt => opt.ResolveUsing<DBPlayerContactInfoResolver>());
-
-                    cfg.CreateMap<Lib.zz.TryOutModel, EFContext.zzFormData>()
-                        .ForMember(m => m.Data, opt => opt.ResolveUsing<TryOutFormDataResolver>());
-
-                    cfg.CreateMap<Lib.zz.SummerCamp, EFContext.zzFormData>()
-                        .ForMember(m => m.Data, opt => opt.ResolveUsing<SummerCampRegistrationFormDataResolver>());
-
-                    cfg.CreateMap<Lib.zz.Registration, EFContext.zzFormData>()
-                        .ForMember(m => m.Data, opt => opt.ResolveUsing<RegistrationFormDataResolver>());
-
                 });
             }
         }
@@ -82,57 +70,6 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         {
             return mapper;
         }       
-    }
-
-    internal class RegistrationFormDataResolver : IValueResolver<Lib.zz.Registration, EFContext.zzFormData, string>
-    {
-        public string Resolve(Registration source, zzFormData destination, string destMember, ResolutionContext context)
-        {
-            if (source != null)
-            {
-                var serializer = new XmlSerializer(source.GetType());
-                using (StringWriter textWriter = new StringWriter())
-                {
-                    serializer.Serialize(textWriter, source);
-                    return textWriter.ToString();
-                }
-            }
-            return null;
-        }
-    }
-
-    internal class TryOutFormDataResolver : IValueResolver<Lib.zz.TryOutModel, EFContext.zzFormData, string>
-    {
-        public string Resolve(TryOutModel source, zzFormData destination, string destMember, ResolutionContext context)
-        {
-            if (source != null)
-            {
-                var serializer = new XmlSerializer(source.GetType());
-                using (StringWriter textWriter = new StringWriter())
-                {
-                    serializer.Serialize(textWriter, source);
-                    return textWriter.ToString();
-                }
-            }
-            return null;
-        }
-    }
-
-    internal class SummerCampRegistrationFormDataResolver : IValueResolver<Lib.zz.SummerCamp, EFContext.zzFormData, string>
-    {
-        public string Resolve(SummerCamp source, zzFormData destination, string destMember, ResolutionContext context)
-        {
-            if (source != null)
-            {
-                var serializer = new XmlSerializer(source.GetType());
-                using (StringWriter textWriter = new StringWriter())
-                {
-                    serializer.Serialize(textWriter, source);
-                    return textWriter.ToString();
-                }
-            }
-            return null;
-        }
     }
 
     internal class DBPlayerContactInfoResolver : IValueResolver<Core.Player, Player, string>
