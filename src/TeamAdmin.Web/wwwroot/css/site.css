@@ -1,185 +1,283 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿@import url(https://fonts.googleapis.com/css?family=Lato:700,900,300,400|Merriweather:300,300italic,700);
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  text-transform:uppercase;
+
+}
+p,a,li,blockquote {
+  font-family: "Lato", serif;
+  font-weight: 300;
+  font-size: 1.111em;
+  line-height: 175%;
+  color: #1a1a1a;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.hero {
+    background: url(../images/hero@2x.jpg);
+    height: 80vh;
+    background-size: cover;
+    background-position: center;
+}
+.hero h1{
+    color:  white;
+    text-shadow: 1px 1px 1px black;
+    padding-top: 37px;
+    text-align: center;
+    font-size: 50px;
+}
+  .hero:before {
+    content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-image: linear-gradient(to bottom right,green,black);
+	opacity: .3; 
+    height: 80vh;
+  }
+.hero .container{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.mapola-logo {
+    max-width: 320px;
+    padding-left: 100px;
+}
+.osa-logo{
+    max-width: 100px;
+}
+.canada-logo {
+    max-width: 100px;
+    margin-left: 20px;
+}
+.ltpd-logo {
+    max-width: 200px;
+    padding-top: 20px;
+}
+/* Navbar */
+.navbar-brand>img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    max-height: 40px;
+    position: relative;
+    top: -10px;
+}
+.navbar-default {
+    background-color: #282828;
+    border-color: #e7e7e7;
+}
+.navbar-default .navbar-nav>li>a {
+    color: #f2f2f2;
+    font-size: 12px;
+    transition: 0.4s;
+}
+.navbar-default .navbar-nav>li>a:focus {
+    color: #f2f2f2;
+}
+.navbar-default .navbar-nav>li>a:hover {
+    color: #e60d2e;
+}
+    .dropdown-menu>li>a{
+    font-size: 12px;
+    font-size: 12px;
+    transition: 0.4s;
+    font-weight: 300;
 }
 
-/* Set widths on the form inputs since otherwise they're 100% wide */
-input,
-select,
-textarea {
-    max-width: 280px;
+@media screen and (max-width: 767px){
+    .navbar-default .navbar-nav .open .dropdown-menu>li>a {
+        color: #f2f2f2;
+    }
+    .dropdown-menu>li>a{
+        color: #f2f2f2;
+    }
+    .dropdown-menu>li>a:hover{
+        color: #e60d2e;;
+    }
 }
+/* Blog */
+.blogsectionpart {
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+}
+.blogsectionpart .vc_column_container>.vc_column-inner {
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+}
+.blog-post{
+	display:inline-block;
+	width: 33.333%;
+	float:left;
+}
+.blog-post{height: 300px;}
+.blog-section { width:100%;}
+.blog-section h1,.contact-form-wrapper h1 {  font-size:45px; margin-bottom:30px; color:#232323;}
+.blog-section h1 span,.contact-form-wrapper h1 span { display:block; color:#969696; font-size:14px; font-weight:400; padding-bottom:23px; text-transform:none;}
+.blog-section .half-box,.contact-form-wrapper .half-box { margin:auto;}
+.blog-section .heading-title h1:after,.contact-form-wrapper h1:after { right:0; margin:auto;}
 
-/* Carousel */
-.carousel-caption{
-    background-color:rgba(0,0,0,0.6);
-    border-radius:5px;
-}
 
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
-}
-
-/* buttons and links extension to use brackets: [ click me ] */
-.btn-bracketed::before {
-    display:inline-block;
-    content: "[";
-    padding-right: 0.5em;
-}
-.btn-bracketed::after {
-    display:inline-block;
-    content: "]";
-    padding-left: 0.5em;
-}
-
-/*calendar*/
-.calendar-item{    
-    border-radius:3px;
-    border:solid 1px darkred;
-    background-color:rgb(255, 255, 255);
-    color:darkred;    
-    text-align:center;
-    width:50px;
-}
-
-.calendar-item > .calendar-month{ 
-    border-top-left-radius:3px;
-    border-top-right-radius:3px;
-    padding:2px 2px 2px 2px;
-    background-color:darkred;
-    color:white;
-    font-weight:600;
-}
-
-.calendar-item > .calendar-date{ 
-    /*padding:2px 2px 0px 2px;  */
-    color:black;
-    font-size:18px;
-    font-weight:600;
-}
-
-.calendar-item > .calendar-day{ 
-    color:darkred;
-    font-size:12px;
-    font-weight:600;
-}
-
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner > .item > a > img, .carousel-inner > .item > img
-{
-     margin: 0 auto;
-}
-
-.dropdown-menu .divider {
-    background-color:rgb(130,130,130);
-}
-
-h1, h2, h3, h4{
-    border-bottom:solid 1px rgb(130,130,130);
-}
-h4{text-shadow:none;}
-
-/*input:valid,
-input:in-range {
-    background:hsl(120, 50%, 90%);
-    border-color:hsl(120, 50%, 50%);
-}*/
-textarea:invalid,
-input:invalid,
-input:out-of-range,
-select:invalid {
-    border-color:darkred;
-    background:hsl(0, 50%, 90%);
-}
-
-.message-unread{
-    font-size:1.1em;
-    font-weight:bolder;
-    color:#efefac;
-}
-
-.message-read{
-    
-}
-
-.navbar-brand {
-    width: 80px;
-    padding-top:0;
-}
-
-p{
-    text-align:justify;
-}
-
-.panel-default{
-    padding:7px 7px 7px 7px;
-    background-color:white;
-    color:black;
-}
-
-.playertile{
-    min-height:90px;
-    margin-bottom:20px;
-}
-
-select{
-    color:black;
-    min-height:30px;
-    border-radius:5px;
+.blog-caption { padding:38px 0 0 0; float:left; width:100%;}
+.blog-caption span {font-family: 'Raleway', sans-serif !important;  color:#82b53f; font-size:13px; line-height:22px; font-weight:600; display:block; text-transform:uppercase;padding-bottom: 23px; }
+.blog-caption h2 { color:#242424;font-size:20px; text-transform: capitalize; font-weight:700; /* padding:11px 0px 20px 0px; */ }
+.blog-caption h2 a { color:#242424; }
+.blog-caption p { color:#888888;}
+.blog-caption .button { font-size: 15px;  font-weight: 700;  background: #0859a6;  padding: 14px 19px 13px 19px;  margin-top: 26px; }
+.blog-details img { width:100%;}
+@media screen and (max-width: 640px){
+  .blog-post{width: 100%!important;}
 }
 
 
-.tile{
-    min-height:258px;
+/* Footer */
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
+footer { background-color:#0c1a1e; min-height:350px; font-family: 'Lato', sans-serif; }
+.footerleft { margin-top:50px; padding:0 36px; }
+.logofooter { margin-bottom:10px; font-size:25px; color:#fff; font-weight:700;}
+.logofooter .mapola-logo {
+    max-width: 120px;
+    padding-left: 0px;
+    margin: 0 auto;
+    float: left;
+    display: inline-block;
+    padding-right: 20px;
+}
+.footerleft p { color:#fff; font-size:12px !important; font-family: 'Lato', sans-serif; margin-bottom:15px;}
+.footerleft p i { width:20px; color:#999;}
+
+
+.paddingtop-bottom {  margin-top:50px;}
+.footer-ul { list-style-type:none;  padding-left:0px; margin-left:2px;}
+.footer-ul li a { color:#a0a3a4; transition: color 0.2s linear 0s, background 0.2s linear 0s; }
+.footer-ul i { margin-right:10px;}
+.footer-ul li a:hover {transition: color 0.2s linear 0s, background 0.2s linear 0s; color:#d61c38; }
+.footer-ul li {
+    line-height: 29px;
+    font-size: 12px;
+    width: 48%;
+    display: inline-block;
 }
 
-.thumbnail, .thumbnail > h4.media-heading{
-    background-color:white;
-    color:black;
+ 
+ 
+
+ 
+ .icon-ul { list-style-type:none !important; margin:0px; padding:0px;}
+ .icon-ul li { line-height:75px; width:100%; float:left;}
+ .icon { float:left; margin-right:5px;}
+ 
+ 
+ .copyright { min-height:40px; background-color:#000000;}
+ .copyright p { text-align:left; color:#FFF; padding:10px 0; margin-bottom:0px;}
+ .heading7 { font-size:21px; font-weight:700; color:#d9d6d6; margin-bottom:22px;}
+ .post p { font-size:12px; color:#FFF; line-height:20px;}
+ .post p span { display:block; color:#8f8f8f;}
+ .bottom_ul { list-style-type:none; float:right; margin-bottom:0px;}
+ .bottom_ul li { float:left; line-height:40px;}
+ .bottom_ul li:after { content:"/"; color:#FFF; margin-right:8px; margin-left:8px;}
+ .bottom_ul li a { color:#FFF;  font-size:12px;}
+
+
+ /* News Grid */
+ .grid {
+    position: relative;
+    margin: 0 auto;
+    padding: 1em 0 4em;
+    max-width: 1000px;
+    list-style: none;
+    text-align: center;
+}
+.grid figure {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    margin: 10px 1%;
+    min-width: 320px;
+    max-width: 480px;
+    max-height: 360px;
+    width: 48%;
+    background: #3085a3;
+    text-align: center;
+    cursor: pointer;
 }
 
-.thumbnail > h4.media-heading {
-    min-height: 75px;
+.grid figure img {
+    position: relative;
+    display: block;
+    min-height: 100%;
+    max-width: 100%;
+    opacity: 0.8;
 }
 
-ul.Dropdown{
-    color:rgb(0,0,0);
+/*---------------*/
+/***** hover effect boxes *****/
+/*---------------*/
+/*
+figure.effect-lily img {
+	max-width: none;
+	width: -webkit-calc(100% + 50px);
+	width: calc(100% + 50px);
+	opacity: 0.7;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: translate3d(-40px,0, 0);
+	transform: translate3d(-40px,0,0);
 }
 
-.row{
-    margin-left:0;
-    margin-right:0;
+figure.effect-lily figcaption {
+	text-align: left;
 }
 
-div.Tokenize, ul.TokensContainer {
-    width:100%;
-    border-radius:4px;
+figure.effect-lily figcaption > div {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	padding: 2em;
+	width: 100%;
+	height: 50%;
 }
 
-ul.TokensContainer > li.Token > span{
-    color:rgb(0,0,0);
+figure.effect-lily h2,
+figure.effect-lily p {
+	-webkit-transform: translate3d(0,40px,0);
+	transform: translate3d(0,40px,0);
 }
 
-@media screen and (max-width: 1200px) {
-   .tile{ min-height:258px; }
+figure.effect-lily h2 {
+	-webkit-transition: -webkit-transform 0.35s;
+	transition: transform 0.35s;
 }
 
-@media screen and (max-width: 991px) {
-    .tile{ min-height:306px; }
+figure.effect-lily p {
+	color: rgba(255,255,255,0.8);
+	opacity: 0;
+	-webkit-transition: opacity 0.2s, -webkit-transform 0.35s;
+	transition: opacity 0.2s, transform 0.35s;
 }
 
-@media screen and (max-width: 767px) {
-    /*.tile{ min-height:505px; }*/
+figure.effect-lily:hover img,
+figure.effect-lily:hover p {
+	opacity: 1;
 }
 
-@media screen and (max-width: 576px) { 
-
+figure.effect-lily:hover img,
+figure.effect-lily:hover h2,
+figure.effect-lily:hover p {
+	-webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
 }
+
+figure.effect-lily:hover p {
+	-webkit-transition-delay: 0.05s;
+	transition-delay: 0.05s;
+	-webkit-transition-duration: 0.35s;
+	transition-duration: 0.35s;
+}
+
+/*---------------*/

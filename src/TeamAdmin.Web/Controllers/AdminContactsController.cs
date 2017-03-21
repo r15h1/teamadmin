@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TeamAdmin.Core;
 using TeamAdmin.Core.Repositories;
 
 namespace TeamAdmin.Web.Controllers
@@ -26,7 +27,39 @@ namespace TeamAdmin.Web.Controllers
         public IActionResult Details(long messageId)
         {
             var message = clubRepository.GetMessage(messageId);
-            return View(message);
+            return View(FormatMessage(message));
+        }
+
+        private Message FormatMessage(Message message)
+        {
+            switch (message.MessageType)
+            {                
+                case MessageType.Registration:
+                    return FormatRegistration(message);
+                case MessageType.SummerCamp:
+                    return FormatSummerCamp(message);
+                case MessageType.TryOut:
+                    return FormatTryOut(message);
+                default:
+                    return message;
+
+            }
+        }
+
+        //implement these and deploy
+        private Message FormatTryOut(Message message)
+        {
+            throw new NotImplementedException();
+        }
+
+        private Message FormatSummerCamp(Message message)
+        {
+            throw new NotImplementedException();
+        }
+
+        private Message FormatRegistration(Message message)
+        {
+            throw new NotImplementedException();
         }
     }
 }
