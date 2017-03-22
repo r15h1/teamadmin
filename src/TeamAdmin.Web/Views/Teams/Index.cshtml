@@ -1,25 +1,25 @@
 ﻿@model IEnumerable<TeamAdmin.Core.Team>
 @using TeamAdmin.Lib.Util
-<div class="container">
-    <h2 style="border-bottom:solid 1px rgba(255,255,255,0.3);">Teams</h2>
-
-    @if (Model != null && Model.Count() > 0)
-    {
-        @foreach (var team in Model)
+<section class="blog-section">
+    <div class="container">
+        <h1>Teams</h1>
+        @if (Model != null && Model.Count() > 0)
         {
-            <div class="col-sm-6 col-md-3 tile">
-                <a href="/teams/@team.TeamId/@team.Name.MakeSEOFriendlyUrl()" class="thumbnail">
-                    @if (team.Media != null && team.Media.Count() > 0)
-                    {
-                        <img class="media-object" src="@team.Media.FirstOrDefault().Url?w=200&h=117&mode=crop" srcset="@team.Media.FirstOrDefault().Url?w=200&h=117&mode=crop 200w, @team.Media.FirstOrDefault().Url?w=360&h=210&mode=crop 360w" alt="@team.DisplayName">
-                    }
-                    else
-                    {
-                        <img class="media-object" src="@Settings.ImageUrlRoot/no_image.jpeg?w=200&h=117&mode=crop" srcset="@Settings.ImageUrlRoot/no_image.jpeg?w=200&h=117&mode=crop 200w, @Settings.ImageUrlRoot/no_image.jpeg?w=360&h=210&mode=crop 360w" alt="@team.DisplayName">
-                    }
-                    <h4 class="caption media-heading">@(string.IsNullOrWhiteSpace(team.DisplayName) ? team.Name : team.Name + " - " + team.DisplayName)</h4>
-                </a>
-            </div>
+            @foreach (var team in Model)
+            {
+                <div class="blog-post effect-lily" style="padding: 50px 10px; background:linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),url('@(team.Media.Count() > 0 ? @team.Media.FirstOrDefault().Url : @Settings.ImageUrlRoot + "/no_image.jpeg")?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
+                    <a href="/teams/@team.TeamId/@team.Name.MakeSEOFriendlyUrl()" style="font-weight:500; color: white;">
+                        <div class="blog-details">
+                            <div class="blog-caption text-center">
+                                <span style="color:white; text-shadow: 1px 1px 0px #515151;">@team.Name</span>
+                                <h2 style="color:white; text-shadow: 1px 1px 0px #515151;">@team.DisplayName</h2>
+                                <p style="color:white; letter-spacing: 2px; font-size: 12px;text-shadow: 1px 1px 0px #515151;text-align:center;font-weight:800;">MORE</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
         }
-    }
-</div>
+    </div>
+
+</section>
