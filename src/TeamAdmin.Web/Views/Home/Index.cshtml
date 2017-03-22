@@ -17,7 +17,7 @@
         </p>
     </div>
     <div class="col-sm-4">
-        <h4>Sanctioned By:</h4>
+        <h4>Sanctioned By</h4>
         <img class="osa-logo" src="~/images/osa-logo.svg" alt="Ontario Soccer Association">
         <img class="canada-logo" src="~/images/canada.png" alt="Canada">
         <img class="ltpd-logo" src="~/images/ltpd.png" alt="LTPD">
@@ -25,24 +25,20 @@
     </div>
 </div>
 <section class="blog-section">
-    <div class="row">
-        <div class="container">
-            <div class="col-sm-12">
-                <h3>Latest News</h3>
-            </div>
-        </div>
+    <div class="container">
+        <h3>Latest News</h3>
 
         @if (Model != null && Model.News != null && Model.News.Count() > 0)
         {
             @foreach (var news in Model.News.Take(6))
             {
-                <div class="blog-post" style="padding: 50px 10px; background:linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),url('@news.Media.FirstOrDefault().Url?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
+                <div class="blog-post effect-lily" style="padding: 50px 10px; background:linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),url('@news.Media.FirstOrDefault().Url?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
                     <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()" style="font-weight:500; color: white;">
-                        <div class="blog-details">                            
+                        <div class="blog-details">
                             <div class="blog-caption text-center">
                                 <span style="color:white; text-shadow: 1px 1px 0px #515151;">@news.DatePublished.ToString("MMM dd yyyy")</span>
                                 <h2 style="color:white; text-shadow: 1px 1px 0px #515151;">@news.Title</h2>
-                                <p style="color:white; letter-spacing: 2px; font-size: 12px;text-shadow: 1px 1px 0px #515151;">READ MORE</p>
+                                <p style="background-color:rgba(0,0,0,0.8);color:white; letter-spacing: 2px; font-size: 12px;text-shadow: 1px 1px 0px #515151;text-align:center;font-weight:800;">READ MORE</p>
                             </div>
                         </div>
                     </a>

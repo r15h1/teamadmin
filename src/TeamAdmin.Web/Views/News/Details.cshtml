@@ -18,7 +18,7 @@
                     foreach (var media in Model.Media)
                     {
                         <div class='item @(j == 0 ? "active" : "")'>
-                            <img style="max-height:400px;" src="@media.Url?w=230&h=70&mode=crop" srcset="@media.Url?w=1200&h=400&mode=crop 1200w, @media.Url?w=800&h=266&mode=crop 800w, @media.Url?w=600&h=200&mode=crop 600w, @media.Url?w=400&h=133&mode=crop 400w" alt="@Model.Title" class="img-responsive" />
+                            <img style="max-height:400px;" src="@media.Url?w=230&h=70&mode=crop" srcset="@media.Url?w=1200&h=400&mode=crop 1200w, @media.Url?w=800&h=266&mode=crop 800w, @media.Url?w=600&h=200&mode=crop 600w, @media.Url?w=400&h=133&mode=crop 400w" alt="@Model.Title" class="img-responsive center-block" />
                         </div>
                         j++;
                     }

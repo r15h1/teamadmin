@@ -1,19 +1,24 @@
 ﻿@model IEnumerable<TeamAdmin.Core.Post>
 @using TeamAdmin.Lib.Util
-<div class="container">
-    <h2 style="border-bottom:solid 1px rgba(255,255,255,0.3);">Latest News</h2>
-    <div class="row">
+<section class="blog-section">
+    <div class="container">
+        <h3>Latest News</h3>
         @if (Model != null && Model.Count() > 0)
         {
             @foreach (var news in Model)
             {
-                <div class="col-sm-6 col-md-3 tile">
-                    <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()" class="thumbnail">
-                        <img class="media-object" src="@news.Media.FirstOrDefault().Url?w=200&h=117&mode=crop" srcset="@news.Media.FirstOrDefault().Url?w=200&h=117&mode=crop 200w, @news.Media.FirstOrDefault().Url?w=360&h=210&mode=crop 360w" alt="@news.Title">
-                        <h4 class="caption media-heading">@news.Title</h4>
+                <div class="blog-post effect-lily" style="padding: 50px 10px; background:linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),url('@news.Media.FirstOrDefault().Url?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
+                    <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()" style="font-weight:500; color: white;">
+                        <div class="blog-details">
+                            <div class="blog-caption text-center">
+                                <span style="color:white; text-shadow: 1px 1px 0px #515151;">@news.DatePublished.ToString("MMM dd yyyy")</span>
+                                <h2 style="color:white; text-shadow: 1px 1px 0px #515151;">@news.Title</h2>
+                                <p style="background-color:rgba(0,0,0,0.8);color:white; letter-spacing: 2px; font-size: 12px;text-shadow: 1px 1px 0px #515151;text-align:center;font-weight:800;">READ MORE</p>
+                            </div>
+                        </div>
                     </a>
                 </div>
             }
         }
     </div>
-</div>
+</section>
