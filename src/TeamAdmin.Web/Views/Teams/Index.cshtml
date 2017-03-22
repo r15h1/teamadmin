@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<TeamAdmin.Core.Team>
 @using TeamAdmin.Lib.Util
-
-<h2 style="border-bottom:solid 1px rgba(255,255,255,0.3);">Teams</h2>
 <div class="container">
+    <h2 style="border-bottom:solid 1px rgba(255,255,255,0.3);">Teams</h2>
+
     @if (Model != null && Model.Count() > 0)
     {
         @foreach (var team in Model)

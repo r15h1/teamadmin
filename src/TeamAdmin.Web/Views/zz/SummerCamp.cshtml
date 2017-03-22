@@ -1,7 +1,7 @@
 @model TeamAdmin.Lib.zz.SummerCamp
 @using TeamAdmin.Lib.Util
 <div class="container">
-    <h2>Summer Camp Registration</h2>
+    <h2>Rangers FC Summer Camp Registration</h2>
 
     @if (Model != null)
     {
@@ -11,6 +11,7 @@
     }
     else
     {
+        <p>Mapola FC has partnered with Scottish giants Rangers FC and is organizing a Summer Camp between July 10th to July 14th 2017.</p><p> Join us to train and play the Rangers way.</p>
         <form asp-action="SummerCamp" method="post" id="myform">
             <div class="form-horizontal">
                 <fieldset>
