@@ -1,320 +1,321 @@
 @model TeamAdmin.Lib.zz.SummerCamp
 @using TeamAdmin.Lib.Util
-<h2>Summer Camp Registration</h2>
+<div class="container">
+    <h2>Summer Camp Registration</h2>
 
-@if (Model != null)
-{
-    <p>Thank you for registering for the Rangers FC summer camp!</p>
-    <p>Should you have any question, please do not hesitate to contact us.</p>
-    <p>Have a great day ahead, see you soon!</p>
-}
-else
-{
-    <form asp-action="SummerCamp" method="post" id="myform">
-        <div class="form-horizontal">
-            <fieldset>
-                <legend>Camp Selections</legend>
-                <span>Please check one or more options</span>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <input asp-for="Ages5To7_9amTo11am_120" type="checkbox" /><label asp-for="Ages5To7_9amTo11am_120"></label>
-                        <span asp-validation-for="Ages5To7_9amTo11am_120" class="text-danger" />
+    @if (Model != null)
+    {
+        <p>Thank you for registering for the Rangers FC summer camp!</p>
+        <p>Should you have any question, please do not hesitate to contact us.</p>
+        <p>Have a great day ahead, see you soon!</p>
+    }
+    else
+    {
+        <form asp-action="SummerCamp" method="post" id="myform">
+            <div class="form-horizontal">
+                <fieldset>
+                    <legend>Camp Selections</legend>
+                    <span>Please check one or more options</span>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <input asp-for="Ages5To7_9amTo11am_120" type="checkbox" /><label asp-for="Ages5To7_9amTo11am_120"></label>
+                            <span asp-validation-for="Ages5To7_9amTo11am_120" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <input asp-for="Ages8To18_9amTo12pm_150" type="checkbox" /><label asp-for="Ages8To18_9amTo12pm_150"></label>
-                        <span asp-validation-for="Ages8To18_9amTo12pm_150" class="text-danger" />
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <input asp-for="Ages8To18_9amTo12pm_150" type="checkbox" /><label asp-for="Ages8To18_9amTo12pm_150"></label>
+                            <span asp-validation-for="Ages8To18_9amTo12pm_150" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <input asp-for="Ages8To18_9amTo3pm_250" type="checkbox" /><label asp-for="Ages8To18_9amTo3pm_250"></label>
-                        <span asp-validation-for="Ages8To18_9amTo3pm_250" class="text-danger" />
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <input asp-for="Ages8To18_9amTo3pm_250" type="checkbox" /><label asp-for="Ages8To18_9amTo3pm_250"></label>
+                            <span asp-validation-for="Ages8To18_9amTo3pm_250" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <input asp-for="TeamTraining_4pmTo6pm_45" type="checkbox" /><label asp-for="TeamTraining_4pmTo6pm_45"></label>
-                        <span asp-validation-for="TeamTraining_4pmTo6pm_45" class="text-danger" />
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <input asp-for="TeamTraining_4pmTo6pm_45" type="checkbox" /><label asp-for="TeamTraining_4pmTo6pm_45"></label>
+                            <span asp-validation-for="TeamTraining_4pmTo6pm_45" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <input asp-for="CoachesClinics_6pmTo8pm_110" type="checkbox" /><label asp-for="CoachesClinics_6pmTo8pm_110"></label>
-                        <span asp-validation-for="CoachesClinics_6pmTo8pm_110" class="text-danger" />
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <input asp-for="CoachesClinics_6pmTo8pm_110" type="checkbox" /><label asp-for="CoachesClinics_6pmTo8pm_110"></label>
+                            <span asp-validation-for="CoachesClinics_6pmTo8pm_110" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <input asp-for="ParentsEducationSession" type="checkbox" /><label asp-for="ParentsEducationSession"></label>
-                        <span asp-validation-for="ParentsEducationSession" class="text-danger" />
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <input asp-for="ParentsEducationSession" type="checkbox" /><label asp-for="ParentsEducationSession"></label>
+                            <span asp-validation-for="ParentsEducationSession" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-            </fieldset>
+                </fieldset>
 
-            <fieldset>
-                <legend>Player Information</legend>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerFullName" class="control-label"></label>
-                    <div>
-                        <input asp-for="PlayerFullName" class="form-control" required />
-                        <span asp-validation-for="PlayerFullName" class="text-danger" />
+                <fieldset>
+                    <legend>Player Information</legend>
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerFullName" class="control-label"></label>
+                        <div>
+                            <input asp-for="PlayerFullName" class="form-control" required />
+                            <span asp-validation-for="PlayerFullName" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="DateOfBirth" class="control-label"></label>
-                    <div>
-                        <input asp-for="DateOfBirth" class="form-control" style="min-width:200px !important;" type="date" required />
-                        <span asp-validation-for="DateOfBirth" class="text-danger" />
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="DateOfBirth" class="control-label"></label>
+                        <div>
+                            <input asp-for="DateOfBirth" class="form-control" style="min-width:200px !important;" type="date" required />
+                            <span asp-validation-for="DateOfBirth" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="StreetAddress" class="control-label"></label>
-                    <div>
-                        <input asp-for="StreetAddress" class="form-control" required />
-                        <span asp-validation-for="StreetAddress" class="text-danger" />
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="StreetAddress" class="control-label"></label>
+                        <div>
+                            <input asp-for="StreetAddress" class="form-control" required />
+                            <span asp-validation-for="StreetAddress" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AddressLine2" class="control-label"></label>
-                    <div>
-                        <input asp-for="AddressLine2" class="form-control" />
-                        <span asp-validation-for="AddressLine2" class="text-danger" />
+                    <div class="form-group">
+                        <label asp-for="AddressLine2" class="control-label"></label>
+                        <div>
+                            <input asp-for="AddressLine2" class="form-control" />
+                            <span asp-validation-for="AddressLine2" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="City" class="control-label"></label>
-                    <div>
-                        <input asp-for="City" class="form-control" required />
-                        <span asp-validation-for="City" class="text-danger" />
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="City" class="control-label"></label>
+                        <div>
+                            <input asp-for="City" class="form-control" required />
+                            <span asp-validation-for="City" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="State" class="control-label"></label>
-                    <div>
-                        <input asp-for="State" class="form-control" required />
-                        <span asp-validation-for="State" class="text-danger" />
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="State" class="control-label"></label>
+                        <div>
+                            <input asp-for="State" class="form-control" required />
+                            <span asp-validation-for="State" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PostalOrZipCode" class="control-label"></label>
-                    <div>
-                        <input asp-for="PostalOrZipCode" class="form-control" required />
-                        <span asp-validation-for="PostalOrZipCode" class="text-danger" />
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PostalOrZipCode" class="control-label"></label>
+                        <div>
+                            <input asp-for="PostalOrZipCode" class="form-control" required />
+                            <span asp-validation-for="PostalOrZipCode" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="Country" class="control-label"></label>
-                    <div>
-                        <input asp-for="Country" class="form-control" required />
-                        <span asp-validation-for="Country" class="text-danger" />
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="Country" class="control-label"></label>
+                        <div>
+                            <input asp-for="Country" class="form-control" required />
+                            <span asp-validation-for="Country" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="Email" class="control-label"></label>
-                    <div>
-                        <input asp-for="Email" class="form-control" type="email" required />
-                        <span asp-validation-for="Email" class="text-danger" />
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="Email" class="control-label"></label>
+                        <div>
+                            <input asp-for="Email" class="form-control" type="email" required />
+                            <span asp-validation-for="Email" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="Phone" class="control-label"></label>
-                    <div>
-                        <input asp-for="Phone" class="form-control" type="tel" required />
-                        <span asp-validation-for="Phone" class="text-danger" />
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="Phone" class="control-label"></label>
+                        <div>
+                            <input asp-for="Phone" class="form-control" type="tel" required />
+                            <span asp-validation-for="Phone" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="TShirtSize" class="control-label"></label>
-                    <div>
-                        <select asp-for="TShirtSize" class="form-control" required>
-                            <option value="" disabled selected>Select</option>
-                            <option>YXS</option>
-                            <option>YS</option>
-                            <option>YM</option>
-                            <option>YL</option>
-                            <option>YXL</option>
+                    <div class="form-group">
+                        <label asp-for="TShirtSize" class="control-label"></label>
+                        <div>
+                            <select asp-for="TShirtSize" class="form-control" required>
+                                <option value="" disabled selected>Select</option>
+                                <option>YXS</option>
+                                <option>YS</option>
+                                <option>YM</option>
+                                <option>YL</option>
+                                <option>YXL</option>
 
-                            <option>AS</option>
-                            <option>AM</option>
-                            <option>AL</option>
-                            <option>AXL</option>
-                        </select>
-                        <span asp-validation-for="TShirtSize" class="text-danger" />
+                                <option>AS</option>
+                                <option>AM</option>
+                                <option>AL</option>
+                                <option>AXL</option>
+                            </select>
+                            <span asp-validation-for="TShirtSize" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="MedicalCondition" class="control-label"></label>
-                    <div>
-                        <input asp-for="MedicalCondition" class="form-control" required />
-                        <span asp-validation-for="MedicalCondition" class="text-danger" />
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="MedicalCondition" class="control-label"></label>
+                        <div>
+                            <input asp-for="MedicalCondition" class="form-control" required />
+                            <span asp-validation-for="MedicalCondition" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Gender" class="control-label"></label>
-                    <div>
-                        <select asp-for="Gender" class="form-control" required>
-                            <option value="" disabled selected>Select</option>
-                            <option>Male</option>
-                            <option>Female</option>
-                        </select>
-                        <span asp-validation-for="Gender" class="text-danger" />
+                    <div class="form-group">
+                        <label asp-for="Gender" class="control-label"></label>
+                        <div>
+                            <select asp-for="Gender" class="form-control" required>
+                                <option value="" disabled selected>Select</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerGradeAndSchool" class="control-label"></label>
-                    <div>
-                        <input asp-for="PlayerGradeAndSchool" class="form-control" required />
-                        <span asp-validation-for="PlayerGradeAndSchool" class="text-danger" />
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerGradeAndSchool" class="control-label"></label>
+                        <div>
+                            <input asp-for="PlayerGradeAndSchool" class="form-control" required />
+                            <span asp-validation-for="PlayerGradeAndSchool" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="HowDidYouHearAboutSummerCamp" class="control-label"></label>
-                    <div>
-                        <input asp-for="HowDidYouHearAboutSummerCamp" class="form-control" required />
-                        <span asp-validation-for="HowDidYouHearAboutSummerCamp" class="text-danger" />
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="HowDidYouHearAboutSummerCamp" class="control-label"></label>
+                        <div>
+                            <input asp-for="HowDidYouHearAboutSummerCamp" class="form-control" required />
+                            <span asp-validation-for="HowDidYouHearAboutSummerCamp" class="text-danger" />
+                        </div>
                     </div>
-                </div>
-            </fieldset>
+                </fieldset>
 
-            <fieldset>
-                <legend>Waivers, Terms and Conditions</legend>
-                <span>*IMPORTANT PLEASE CHECK ALL / Application will not be processed if payment is not made upon completion of application</span>
-                <div class="form-group">
-                    <div>
-                        <div class="checkbox">
-                            <input asp-for="WaiverForm" required/>
-                            <label asp-for="WaiverForm"></label>
-                            <br /><span asp-validation-for="WaiverForm" class="text-danger"/>
+                <fieldset>
+                    <legend>Waivers, Terms and Conditions</legend>
+                    <span>*IMPORTANT PLEASE CHECK ALL / Application will not be processed if payment is not made upon completion of application</span>
+                    <div class="form-group">
+                        <div>
+                            <div class="checkbox">
+                                <input asp-for="WaiverForm" required />
+                                <label asp-for="WaiverForm"></label>
+                                <br /><span asp-validation-for="WaiverForm" class="text-danger" />
+                            </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div>
+                            <div class="checkbox">
+                                <input asp-for="MapolaFCRangersFCCanUseChildImage" required />
+                                <label asp-for="MapolaFCRangersFCCanUseChildImage"></label>
+                                <br /><span asp-validation-for="WaiverForm" class="text-danger" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <div class="checkbox">
+                                <input asp-for="ParentLegalGuardianAffirmParticipationOfChild" required />
+                                <label asp-for="ParentLegalGuardianAffirmParticipationOfChild"></label>
+                                <br /><span asp-validation-for="WaiverForm" class="text-danger" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <div class="checkbox">
+                                <input asp-for="CancellationPolicy" required />
+                                <label asp-for="CancellationPolicy"></label><br />
+                                <span asp-validation-for="WaiverForm" class="text-danger" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <div class="checkbox">
+                                <input asp-for="FullPaymentAgreementWithin24HrsOfApplication" required />
+                                <label asp-for="FullPaymentAgreementWithin24HrsOfApplication"></label><br />
+                                <span asp-validation-for="WaiverForm" class="text-danger" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <div class="checkbox">
+                                <input asp-for="TypesOfPaymentAccepted" required />
+                                <label asp-for="TypesOfPaymentAccepted"></label><br />
+                                <span asp-validation-for="WaiverForm" class="text-danger" />
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <br />
+                <div class="form-group">
+                    <div class="g-recaptcha" data-sitekey="@Settings.GoogleRecaptchaDataSiteKey"></div>
+                    <div id="captchavalidation" class="text-danger" style="display:none;padding-bottom:0;margin-bottom:0;">Please click on the "I'm not a robot" checkbox</div>
                 </div>
                 <div class="form-group">
                     <div>
-                        <div class="checkbox">
-                            <input asp-for="MapolaFCRangersFCCanUseChildImage" required/>
-                            <label asp-for="MapolaFCRangersFCCanUseChildImage"></label>
-                            <br /><span asp-validation-for="WaiverForm" class="text-danger" />
-                        </div>
+                        <input id="Register" type="submit" value="Register" class="btn btn-default" />
                     </div>
                 </div>
-                <div class="form-group">
-                    <div>
-                        <div class="checkbox">
-                            <input asp-for="ParentLegalGuardianAffirmParticipationOfChild" required/>
-                            <label asp-for="ParentLegalGuardianAffirmParticipationOfChild"></label>
-                            <br /><span asp-validation-for="WaiverForm" class="text-danger" />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div>
-                        <div class="checkbox">
-                            <input asp-for="CancellationPolicy" required/>
-                            <label asp-for="CancellationPolicy"></label><br />
-                            <span asp-validation-for="WaiverForm" class="text-danger" />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div>
-                        <div class="checkbox">
-                            <input asp-for="FullPaymentAgreementWithin24HrsOfApplication" required/>
-                            <label asp-for="FullPaymentAgreementWithin24HrsOfApplication"></label><br />
-                            <span asp-validation-for="WaiverForm" class="text-danger" />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div>
-                        <div class="checkbox">
-                            <input asp-for="TypesOfPaymentAccepted" required/>
-                            <label asp-for="TypesOfPaymentAccepted"></label><br />
-                            <span asp-validation-for="WaiverForm" class="text-danger" />
-                        </div>
-                    </div>
-                </div>                
-            </fieldset>
-            <br/>
-            <div class="form-group">
-                <div class="g-recaptcha" data-sitekey="@Settings.GoogleRecaptchaDataSiteKey"></div>
-                <div id="captchavalidation" class="text-danger" style="display:none;padding-bottom:0;margin-bottom:0;">Please click on the "I'm not a robot" checkbox</div>
             </div>
-            <div class="form-group">
-                <div>
-                    <input id="Register" type="submit" value="Register" class="btn btn-default" />
-                </div>
-            </div>
-        </div>
 
-    </form>
-}
-<div>
-    <a href="/" rel="nofollow">Go to Home Page</a>
-</div>
+        </form>
+    }
+    <div>
+        <a href="/" rel="nofollow">Go to Home Page</a>
+    </div>
+    </div>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <script src="~/js/recaptcha.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#Register').click(function () {
+                    var checked1 = $("input[name=Ages5To7_9amTo11am_120]:checked").length;
+                    var checked2 = $("input[name=Ages8To18_9amTo12pm_150]:checked").length;
+                    var checked3 = $("input[name=Ages8To18_9amTo3pm_250]:checked").length;
+                    var checked4 = $("input[name=TeamTraining_4pmTo6pm_45]:checked").length;
+                    var checked5 = $("input[name=CoachesClinics_6pmTo8pm_110]:checked").length;
+                    var checked6 = $("input[name=ParentsEducationSession]:checked").length;
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src='https://www.google.com/recaptcha/api.js'></script>
-    <script src="~/js/recaptcha.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#Register').click(function () {
-                var checked1 = $("input[name=Ages5To7_9amTo11am_120]:checked").length;
-                var checked2 = $("input[name=Ages8To18_9amTo12pm_150]:checked").length;
-                var checked3 = $("input[name=Ages8To18_9amTo3pm_250]:checked").length;
-                var checked4 = $("input[name=TeamTraining_4pmTo6pm_45]:checked").length;
-                var checked5 = $("input[name=CoachesClinics_6pmTo8pm_110]:checked").length;
-                var checked6 = $("input[name=ParentsEducationSession]:checked").length;
+                    if (!checked1 && !checked2 && !checked3 && !checked4 && !checked5 && !checked6) {
+                        alert("You must check at least one item from the camp selections.");
+                        return false;
+                    }
 
-                if (!checked1 && !checked2 && !checked3 && !checked4 && !checked5 && !checked6) {
-                    alert("You must check at least one item from the camp selections.");
-                    return false;
+                });
+            });
+        </script>
+    }
+
+    @section headerlinks{
+        <style>
+            .form-horizontal .form-group {
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            input.form-control {
+                min-width: 100%;
+                width: 100%;
+            }
+
+            .checkbox input[type=checkbox] {
+                padding-top: 5px;
+                margin-left: 0;
+            }
+
+                .checkbox input[type=checkbox] + label {
+                    margin-left: 5px;
                 }
 
-            });
-        });
-    </script>
-}
 
-@section headerlinks{
-    <style>
-        .form-horizontal .form-group {
-            margin-left: 0;
-            margin-right: 0;
-        }
+            fieldset {
+                border: 1px solid #ddd !important;
+                margin-top: 25px !important;
+                /*margin-bottom: 25px !important;*/
+                padding: 10px;
+                position: relative;
+                border-radius: 4px;
+                padding-left: 10px !important;
+            }
 
-        input.form-control {
-            min-width: 100%;
-            width: 100%;
-        }
-
-        .checkbox input[type=checkbox] {
-            padding-top:5px;
-            margin-left:0;
-        }
-
-        .checkbox input[type=checkbox] + label {
-            margin-left:5px;
-        }
-
-
-        fieldset {
-            border: 1px solid #ddd !important;
-            margin-top: 25px !important;
-            /*margin-bottom: 25px !important;*/
-            padding: 10px;
-            position: relative;
-            border-radius: 4px;
-            padding-left: 10px !important;
-        }
-
-        legend {
-            font-size: 1.5em;
-            font-weight: bold;
-            width: auto;
-            border-bottom: none;
-        }
-    </style>
-}
+            legend {
+                font-size: 1.5em;
+                font-weight: bold;
+                width: auto;
+                border-bottom: none;
+            }
+        </style>
+    }

@@ -1,27 +1,29 @@
 ﻿@model IEnumerable<TeamAdmin.Core.Post>
-<h1>News</h1>
-<div class="btn-toolbar" role="toolbar"><a class="btn btn-default pull-right" asp-controller="AdminNews" asp-action="Add">Add News</a></div>
-@if (Model != null && Model.Count() > 0)
-{
-    <div class="table-responsive">
-        <table  class="table table-bordered table-striped table-hover">
-            <thead>
-                <tr class="bg-primary">
-                    <th class="col-md-1 col-sm-1 col-xs-1">Id</th>
-                    <th class="col-md-4 col-sm-4 col-xs-3">Title</th>
-                    <th class="col-md-1 col-sm-1 col-xs-1">Status</th>
-                    <th class="col-md-1 col-sm-1 col-xs-1">Edit</th>
-                </tr>
-            </thead>
-            @foreach (var news in Model)
-            {
-                <tr>
-                    <td>@news.PostId</td>
-                    <td>@news.Title</td>
-                    <td>@news.PostStatus.ToString()</td>
-                    <td class="text-center"><a href="/admin/news/@news.PostId"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="edit"></i></a></td>
-                </tr>
-            }
-        </table>
-    </div>
-}
+<div class="container">
+    <h1>News</h1>
+    <div class="btn-toolbar" role="toolbar"><a class="btn btn-default pull-right" asp-controller="AdminNews" asp-action="Add">Add News</a></div>
+    @if (Model != null && Model.Count() > 0)
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr class="bg-primary">
+                        <th class="col-md-1 col-sm-1 col-xs-1">Id</th>
+                        <th class="col-md-4 col-sm-4 col-xs-3">Title</th>
+                        <th class="col-md-1 col-sm-1 col-xs-1">Status</th>
+                        <th class="col-md-1 col-sm-1 col-xs-1">Edit</th>
+                    </tr>
+                </thead>
+                @foreach (var news in Model)
+                {
+                    <tr>
+                        <td>@news.PostId</td>
+                        <td>@news.Title</td>
+                        <td>@news.PostStatus.ToString()</td>
+                        <td class="text-center"><a href="/admin/news/@news.PostId"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="edit"></i></a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+</div>

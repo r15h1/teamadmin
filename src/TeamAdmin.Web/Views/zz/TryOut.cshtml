@@ -1,313 +1,312 @@
 @model TeamAdmin.Lib.zz.TryOutModel
 @using TeamAdmin.Lib.Util
-<h1>Spring 2017 Tryout</h1>
+<div class="container">
+    <h1>Spring 2017 Tryout</h1>
 
 
-@if (Model != null)
-{
-    <p>Thank you for registering for the try out!</p>
-    <p>Should you have any question, please do not hesitate to contact us.</p>
-    <p>Have a great day ahead, see you soon!</p>
-    <a rel="nofollow" href="/">Go to Home Page</a>
-}
-else
-{
-<form method="post" id="myform">
-    <div class="form-horizontal">
-        <h2 style="border:none;">Creditview/ Sandalwood Sportsfield 10530 Creditview Rd, Brampton, ON L7A</h2>
-        <h3 style="border:none;">Tuesdays April 4th, 11th, 18th and 25th<br/>Ages 7 - 12 Boys and Girls  (Time 6pm-8pm )<br/> Ages 13 - 16 Boys and Girls (Time 8pm-9:45pm )</h3>
-        
-        <fieldset>
-            <legend>Academy Selection</legend>
-            <div class="form-group">
-                <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="Academy" class="control-label"></label>
-                <div>
-                    <select asp-for="Academy" class="form-control" required>
-                        <option value="" disabled selected>Select Academy</option>
-                        <option>Full Time Academy</option>
-                        <option>Practice Only Academy</option>
-                    </select>
-                    <span asp-validation-for="Academy" class="text-danger" />
+    @if (Model != null)
+    {
+        <p>Thank you for registering for the try out!</p>
+        <p>Should you have any question, please do not hesitate to contact us.</p>
+        <p>Have a great day ahead, see you soon!</p>
+        <a rel="nofollow" href="/">Go to Home Page</a>
+    }
+    else
+    {
+        <form method="post" id="myform">
+            <div class="form-horizontal">
+                <h2 style="border:none;">Creditview/ Sandalwood Sportsfield 10530 Creditview Rd, Brampton, ON L7A</h2>
+                <h3 style="border:none;">Tuesdays April 4th, 11th, 18th and 25th<br />Ages 7 - 12 Boys and Girls  (Time 6pm-8pm )<br /> Ages 13 - 16 Boys and Girls (Time 8pm-9:45pm )</h3>
+
+                <fieldset>
+                    <legend>Academy Selection</legend>
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="Academy" class="control-label"></label>
+                        <div>
+                            <select asp-for="Academy" class="form-control" required>
+                                <option value="" disabled selected>Select Academy</option>
+                                <option>Full Time Academy</option>
+                                <option>Practice Only Academy</option>
+                            </select>
+                            <span asp-validation-for="Academy" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="AgeGroup" class="control-label"></label>
+                        <div>
+                            <select asp-for="AgeGroup" class="form-control" required>
+                                <option value="" disabled selected>Select Age Group</option>
+                                <option>U8</option>
+                                <option>U9</option>
+                                <option>U10</option>
+                                <option>U11</option>
+                                <option>U12</option>
+                                <option>U13</option>
+                                <option>U14</option>
+                                <option>U15</option>
+                                <option>U16</option>
+                                <option>U17</option>
+                                <option>U18</option>
+                            </select>
+                            <span asp-validation-for="AgeGroup" class="text-danger" />
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Player's Information</legend>
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerGender" class="control-label"></label>
+                        <div>
+                            <select asp-for="PlayerGender" class="form-control" required>
+                                <option value="" disabled selected>Select Gender</option>
+                                <option>Boys</option>
+                                <option>Girls</option>
+                            </select>
+                            <span asp-validation-for="PlayerGender" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PlayerRegistrationNumber" class="control-label"></label>
+                        <div>
+                            <input asp-for="PlayerRegistrationNumber" class="form-control" placeholder="player registration # if any" />
+                            <span asp-validation-for="PlayerRegistrationNumber" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerLastName" class="control-label"></label>
+                        <div>
+                            <input asp-for="PlayerLastName" class="form-control" placeholder="player's last name" required />
+                            <span asp-validation-for="PlayerLastName" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerFirstName" class="control-label"></label>
+                        <div>
+                            <input asp-for="PlayerFirstName" class="form-control" placeholder="player's first name'" required />
+                            <span asp-validation-for="PlayerFirstName" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="Address" class="control-label"></label>
+                        <div>
+                            <input asp-for="Address" class="form-control" placeholder="street address" required />
+                            <span asp-validation-for="Address" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="City" class="control-label"></label>
+                        <div>
+                            <input asp-for="City" class="form-control" placeholder="city" required />
+                            <span asp-validation-for="City" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="Province" class="control-label"></label>
+                        <div>
+                            <select asp-for="Province" class="form-control" required>
+                                <option value="" disabled selected>Select Province</option>
+                                <option>ON</option>
+                                <option>AB</option>
+                                <option>BC</option>
+                                <option>MB</option>
+                                <option>NB</option>
+                                <option>NL</option>
+                                <option>NS</option>
+                                <option>NT</option>
+                                <option>PEI</option>
+                                <option>QC</option>
+                                <option>SK</option>
+                                <option>YK</option>
+                                <option>NWT</option>
+                            </select>
+                            <span asp-validation-for="Province" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PrimaryContactNumber" class="control-label"></label>
+                        <div>
+                            <input asp-for="PrimaryContactNumber" class="form-control" style="min-width:200px !important;" type="tel" placeholder="primary telephone #" required />
+                            <span asp-validation-for="PrimaryContactNumber" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SecondaryContactNumber" class="control-label"></label>
+                        <div>
+                            <input asp-for="SecondaryContactNumber" class="form-control" style="min-width:200px !important;" type="tel" />
+                            <span asp-validation-for="SecondaryContactNumber" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerDateOfBirth" class="control-label"></label>
+                        <div>
+                            <input asp-for="PlayerDateOfBirth" class="form-control" style="min-width:200px !important;" type="date" required />
+                            <span asp-validation-for="PlayerDateOfBirth" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerEmail" class="control-label"></label>
+                        <div>
+                            <input asp-for="PlayerEmail" class="form-control" style="min-width:200px !important;" type="email" required />
+                            <span asp-validation-for="PlayerEmail" class="text-danger" />
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Guardian Information</legend>
+
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PrimaryGuardianFullName" class="control-label"></label>
+                        <div>
+                            <input asp-for="PrimaryGuardianFullName" class="form-control" required />
+                            <span asp-validation-for="PrimaryGuardianFullName" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PrimaryGuardianContactNumber" class="control-label"></label>
+                        <div>
+                            <input asp-for="PrimaryGuardianContactNumber" class="form-control" style="min-width:200px !important;" type="tel" required />
+                            <span asp-validation-for="PrimaryGuardianContactNumber" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PrimaryGuardianAltContactNumber" class="control-label"></label>
+                        <div>
+                            <input asp-for="PrimaryGuardianAltContactNumber" class="form-control" style="min-width:200px !important;" type="tel" />
+                            <span asp-validation-for="PrimaryGuardianAltContactNumber" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PrimaryGuardianEmail" class="control-label"></label>
+                        <div>
+                            <input asp-for="PrimaryGuardianEmail" class="form-control" style="min-width:200px !important;" type="email" required />
+                            <span asp-validation-for="PrimaryGuardianEmail" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SecondaryGuardianFullName" class="control-label"></label>
+                        <div>
+                            <input asp-for="SecondaryGuardianFullName" class="form-control" />
+                            <span asp-validation-for="SecondaryGuardianFullName" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SecondaryGuardianContactNumber" class="control-label"></label>
+                        <div>
+                            <input asp-for="SecondaryGuardianContactNumber" class="form-control" style="min-width:200px !important;" type="tel" />
+                            <span asp-validation-for="SecondaryGuardianContactNumber" class="text-danger" />
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Emergency Contact</legend>
+
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="EmergencyContactFullName" class="control-label"></label>
+                        <div>
+                            <input asp-for="EmergencyContactFullName" class="form-control" required />
+                            <span asp-validation-for="EmergencyContactFullName" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="EmergencyContactNumber" class="control-label"></label>
+                        <div>
+                            <input asp-for="EmergencyContactNumber" class="form-control" style="min-width:200px !important;" type="tel" required />
+                            <span asp-validation-for="EmergencyContactNumber" class="text-danger" />
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Medical Information</legend>
+                    <div class="form-group">
+                        @*<span style="font-size:1.4em;font-weight:600">* </span>*@<label asp-for="DoctorFullName" class="control-label"></label>
+                        <div>
+                            <input asp-for="DoctorFullName" class="form-control" />
+                            <span asp-validation-for="DoctorFullName" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @*<span style="font-size:1.4em;font-weight:600">* </span>*@<label asp-for="DoctorContactNumber" class="control-label"></label>
+                        <div>
+                            <input asp-for="DoctorContactNumber" class="form-control" style="min-width:200px !important;" type="tel" />
+                            <span asp-validation-for="DoctorContactNumber" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MedicalConditions" class="control-label"></label>
+                        <div>
+                            <input asp-for="MedicalConditions" class="form-control" />
+                            <span asp-validation-for="MedicalConditions" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>As the parent or legal guardian of the above-named player, I hereby give consent for emergency medical care prescribed by a duly licensed Doctor of Medicine or Doctor of Dentistry. This care may be given under whatever conditions are necessary to preserve the life, limb or well-being of my dependent.</label>
+                        <div>
+                            <input asp-for="ConsentToMedicalTreatmentOfMinor" type="checkbox" required />
+                            <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="ConsentToMedicalTreatmentOfMinor" class="control-label"></label>
+                            <br /><span asp-validation-for="ConsentToMedicalTreatmentOfMinor" class="text-danger" />
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="form-group">
+                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="HowDidYouHearAboutUs" class="control-label"></label>
+                    <div>
+                        <input asp-for="HowDidYouHearAboutUs" class="form-control" required />
+                        <span asp-validation-for="HowDidYouHearAboutUs" class="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="g-recaptcha" data-sitekey="@Settings.GoogleRecaptchaDataSiteKey"></div>
+                    <div id="captchavalidation" class="text-danger" style="display:none;padding-bottom:0;margin-bottom:0;">Please click on the "I'm not a robot" checkbox</div>
+                </div>
+
+
+                <div class="form-group">
+                    <div>
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="AgeGroup" class="control-label"></label>
-                <div>
-                    <select asp-for="AgeGroup" class="form-control" required>
-                        <option value="" disabled selected>Select Age Group</option>
-                        <option>U8</option>
-                        <option>U9</option>
-                        <option>U10</option>
-                        <option>U11</option>
-                        <option>U12</option>
-                        <option>U13</option>
-                        <option>U14</option>
-                        <option>U15</option>
-                        <option>U16</option>
-                        <option>U17</option>
-                        <option>U18</option>
-                    </select>
-                    <span asp-validation-for="AgeGroup" class="text-danger" />
-                </div>
-            </div>
-            </fieldset>
-            <fieldset>
-                <legend>Player's Information</legend>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerGender" class="control-label"></label>
-                    <div>
-                        <select asp-for="PlayerGender" class="form-control" required>
-                            <option value="" disabled selected>Select Gender</option>
-                            <option>Boys</option>
-                            <option>Girls</option>
-                        </select>
-                        <span asp-validation-for="PlayerGender" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PlayerRegistrationNumber" class="control-label"></label>
-                    <div>
-                        <input asp-for="PlayerRegistrationNumber" class="form-control" placeholder="player registration # if any"/>
-                        <span asp-validation-for="PlayerRegistrationNumber" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerLastName" class="control-label"></label>
-                    <div>
-                        <input asp-for="PlayerLastName" class="form-control" placeholder="player's last name" required/>
-                        <span asp-validation-for="PlayerLastName" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerFirstName" class="control-label"></label>
-                    <div>
-                        <input asp-for="PlayerFirstName" class="form-control" placeholder="player's first name'" required/>
-                        <span asp-validation-for="PlayerFirstName" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="Address" class="control-label"></label>
-                    <div>
-                        <input asp-for="Address" class="form-control" placeholder="street address" required/>
-                        <span asp-validation-for="Address" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="City" class="control-label"></label>
-                    <div>
-                        <input asp-for="City" class="form-control" placeholder="city" required/>
-                        <span asp-validation-for="City" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="Province" class="control-label"></label>
-                    <div>
-                        <select asp-for="Province" class="form-control" required>
-                            <option value="" disabled selected>Select Province</option>
-                            <option>ON</option>
-                            <option>AB</option>
-                            <option>BC</option>
-                            <option>MB</option>
-                            <option>NB</option>
-                            <option>NL</option>
-                            <option>NS</option>
-                            <option>NT</option>
-                            <option>PEI</option>
-                            <option>QC</option>
-                            <option>SK</option>
-                            <option>YK</option>
-                            <option>NWT</option>
-                        </select>
-                        <span asp-validation-for="Province" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PrimaryContactNumber" class="control-label"></label>
-                    <div>
-                        <input asp-for="PrimaryContactNumber" class="form-control" style="min-width:200px !important;" type="tel" placeholder="primary telephone #" required/>
-                        <span asp-validation-for="PrimaryContactNumber" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="SecondaryContactNumber" class="control-label"></label>
-                    <div>
-                        <input asp-for="SecondaryContactNumber" class="form-control" style="min-width:200px !important;" type="tel"/>
-                        <span asp-validation-for="SecondaryContactNumber" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerDateOfBirth" class="control-label"></label>
-                    <div>
-                        <input asp-for="PlayerDateOfBirth" class="form-control" style="min-width:200px !important;" type="date" required/>
-                        <span asp-validation-for="PlayerDateOfBirth" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PlayerEmail" class="control-label"></label>
-                    <div>
-                        <input asp-for="PlayerEmail" class="form-control" style="min-width:200px !important;" type="email" required/>
-                        <span asp-validation-for="PlayerEmail" class="text-danger" />
-                    </div>
-                </div>
-            </fieldset>
+        </form>
+    }
+    </div>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <script src="~/js/recaptcha.js"></script>
+    }
 
-            <fieldset>
-                <legend>Guardian Information</legend>
+    @section headerlinks{
+        <style>
+            .form-horizontal .form-group {
+                margin-left: 0;
+                margin-right: 0;
+            }
 
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PrimaryGuardianFullName" class="control-label"></label>
-                    <div>
-                        <input asp-for="PrimaryGuardianFullName" class="form-control" required/>
-                        <span asp-validation-for="PrimaryGuardianFullName" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PrimaryGuardianContactNumber" class="control-label"></label>
-                    <div>
-                        <input asp-for="PrimaryGuardianContactNumber" class="form-control" style="min-width:200px !important;" type="tel" required/>
-                        <span asp-validation-for="PrimaryGuardianContactNumber" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PrimaryGuardianAltContactNumber" class="control-label"></label>
-                    <div>
-                        <input asp-for="PrimaryGuardianAltContactNumber" class="form-control" style="min-width:200px !important;" type="tel"/>
-                        <span asp-validation-for="PrimaryGuardianAltContactNumber" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="PrimaryGuardianEmail" class="control-label"></label>
-                    <div>
-                        <input asp-for="PrimaryGuardianEmail" class="form-control" style="min-width:200px !important;" type="email" required/>
-                        <span asp-validation-for="PrimaryGuardianEmail" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="SecondaryGuardianFullName" class="control-label"></label>
-                    <div>
-                        <input asp-for="SecondaryGuardianFullName" class="form-control" />
-                        <span asp-validation-for="SecondaryGuardianFullName" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="SecondaryGuardianContactNumber" class="control-label"></label>
-                    <div>
-                        <input asp-for="SecondaryGuardianContactNumber" class="form-control" style="min-width:200px !important;" type="tel"/>
-                        <span asp-validation-for="SecondaryGuardianContactNumber" class="text-danger" />
-                    </div>
-                </div>
-            </fieldset>
+            input.form-control {
+                min-width: 100%;
+                width: 100%;
+            }
 
-            <fieldset>
-                <legend>Emergency Contact</legend>
+            fieldset {
+                border: 1px solid #ddd !important;
+                margin-top: 25px !important;
+                /*margin-bottom: 25px !important;*/
+                padding: 10px;
+                position: relative;
+                border-radius: 4px;
+                padding-left: 10px !important;
+            }
 
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="EmergencyContactFullName" class="control-label"></label>
-                    <div>
-                        <input asp-for="EmergencyContactFullName" class="form-control" required/>
-                        <span asp-validation-for="EmergencyContactFullName" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="EmergencyContactNumber" class="control-label"></label>
-                    <div>
-                        <input asp-for="EmergencyContactNumber" class="form-control" style="min-width:200px !important;" type="tel" required/>
-                        <span asp-validation-for="EmergencyContactNumber" class="text-danger" />
-                    </div>
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Medical Information</legend>
-                <div class="form-group">
-                    @*<span style="font-size:1.4em;font-weight:600">* </span>*@<label asp-for="DoctorFullName" class="control-label"></label>
-                    <div>
-                        <input asp-for="DoctorFullName" class="form-control" />
-                        <span asp-validation-for="DoctorFullName" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    @*<span style="font-size:1.4em;font-weight:600">* </span>*@<label asp-for="DoctorContactNumber" class="control-label"></label>
-                    <div>
-                        <input asp-for="DoctorContactNumber" class="form-control" style="min-width:200px !important;" type="tel"/>
-                        <span asp-validation-for="DoctorContactNumber" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MedicalConditions" class="control-label"></label>
-                    <div>
-                        <input asp-for="MedicalConditions" class="form-control" />
-                        <span asp-validation-for="MedicalConditions" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>As the parent or legal guardian of the above-named player, I hereby give consent for emergency medical care prescribed by a duly licensed Doctor of Medicine or Doctor of Dentistry. This care may be given under whatever conditions are necessary to preserve the life, limb or well-being of my dependent.</label>
-                    <div>
-                        <input asp-for="ConsentToMedicalTreatmentOfMinor" type="checkbox" required/>
-                        <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="ConsentToMedicalTreatmentOfMinor" class="control-label"></label>
-                        <br/><span asp-validation-for="ConsentToMedicalTreatmentOfMinor" class="text-danger"/>
-                    </div>
-                </div>
-            </fieldset>
-
-            <div class="form-group">
-                <span style="font-size:1.4em;font-weight:600">* </span><label asp-for="HowDidYouHearAboutUs" class="control-label"></label>
-                <div>
-                    <input asp-for="HowDidYouHearAboutUs" class="form-control" required/>
-                    <span asp-validation-for="HowDidYouHearAboutUs" class="text-danger" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="g-recaptcha" data-sitekey="@Settings.GoogleRecaptchaDataSiteKey"></div>
-                <div id="captchavalidation" class="text-danger" style="display:none;padding-bottom:0;margin-bottom:0;">Please click on the "I'm not a robot" checkbox</div>
-            </div>
-
-
-            <div class="form-group">
-                <div>
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>
-</div>
-</form>
-}
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src='https://www.google.com/recaptcha/api.js'></script>
-    <script src="~/js/recaptcha.js"></script>
-}
-
-@section headerlinks{
-    <style>
-        .form-horizontal .form-group{
-            margin-left:0;
-            margin-right:0;
-        }
-
-        input.form-control{
-            min-width:100%;
-            width:100%;
-        }
-
-        fieldset 
-	    {
-		    border: 1px solid #ddd !important;
-		    margin-top: 25px !important;
-            /*margin-bottom: 25px !important;*/
-		    padding: 10px;       
-		    position: relative;
-		    border-radius:4px;
-		    padding-left:10px!important;
-	    }	
-
-        legend
-		{
-			font-size:1.5em;
-			font-weight:bold;
-            width:auto;
-            border-bottom:none;
-		}
-    </style>
-}
+            legend {
+                font-size: 1.5em;
+                font-weight: bold;
+                width: auto;
+                border-bottom: none;
+            }
+        </style>
+    }

@@ -1,12 +1,13 @@
 ﻿@model IndexViewModel
-
-<h2>Administration</h2>
-<p class="text-success">@ViewData["StatusMessage"]</p>
-<div>
-    <ul>
-        <li><a asp-area="" asp-controller="AdminNews" asp-action="Index">News</a></li>
-        <li><a asp-area="" asp-controller="AdminTeams" asp-action="Teams">Teams</a></li>
-        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-    </ul>
+<div class="container">
+    <h2>Administration</h2>
+    <p class="text-success">@ViewData["StatusMessage"]</p>
+    <div>
+        <ul>
+            <li><a asp-area="" asp-controller="AdminNews" asp-action="Index">News</a></li>
+            <li><a asp-area="" asp-controller="AdminTeams" asp-action="Teams">Teams</a></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+        </ul>
+    </div>
 </div>

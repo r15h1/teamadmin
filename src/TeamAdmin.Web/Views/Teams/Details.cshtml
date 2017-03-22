@@ -14,7 +14,7 @@
     </div>
 }
 
-<div class="row">
+<div class="container">
     <h2 style="border-bottom:solid 1px rgba(255,255,255,0.3);">Upcoming Events</h2>
     @if (Model != null && events != null && events.Count() > 0)
     {
@@ -54,8 +54,7 @@
     {
         <span>There is no event created yet.</span>
     }
-</div>
-<div class="row">
+
     <h2 style="border-bottom:solid 1px rgba(255,255,255,0.3);">Players</h2>
     @if (Model != null && Model.Players != null && Model.Players.Count() > 0)
     {

@@ -1,37 +1,39 @@
 ﻿@model TeamAdmin.Web.Models.AdminViewModels.PlayersListModel
-<h1>@Model.Team.Name@(!string.IsNullOrWhiteSpace(Model.Team.DisplayName) ? " - " + Model.Team.DisplayName : "" ) Players</h1>
-<div class="btn-toolbar" role="toolbar"><a class="btn btn-default pull-right" href="/admin/teams/@Model.Team.TeamId/players/add">Add a Player</a></div>
-@if (Model !=null && Model.Players != null && Model.Players.Count() > 0)
-{
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover">
-            <thead>
-                <tr class="bg-primary">
-                    <th>Photo</th>
-                    <th>Name</th>                    
-                    <th>Number</th>
-                    <th>Position</th>
-                    <th>Edit</th>
-                </tr>
-            </thead>
-            @foreach (var player in Model.Players)
-            {
-                <tr>
-                    <td>@(!string.IsNullOrWhiteSpace(player.PhotoUrl) ? Html.Raw("<img src=\"" + @player.PhotoUrl + "?w=50\" class='img-thumbnail' alt=\"" + @player.FirstName + "\"/>"):null)</td>
-                    <td>@player.FirstName @player.LastName</td>
-                    <td>@player.SquadNumber</td>
-                    <td>@player.Position</td> 
-                    <td class="text-center"><a href="/admin/teams/@player.TeamId/players/@player.PlayerId"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="edit"></i></a></td>
-                </tr>
-            }
-        </table>
-    </div>
-}
-else
-{
-    <div>No players registered yet.</div><br/><br />
-}
+<div class="container">
+    <h1>@Model.Team.Name@(!string.IsNullOrWhiteSpace(Model.Team.DisplayName) ? " - " + Model.Team.DisplayName : "" ) Players</h1>
+    <div class="btn-toolbar" role="toolbar"><a class="btn btn-default pull-right" href="/admin/teams/@Model.Team.TeamId/players/add">Add a Player</a></div>
+    @if (Model != null && Model.Players != null && Model.Players.Count() > 0)
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr class="bg-primary">
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Number</th>
+                        <th>Position</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                @foreach (var player in Model.Players)
+                {
+                    <tr>
+                        <td>@(!string.IsNullOrWhiteSpace(player.PhotoUrl) ? Html.Raw("<img src=\"" + @player.PhotoUrl + "?w=50\" class='img-thumbnail' alt=\"" + @player.FirstName + "\"/>") : null)</td>
+                        <td>@player.FirstName @player.LastName</td>
+                        <td>@player.SquadNumber</td>
+                        <td>@player.Position</td>
+                        <td class="text-center"><a href="/admin/teams/@player.TeamId/players/@player.PlayerId"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="edit"></i></a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+    else
+    {
+        <div>No players registered yet.</div><br /><br />
+    }
 
-<div>
-    <a href="/admin/teams">Back to Teams</a>
+    <div>
+        <a href="/admin/teams">Back to Teams</a>
+    </div>
 </div>

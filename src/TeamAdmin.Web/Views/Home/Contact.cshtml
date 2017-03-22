@@ -1,117 +1,74 @@
 ﻿@model TeamAdmin.Web.Models.Message
 @using TeamAdmin.Lib.Util
-
-<h1>Contact</h1>
-@if (Model != null && Model.MessageId.HasValue)
-{
-    <p>Thank you for getting in touch!</p>
-    <p>We appreciate you contacting us. We try to respond as soon as possible, so one of our colleagues will get back to you soon.</p>
-    <p>Have a great day ahead!</p>
-    <a rel="nofollow" href="/">Go to Home Page</a>
-}
-else
-{
-    <form action="contact" name="myform" id="myform" method="post">
-        <div class="form-horizontal">
-            <p>Please fill this form to ask any question or provide any feedback.</p>
-            <div id="captchavalidation" class="text-warning" style="display:none;padding-bottom:0;margin-bottom:0;"><ul style="padding-bottom:0;margin-bottom:0;"><li>Please click on the "I'm not a robot" checkbox</li></ul></div>
-            <div asp-validation-summary="All" class="text-warning"></div>
-            <div class="form-group">
-                <label for="Name" class="col-md-2 col-sm-2 control-label">Your Name</label>
-                <div class="col-md-8 col-sm-9">
-                    <input asp-for="Name" class="form-control" style="max-width:100%" name="name" id="name" required title="Please enter your name" placeholder="Your name" maxlength="50" />
+<div class="container">
+    <h1>Contact Us</h1>
+    @if (Model != null && Model.MessageId.HasValue)
+    {
+        <p>Thank you for getting in touch!</p>
+        <p>We appreciate you contacting us. We try to respond as soon as possible, so one of our colleagues will get back to you soon.</p>
+        <p>Have a great day ahead!</p>
+        <a rel="nofollow" href="/">Go to Home Page</a>
+    }
+    else
+    {
+        <form action="contact" name="myform" id="myform" method="post">
+            <div class="form-horizontal">
+                <p>Please fill this form to ask any question or provide any feedback.</p>
+                <div id="captchavalidation" class="text-warning" style="display:none;padding-bottom:0;margin-bottom:0;"><ul style="padding-bottom:0;margin-bottom:0;"><li>Please click on the "I'm not a robot" checkbox</li></ul></div>
+                <div asp-validation-summary="All" class="text-warning"></div>
+                <div class="form-group">
+                    <label for="Name" class="col-md-2 col-sm-2 control-label">Your Name</label>
+                    <div class="col-md-8 col-sm-9">
+                        <input asp-for="Name" class="form-control" style="max-width:100%" name="name" id="name" required title="Please enter your name" placeholder="Your name" maxlength="50" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-horizontal">
-            <div class="form-group">
-                <label for="Email" class="col-md-2 col-sm-2 control-label">Your Email</label>
-                <div class="col-md-8 col-sm-9">
-                    <input asp-for="Email" type="email" class="form-control" style="max-width:100%" name="email" id="email" required maxlength="100" placeholder="Your email address" />
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="Email" class="col-md-2 col-sm-2 control-label">Your Email</label>
+                    <div class="col-md-8 col-sm-9">
+                        <input asp-for="Email" type="email" class="form-control" style="max-width:100%" name="email" id="email" required maxlength="100" placeholder="Your email address" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-horizontal">
-            <div class="form-group">
-                <label for="Subject" class="col-md-2 col-sm-2 control-label">Subject</label>
-                <div class="col-md-8 col-sm-9">
-                    <input asp-for="Subject" class="form-control" style="max-width:100%" name="subject" id="subject" required maxlength="150" placeholder="Reason for contacting" />
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="Subject" class="col-md-2 col-sm-2 control-label">Subject</label>
+                    <div class="col-md-8 col-sm-9">
+                        <input asp-for="Subject" class="form-control" style="max-width:100%" name="subject" id="subject" required maxlength="150" placeholder="Reason for contacting" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-horizontal">
-            <div class="form-group">
-                <label for="Body" class="col-md-2 col-sm-2 control-label" required>Message</label>
-                <div class="col-md-8 col-sm-9">
-                    <textarea asp-for="Body" class="form-control" style="max-width:100%" name="body" id="body" rows="7" required data-val-required="The Message field is required." placeholder="Your question or feedback"></textarea>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="Body" class="col-md-2 col-sm-2 control-label" required>Message</label>
+                    <div class="col-md-8 col-sm-9">
+                        <textarea asp-for="Body" class="form-control" style="max-width:100%" name="body" id="body" rows="7" required data-val-required="The Message field is required." placeholder="Your question or feedback"></textarea>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-horizontal">
-            <div class="form-group">
-                <div class="col-md-2 col-sm-2 "></div>
-                <div class="col-md-5 col-sm-5 col-xs-5 g-recaptcha" data-sitekey="@Settings.GoogleRecaptchaDataSiteKey"></div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-2"></div>
+                    <div class="col-md-5 col-sm-5 col-xs-5 g-recaptcha" data-sitekey="@Settings.GoogleRecaptchaDataSiteKey"></div>
+                </div>
             </div>
-        </div>
-        <div class="form-horizontal">
-            <div class="form-group">
-                <div class="col-md-2 col-sm-2 col-xs-1"></div>
-                <input type="submit" class="btn btn-default" />
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" class="btn btn-default" />
+                    </div>
+                </div>
             </div>
-        </div>
-    </form>
-    
-}
+        </form>
+    }
+    </div>
 
-@section headerlinks{
-    <script src='https://www.google.com/recaptcha/api.js'></script>
-}
-@section scripts{
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("form").submit(function (e) {                
-                $("#captchavalidation").hide();
-                $('input[type=submit]').prop('disabled', true);
-
-                var result = $("form")[0].checkValidity();
-                if (result === false) { return cancelSubmit(e); }
-
-                $('.validation-summary-errors > ul').empty();
-                var recaptcha = $("#g-recaptcha-response").val();
-                if (recaptcha === "") {
-                    $("#captchavalidation").show();
-                    cancelSubmit(e);
-                } else {
-                    $.ajax({
-                        async: false,
-                        url: "/api/recaptcha",
-                        method: "POST",
-                        data: { "captchaResponse": recaptcha },
-
-                        success: function (response) {
-                            if (response.success !== true) {
-                                $("#captchavalidation").show();
-                                cancelSubmit(e);
-                            }
-                        },
-
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            $("#captchavalidation").show();
-                            cancelSubmit(e);
-                        }
-                    });
-                }
-
-                function cancelSubmit(evt) {
-                    $('input[type=submit]').prop('disabled', false);
-                    evt.preventDefault();
-                    return false;
-                }
-
-            });
-        });
-    </script>
-}
+    @section headerlinks{
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    }
+    @section scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/recaptcha.js"></script>        
+    }
 

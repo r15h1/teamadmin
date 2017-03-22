@@ -1,88 +1,88 @@
 ﻿@model TeamAdmin.Web.Models.EventsCalendarModel
-<h1>Events</h1>
-<div class="row">
-    <form id="myform">
-        <div class="form-horizontal">
-            <div class="form-group">
-                <label for="Teams" class="col-md-1 col-sm-1 col-xs-2 control-label pull-left">Teams</label>
-                <div class="col-md-6 col-sm-8 col-xs-10">
-                    <select name="team" id="team" asp-items="@(new SelectList(Model.Teams, "TeamId", "Name"))" style="width:100%"></select>
+<div class="container">
+    <h1>Events</h1>
+    <div class="row">
+        <form id="myform">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="Teams" class="col-md-1 col-sm-1 col-xs-2 control-label pull-left">Teams</label>
+                    <div class="col-md-6 col-sm-8 col-xs-10">
+                        <select name="team" id="team" asp-items="@(new SelectList(Model.Teams, "TeamId", "Name"))" style="width:100%"></select>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
+    <div class="row"><span id='loading'>loading...</span></div>
+    <div class="row">
+        <div id="calendar"></div>
+    </div>
 </div>
-<div class="row"><span id='loading'>loading...</span></div>
-<div class="row">
-    <div id="calendar"></div>
-</div>
+    @section headerlinks{
+        <link href="~/lib/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
+        <link href="~/css/eventscalendar.css" rel="stylesheet" />
+    }
 
-@section headerlinks{
-    <link href="~/lib/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
-    <link href="~/css/eventscalendar.css" rel="stylesheet" />
-}
-
-@section scripts {
-    <script src="~/lib/moment/min/moment.min.js"></script>
-    <script src="~/lib/fullcalendar/dist/fullcalendar.min.js"></script>
-    <script src="~/lib/purl/purl.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,basicWeek,basicDay'
-                },
-
-                events: {
-                    url: '/api/events',
-                    data: function() { 
-                        return {
-                            'team': $('#team').val()
-                        };
+    @section scripts {
+        <script src="~/lib/moment/min/moment.min.js"></script>
+        <script src="~/lib/fullcalendar/dist/fullcalendar.min.js"></script>
+        <script src="~/lib/purl/purl.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#calendar').fullCalendar({
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,basicWeek,basicDay'
                     },
-                    error: function () {
-                        alert('error');
+
+                    events: {
+                        url: '/api/events',
+                        data: function () {
+                            return {
+                                'team': $('#team').val()
+                            };
+                        },
+                        error: function () {
+                            alert('error');
+                        }
+                    },
+
+                    //eventClick: function (event) {
+                    //    if (event.url) {
+                    //        window.open(event.url);
+                    //        return false;
+                    //    }
+                    //},
+
+                    eventRender: function (event, element) {
+                        var div = document.createElement("div");
+                        div.className = "eventLocation";
+                        var location = document.createTextNode(event.location);
+                        div.appendChild(location);
+                        element[0].childNodes[0].appendChild(div);
+                    },
+
+                    loading: function (bool) {
+                        $('#loading').toggle(bool);
                     }
-                },                
+                });
 
-                //eventClick: function (event) {
-                //    if (event.url) {
-                //        window.open(event.url);
-                //        return false;
-                //    }
-                //},
+                $('#team').removeAttr("multiple");
+                $('#team').change(function (e) {
+                    updateCalendar();
+                    e.preventDefault();
+                });
 
-                eventRender: function (event, element) {
-                    var div = document.createElement("div");
-                    div.className = "eventLocation";
-                    var location = document.createTextNode(event.location);
-                    div.appendChild(location);
-                    element[0].childNodes[0].appendChild(div);
-                },
-
-                loading: function (bool) {
-                    $('#loading').toggle(bool);
+                if ($.url().param('team') && !isNaN($.url().param('team'))) {
+                    $('#team').val($.url().param('team'));
+                    updateCalendar();
                 }
             });
 
-            $('#team').removeAttr("multiple");
-            $('#team').change(function (e) {
-                updateCalendar();
-                e.preventDefault();
-            });
-            
-            if ($.url().param('team') && !isNaN($.url().param('team')))
-            {
-                $('#team').val($.url().param('team'));
-                updateCalendar();
+            function updateCalendar() {
+                console.log($('#team').val())
+                $("#calendar").fullCalendar('refetchEvents');
             }
-        });
-
-        function updateCalendar() {
-            console.log($('#team').val())
-            $("#calendar").fullCalendar('refetchEvents');
-        }
-    </script>
-}
+        </script>
+    }

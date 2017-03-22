@@ -1,51 +1,53 @@
 @model TeamAdmin.Core.Message
 @using TeamAdmin.Lib.Util
-<h1>Contact Message</h1>
-@if (Model == null)
-{
-    <p>Message not found</p>
-}
-else
-{
-<form action="contact" name="myform" id="myform" method="post">
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label for="DateCreated" class="col-md-2 col-sm-2 control-label">Date</label>
-            <div class="col-md-8 col-sm-9">
-                <label class="form-control">@Model.DateCreated.Value.ToLocalTime().ToString("dd MMM yyyy hh:mm tt")</label>
+<div class="container">
+    <h1>Contact Message</h1>
+    @if (Model == null)
+    {
+        <p>Message not found</p>
+    }
+    else
+    {
+        <form action="contact" name="myform" id="myform" method="post">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="DateCreated" class="col-md-2 col-sm-2 control-label">Date</label>
+                    <div class="col-md-8 col-sm-9">
+                        <label class="form-control">@Model.DateCreated.Value.ToLocalTime().ToString("dd MMM yyyy hh:mm tt")</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Name" class="col-md-2 col-sm-2 control-label">From</label>
+                    <div class="col-md-8 col-sm-9">
+                        <label class="form-control">@Model.Name</label>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="Name" class="col-md-2 col-sm-2 control-label">From</label>
-            <div class="col-md-8 col-sm-9">
-                <label class="form-control">@Model.Name</label>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="Email" class="col-md-2 col-sm-2 control-label">Email</label>
+                    <div class="col-md-8 col-sm-9">
+                        <label class="form-control">@Model.Email</label>
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="Subject" class="col-md-2 col-sm-2 control-label">Subject</label>
+                    <div class="col-md-8 col-sm-9">
+                        <label class="form-control">@Model.Subject</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="Body" class="col-md-2 col-sm-2 control-label" required>Message</label>
+                    <div class="col-md-8 col-sm-9">
+                        <textarea class="form-control" rows="10" style="max-width:100%;background-color:white;" readonly>@Model.Body</textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    }
+    <a href="/admin/contacts">Back to Inbox</a>
     </div>
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label for="Email" class="col-md-2 col-sm-2 control-label">Email</label>
-            <div class="col-md-8 col-sm-9">
-                <label class="form-control">@Model.Email</label>
-            </div>
-        </div>
-    </div>
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label for="Subject" class="col-md-2 col-sm-2 control-label">Subject</label>
-            <div class="col-md-8 col-sm-9">
-                <label class="form-control">@Model.Subject</label>
-            </div>
-        </div>
-    </div>
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label for="Body" class="col-md-2 col-sm-2 control-label" required>Message</label>
-            <div class="col-md-8 col-sm-9">
-                <textarea class="form-control" rows="10" style="max-width:100%;background-color:white;" readonly>@Model.Body</textarea>
-            </div>
-        </div>
-    </div>
-</form>
-}
-<a href="/admin/contacts">Back to Inbox</a>
