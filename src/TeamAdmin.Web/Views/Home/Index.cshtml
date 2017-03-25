@@ -2,31 +2,66 @@
 @using System.Globalization
 @using TeamAdmin.Lib.Util
 
-<section class="hero">
-    <div class="container">        
-        <div>
-            <h1>Welcome To Mapola FC Academy</h1>
+<section>
+    <div id="bg-fade-carousel" class="carousel slide carousel-fade" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#bg-fade-carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#bg-fade-carousel" data-slide-to="1"></li>
+            <li data-target="#bg-fade-carousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <div class="slider" style="background-size: cover;background-position: center;background-image: url('/images/hero@2x.jpg');"></div>
+                <div class="container carousel-overlay text-center ">                    
+                    <h1>
+                        Welcome to Mapola FC Academy
+                    </h1>
+                </div>
+            </div>
+
+            @if (Model != null && Model.News != null && Model.News.Count() >= 3)
+            {
+                @foreach (var news in Model.News.Take(3))
+                {
+                    <div class="item">
+                        <div class="slider" style="background-size: cover;background-position: center;background-image: url('@news.Media.FirstOrDefault().Url?w=400&mode=max');"></div>
+                        <div class="container carousel-overlay text-center ">
+                            <h2>@news.Title</h2>
+                            <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()" class="btn btn-default">Read More</a>
+                        </div>
+                    </div>
+                }
+            }
+
         </div>
     </div>
+    <!--end bg-carousel-->
 </section>
-<div class="container">
-    <div class="col-sm-8">
-        <h2>Mapola FC Academy's Mission</h2>
-        <p>
-            Our primary goal is to provide the best soccer development platform for committed, and ambitious players who are passionate to develop as a person and as a player. Our core values include personal improvement in a fast paced environment, enjoyment of the game, and the pursuit of excellence, honesty, and integrity.
-        </p>
-    </div>
-    <div class="col-sm-4">
-        <h4>Sanctioned By</h4>
-        <img class="osa-logo" src="~/images/osa-logo.svg" alt="Ontario Soccer Association">
-        <img class="canada-logo" src="~/images/canada.png" alt="Canada">
-        <img class="ltpd-logo" src="~/images/ltpd.png" alt="LTPD">
+<section>
+    @*--------------------------------------------------------*@
+    <article class="container">
+        <div class="col-sm-8">
+            <header>
+                <h1 style="font-size:large;">Mapola FC Academy</h1>
+            </header>
+            <p>Mapola FC is a not-for-profit organization in Brampton ON (Canada), aiming to provide the best soccer development platform for passionate, committed and ambitious players.</p>
+            <p>We have partnered with Scottish giants Rangers FC to provide an innovative and dynamic training program targeting key areas of soccer development such technical precision, speed, agility, strength, power, flexibility, balance, game intelligence and mental toughness.</p>
+            <p>Our core values include personal improvement, enjoyment of the game, the pursuit of excellence, honesty and integrity.</p>
+        </div>
+        <div class="col-sm-4">
+            <h4>Sanctioned By</h4>
+            <img class="osa-logo" src="~/images/osa-logo.svg" alt="Ontario Soccer Association">
+            <img class="canada-logo" src="~/images/canada.png" alt="Canada">
+            <img class="ltpd-logo" src="~/images/ltpd.png" alt="LTPD">
 
-    </div>
-</div>
+        </div>
+    </article>
+</section>
 <section class="blog-section">
     <div class="container">
-        <h1>Latest News</h1>
+        <h2>Latest News</h2>
 
         @if (Model != null && Model.News != null && Model.News.Count() > 0)
         {
@@ -49,39 +84,16 @@
 
 </section>
 
-    @*<div class="row">
-        <h2 style="border-bottom:solid 1px rgba(255,255,255,0.3);">Upcoming Events</h2>
-        @if (Model != null && Model.Events != null && Model.Events.Count() > 0)
-        {
-            @foreach (var evnt in Model.Events.Take(6))
-            {
-                <div class="col-sm-6 col-md-4">
-                    <div class="panel panel-default">
-                        <div class="media">
-                            <div class="media-left">
-                                <div class="media-object calendar-item">
-                                    <div class="calendar-month">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(evnt.Key.Month).ToUpper())</div>
-                                    <div class="calendar-date">@evnt.Key.Day.ToString("00")</div>
-                                    <div class="calendar-day">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedDayName(evnt.Key.DayOfWeek).ToUpper())</div>
-                                </div>
-                            </div>
-                            <div class="media-body list-group">
-                                @foreach (var item in evnt)
-                                {
-                                    <div class="media-heading list-group-item" style="background-color:white;">
-                                        <span style="color:darkred;font-weight:700; text-transform:capitalize;">@item.EventType:</span>
-                                        @foreach (var t in item.Teams)
-                                        {
-                                            <span style="margin-right:5px;font-weight:700;">@(string.IsNullOrWhiteSpace(t.DisplayName) ? t.Name : t.DisplayName) @(item.EventType == TeamAdmin.Core.EventType.GAME ? "vs " + @item.Title : "")</span>
-                                        }
-                                        <div style="color:darkred;font-weight:700;"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> @item.StartDate.ToString("hh:mmtt") - @item.EndDate.ToString("hh:mmtt")</div>
-                                        <div>@item.Address</div>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        }
-    </div>*@
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('.carousel').carousel({
+                "interval": 3000,
+                "pause":false
+            });
+        });
+    </script>
+}
+@section headerlinks{
+    <meta name="description" content="Mapola FC Academy is a not-for-profit organization in Brampton ON (Canada), aiming to provide the best soccer development platform for passionate, committed and ambitious players.">
+}

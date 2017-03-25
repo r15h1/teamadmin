@@ -52,7 +52,7 @@ namespace TeamAdmin.Lib.Tests
             {
                 EventType = EventType.GAME,
                 Title = "Game at Soccer Field",
-                Description = "SAAC soccer game against Panthers",
+                Description = "OASL soccer game against Panthers",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddHours(2)
             };
@@ -74,7 +74,7 @@ namespace TeamAdmin.Lib.Tests
             {
                 EventType = EventType.GAME,
                 Title = "Game at Soccer Field",
-                Description = "SAAC soccer game against Panthers",
+                Description = "OASL soccer game against Panthers",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddHours(2)
             };
@@ -98,7 +98,7 @@ namespace TeamAdmin.Lib.Tests
 
                 EventType = EventType.GAME,
                 Title = "Game at Soccer Field",
-                Description = "SAAC soccer game against Panthers",
+                Description = "OASL soccer game against Panthers",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddHours(2)
             };
@@ -120,7 +120,7 @@ namespace TeamAdmin.Lib.Tests
             {
                 EventType = EventType.GAME,
                 Title = "Game at Soccer Field",
-                Description = "SAAC soccer game against Panthers",
+                Description = "OASL soccer game against Panthers",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddHours(2)
             };
@@ -152,7 +152,7 @@ namespace TeamAdmin.Lib.Tests
             {
                 EventType = EventType.GAME,
                 Title = "Game at Soccer Field",
-                Description = "SAAC soccer game against Panthers",
+                Description = "OASL soccer game against Panthers",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddHours(2)
             };
@@ -183,7 +183,7 @@ namespace TeamAdmin.Lib.Tests
             {
                 EventType = EventType.GAME,
                 Title = "Game at Soccer Field",
-                Description = "SAAC soccer game against Panthers",
+                Description = "OASL soccer game against Panthers",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddHours(2)
             };
@@ -202,7 +202,7 @@ namespace TeamAdmin.Lib.Tests
             {
                 EventType = EventType.GAME,
                 Title = "Game at Soccer Field",
-                Description = "SAAC soccer game against Panthers",
+                Description = "OASL soccer game against Panthers",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddHours(2)
             };

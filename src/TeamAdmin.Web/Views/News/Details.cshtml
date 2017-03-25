@@ -1,6 +1,6 @@
 ﻿@model TeamAdmin.Core.Post
 <div class="container">
-    <h1 style="border-bottom:solid 1px rgba(255,255,255,0.3);">@Model.Title</h1>
+    <h1>@Model.Title</h1>
     @if (Model != null && Model.Media != null && Model.Media.Count() > 0)
     {
         <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">

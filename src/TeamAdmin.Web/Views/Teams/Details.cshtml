@@ -6,82 +6,85 @@
     var events = Model.Events;
 }
 <div class="container">
-    <h1 style="border-bottom:solid 1px rgba(255,255,255,0.3);">@team.Name @(string.IsNullOrWhiteSpace(team.DisplayName) ? "" : "- " + team.DisplayName)</h1>
+    <h1>@team.Name @(string.IsNullOrWhiteSpace(team.DisplayName) ? "" : "- " + team.DisplayName)</h1>
 
     @if (team != null && team.Media != null && team.Media.Count() > 0)
     {
         <div class="row">
-            <img style="max-height:400px;" src="@team.Media.FirstOrDefault().Url?w=230&h=70&mode=max" srcset="@team.Media.FirstOrDefault().Url?w=1200&h=400&mode=max 1200w, @team.Media.FirstOrDefault().Url?w=800&h=266&mode=max 800w, @team.Media.FirstOrDefault().Url?w=600&h=200&mode=max 600w, @team.Media.FirstOrDefault().Url?w=400&h=133&mode=max 400w" alt="@team.Name" class="img-responsive center-block" />
+            <img style="max-height:400px" src="@team.Media.FirstOrDefault().Url?w=600&mode=max" srcset="@team.Media.FirstOrDefault().Url?w=1200&mode=max 1200w, @team.Media.FirstOrDefault().Url?w=800&mode=max 800w, @team.Media.FirstOrDefault().Url?w=600&mode=max 600w, @team.Media.FirstOrDefault().Url?w=400&mode=max 400w" alt="@team.Name" class="img-responsive center-block" />
         </div>
     }
 
 
-        <h2 style="border-bottom:solid 1px rgba(255,255,255,0.3);">Upcoming Events</h2>
-        @if (Model != null && events != null && events.Count() > 0)
-        {
+
+    @if (Model != null && events != null && events.Count() > 0)
+    {
+        <h2>Upcoming Events</h2>
+        <div class="row">
             @foreach (var evnt in events)
             {
                 <div class="col-sm-6 col-md-4">
-                    <div class="panel panel-default">
-                        <div class="media">
-                            <div class="media-left">
-                                <div class="media-object calendar-item">
-                                    <div class="calendar-month">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(evnt.Key.Month).ToUpper())</div>
-                                    <div class="calendar-date">@evnt.Key.Day.ToString("00")</div>
-                                    <div class="calendar-day">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedDayName(evnt.Key.DayOfWeek).ToUpper())</div>
-                                </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="media-object calendar-item">
+                                <div class="calendar-month">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(evnt.Key.Month).ToUpper())</div>
+                                <div class="calendar-date">@evnt.Key.Day.ToString("00")</div>
+                                <div class="calendar-day">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedDayName(evnt.Key.DayOfWeek).ToUpper())</div>
                             </div>
-                            <div class="media-body list-group">
-                                @foreach (var item in evnt)
-                                {
-                                    <div class="media-heading list-group-item" style="background-color:white;">
-                                        <span style="color:darkred;font-weight:700; text-transform:capitalize;">@item.EventType:</span>
-                                        @foreach (var t in item.Teams)
-                                        {
-                                            <span style="margin-right:5px;font-weight:700;">@(string.IsNullOrWhiteSpace(t.DisplayName) ? t.Name : t.DisplayName) @(item.EventType == TeamAdmin.Core.EventType.GAME ? "vs " + @item.Title : "")</span>
-                                        }
-                                        <div style="color:darkred;font-weight:700;"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> @item.StartDate.ToString("hh:mmtt") - @item.EndDate.ToString("hh:mmtt")</div>
-                                        <div>@item.Address</div>
+                        </div>
+                        <div class="media-body list-group">
+                            @foreach (var item in evnt)
+                            {
+                                <div class="media-heading list-group-item" style="background-color:white;">
+                                    <span style="color:rgb(8, 89, 176);font-weight:700; text-transform:capitalize;">@item.EventType:</span>
+                                    @foreach (var t in item.Teams)
+                                    {
+                                        <span style="margin-right:5px;font-weight:700;">@(string.IsNullOrWhiteSpace(t.DisplayName) ? t.Name : t.DisplayName) @(item.EventType == TeamAdmin.Core.EventType.GAME ? "vs " + @item.Title : "")</span>
+                                    }
+                                    <div style="color:rgb(8, 89, 176);font-weight:700;"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> @item.StartDate.ToString("hh:mmtt") - @item.EndDate.ToString("hh:mmtt")</div>
+                                    <div>@item.Address</div>
 
-                                    </div>
-                                }
-                            </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
             }
-        }
-        else
-        {
-            <span>There is no event created yet.</span>
-        }
+        </div>
+    }
 
-        <h2 style="border-bottom:solid 1px rgba(255,255,255,0.3);">Players</h2>
-        @if (Model != null && Model.Players != null && Model.Players.Count() > 0)
-        {
+    @if (Model != null && Model.Players != null && Model.Players.Count() > 0)
+    {
+        <h2>Players</h2>
+        <div class="row">
             @foreach (var player in Model.Players)
-            {
-                <div class="col-xs-12 col-sm-4 col-md-3 playertile">
+                {
+                <div class="col-xs-12 col-sm-4 col-md-3">
                     <div class="media">
                         <div class="media-left">
                             @if (!string.IsNullOrWhiteSpace(player.PhotoUrl))
                             {
-                                <img style="max-height:80px;" class="media-object img-rounded" src="@player.PhotoUrl?w=80&h=80" alt="@player.FirstName">
+                                <img class="media-object img-rounded" src="@player.PhotoUrl?w=80&h=80" alt="@player.FirstName">
                             }
                             else
                             {
-                                <img style="max-height:80px;" class="media-object img-rounded" src="@Settings.ImageUrlRoot/no_image.jpeg?w=80&h=80" alt="@player.FirstName">
+                                <img class="media-object img-rounded" src="@($"{Settings.ImageUrlRoot}/no_image.jpeg")?w=80&h=80" alt="@player.FirstName">
                             }
+
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading">@player.FirstName @player.LastName.FirstOrDefault()</h4>
                             <div>@player.Position</div>
-                            <div>#@player.SquadNumber</div>
+                            @if(player.SquadNumber.HasValue)
+                            {
+                                <div>#@player.SquadNumber</div>
+                            }
                         </div>
                     </div>
                 </div>
             }
-        }
+        </div>
+    }
 
     <a href="/teams" class="right">Go to teams list</a>
 </div>

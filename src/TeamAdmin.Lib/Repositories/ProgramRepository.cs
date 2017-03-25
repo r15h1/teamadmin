@@ -39,7 +39,7 @@ namespace TeamAdmin.Lib.Repositories
                     ProgramId = 3,
                     Title = "Elite Program U10-14",
                     Body = @"<p>Our Elite academy program offers 3 Practices a week and 1 - 2 game a week, and run an all year programs. Practice time and day may depend on the athlete’s age group. We also provide 5v5 futsal game format activity 3 times a week in a competitive environment during the winter. We provide Strength and Conditioning training once every 2 weeks, with one nutritional session once a month, and Technical skills training one a week.
-Our team age 9 – 14 plays in SAAC that mea ns we travel the GTA for most of our games with some home games. Our program is dedicated to excellence therefore we take proud in our teaching, as well as prioritizing our participants need. Our elite players train hard in a fun environment and play right.  Please refer to our events calendar for training information’s. Our elites players play in SAAC League April - November and participate yearly in 5-6 domestic tournament and 1-2 major tournaments in the US or Europe, age dependent.</p>"
+Our team age 9 – 14 plays in OASL that mea ns we travel the GTA for most of our games with some home games. Our program is dedicated to excellence therefore we take proud in our teaching, as well as prioritizing our participants need. Our elite players train hard in a fun environment and play right.  Please refer to our events calendar for training information’s. Our elites players play in OASL League April - November and participate yearly in 5-6 domestic tournament and 1-2 major tournaments in the US or Europe, age dependent.</p>"
             });
 
             programs.Add(new Program
