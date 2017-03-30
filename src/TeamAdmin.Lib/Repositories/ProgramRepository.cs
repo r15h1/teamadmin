@@ -46,37 +46,46 @@ Our team age 9 – 14 plays in OASL that mea ns we travel the GTA for most of ou
             {
                 ProgramId = 4,
                 Title = "Curriculum",
-                Body = @"<h3>MFC Academy for Age Groups 7-11 <br/>Years Old Development (Vertical Educational Integration)</h3>
+                Body = @"<h3>Academy Culture</h3>
                          <p><ul>
-                            <li>Provide a fun environment focused on holistic child development (emotional, physiological , social, cultural, physical, mental)</li>
-<li>Application of the lesson plans</li>
-<li>For Soccer – Development of the 12 techniques</li>
-<li>For Soccer and Futsal – Application of Coerver Coaching Methodology of tactical and technical skills development</li>
-<li>For Soccer and Futsal - Implementation of the positioning concepts from 1v1 to 8v8 with emphasis on the Dutch application of small sided game 4v4, 3v3, 6v6, & 5v5
-</li>
-<li>Consistent development of the physical capacities such as body coordination, Agility, fast reaction, flexibility (elasticity), etc</li>
-<li>Applying LTPD methodology learning in a fun environment with structure activity - game – activity - game. Using Question answer, Guiding and Discovery, Command Directive, Observation & Feedback, Trail & Error, and Coaches Demonstrate activity while applying various principles of play</li>
-                         </ul></p> 
-
-<h3>MFC Academy for Age Groups 12-19 Years Old<br/>
-Competitive Department (Vertical Educational Integration)
-</h3>  
+<li>Promote enjoyment</li>
+<li>Provide a long term learning environment to allow individuals to maximize their football talent and potential</li>
+<li>Develop lifelong individual personalities-attitude, discipline, concentration, team work, confidence, leadership, respect, motivation</li>
+<li>Develop individual player technical, tactical, physical, psychological and social qualities</li>
+<li>A training environment and playing style to allow the players to problem solve, express themselves and make decisions</li>
+<li>Seek to improve everyday</li>
+<li>Trust each other</li>
+</ul></p> 
+<h3>Coaching Methodology</h3>  
+<p>We believe that effective coaching is critical in the development of our young players. Our football culture is clearly defined in which we must create the followingenvironment to: </p>
 <p>
 <ul>
-<li>Continuation of the fun and competitive environment focused on holistic youth development (emotional, physiological, social, cultural, physical, mental)</li>
-<li>For Soccer and Futsal - Application of the Football Made in Brazil software (tactical development) from U13 - and up to U1 9 . Tactical schemes, systems and strategies in a 11v11 game conditioning</li>
-<li>Perfection of the 12 techniques, both feet in game situation and game condition</li>
-<li>For Soccer - Application of My Soccer Coach Made in England software (tactical development) from U8 and up to U19 . Tactical schemes, systems and strategies in a 11v11 game conditioning</li>
-<li>Continual development of the physical capacities such as body coordination, agility, fast reaction, flexibility (elasticity), muscle strength, etc.</li>
-<li>Participation in provincial and national programs and competitions</li>
-<li>Participation in international competitions (understanding the different philosophies)</li>
-<li>Maintain the fun and competitive environment focused on holistic development (emotional, spiritual, social, cultural, physical, mental) with expectations of success and performance</li>
-<li>Application of the four stages of warm up, Continuous Movement - Dynamic range of motion – Neural Preparation - Technical Preparation</li>
-<li>Incorporating Functional Practices and Phases of play to plan sessions</li>
-<li>Emphasis on the Dutch application of small sided game 4v4, 3v3, 6v6, & 5v5</li>
-<li>Applying LTPD methodology learning in a fun environment with structure activity - game – activity - game. Using Question answer, Guiding and Discovery, Command Directive, Observation & Feedback, Trail & Error, and Coaches Demonstrate activity while applying various principles of play</li>
+<li>Building play from the back and through all units of the team </li>
+<li>Understand the needs of the individual players and provide a support mechanism to cater for those needs</li>
+<li>Deliver age related practices that support learning </li>
+<li>Develop the person to develop the player </li>
+<li>Defending with organization, discipline and responsibility </li>
+<li>Attacking with imagination, invention and expression </li>
+<li>Develop the transference of skills and knowledge from the training environment into the games programme </li>
+<li>Ensure everything we do in the coaching and development of our players is with a clear method and purpose </li>
+<li>Teach players to play with freedom, encouraging experimentation in the younger players and expression throughout all ages </li>
+<li>Encouraging the importance of hard wok, application and effort as part of the long-term player pathway</li>
 </ul>
-</p>"
+</p>
+<h3>Style of Play</h3> 
+<p>Our Academy style of play is built on an attacking and progressive possession based
+approach. We teach this through building confidence, awareness and the ability to
+retain possession in all areas of field. Players are encouraged to express themselves
+against opponents in game situations. </p>
+<p>Out of possession we adopt a collective and assertive defensive approach. This is
+built around technically effective individual defending (1v1 situations) and a tactical
+competence to defend collectively with teammates.
+</p>
+<p>Our style of play is developed over a period of time through a program managed by
+staff and coaches who place individual player performance and development as the
+priority within the coaching curriculum’s.</p>
+<p><a target='_blank' href='/forms/Curriculum.pdf'>Click here to download the full curriculum.</a>
+"
             });
         }
 

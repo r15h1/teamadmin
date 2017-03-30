@@ -44,10 +44,7 @@
             <p>Our core values include personal improvement, enjoyment of the game, the pursuit of excellence, honesty and integrity.</p>
         </article>
     <aside class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-        <h4>Sanctioned By</h4>        
-        <figure class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-            <a href="http://www.canadasoccer.com/" target="_blank" rel="nofollow"><img class="img-responsive" src="~/images/canada.png" alt="Canada Soccer"></a>
-        </figure>
+        <h4>Sanctioned By</h4>
 
         <figure class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
             <a href="http://www.ontariosoccer.net/" target="_blank" rel="nofollow">
@@ -55,9 +52,12 @@
             </a>
         </figure>
         <figure class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+            <a href="http://www.canadasoccer.com/" target="_blank" rel="nofollow"><img class="img-responsive" src="~/images/canada.png" alt="Canada Soccer"></a>
+        </figure>
+        <figure class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
             <a href="http://www.ontariosoccer.net/news_article/show/774224?referrer_id=2958561" target="_blank" rel="nofollow">
                 <img src="~/images/oasl.jpg" alt="Ontario Academy Soccer League">
-            </a>        
+            </a>
         </figure>
         <figure class="col-xs-6 col-sm-12 col-md-12 col-lg-12">
             <a href="" target="_blank" rel="nofollow">
@@ -111,9 +111,9 @@
                                 <span class="fixture-day">@ev.StartDate.ToString("dd")</span>
                                 <span>@ev.StartDate.ToString("ddd")</span>
                             </div>
-                            <a class="fixture-title" href="/events/@ev.EventId">@ev.Teams.FirstOrDefault().DisplayName vs. @ev.Title</a>
+                            <div  class="fixture-title"><a href="/events/@ev.EventId">@ev.Teams.FirstOrDefault().DisplayName vs. @ev.Title</a></div>
                             <div>
-                                <span class="glyphicon glyphicon-time"></span><span> @ev.StartDate.ToString("h:mmtt") - @ev.EndDate.ToString("h:mmtt")</span>
+                                <span class="glyphicon glyphicon-time"></span><span class="fixture-time"> @ev.StartDate.ToString("h:mmtt") - @ev.EndDate.ToString("h:mmtt")</span>
                             </div>
                             <div class="fixture-address">@ev.Address</div>
                         </div>
@@ -157,9 +157,10 @@
         }
 
         section.container{
-            background-color:rgba(255,255,255,0.93);
+            background-color:rgba(255,255,255,0.97);
             border-radius:2px;
             padding:5px 5px 5px 5px;
+            max-width:1000px;
         }
 
         figure img{
