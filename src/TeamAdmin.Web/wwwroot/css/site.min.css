@@ -6,7 +6,17 @@ h1,h2,h3,h4,h5,h6 {
   /*text-transform:uppercase;*/
 }
 
-p,a,li,blockquote {
+a{
+    color:rgb(176, 39, 8);
+    text-decoration:none;
+}
+
+a:hover{
+    color:rgb(176, 39, 8);
+    text-decoration:underline;
+}
+
+p,li,blockquote {
   font-family: "Lato", serif;
   font-weight: 300;
   font-size: 1.111em;
@@ -16,6 +26,48 @@ p,a,li,blockquote {
 
 p{
     text-align:justify;
+}
+
+section{
+    margin-bottom:20px;
+}
+
+.fixture{
+    margin:5px 5px 15px 5px;
+}
+
+.fixture-address{
+    font-weight:600;
+}
+
+.fixture-date{    
+    border:solid 1px rgb(200, 200, 200);
+    border-radius:5px;   
+    float:left;
+    font-size:12px;
+    font-weight:600;
+    margin:5px 5px 0px 5px;
+    text-transform:uppercase;
+}
+
+.fixture-date span{    
+    display:block;
+    padding:1px 10px 0px 10px;
+    text-align:center;
+}
+
+.fixture-day{
+    font-size:15px;
+}
+
+.fixture-month{
+    background-color:rgb(176, 39, 8);
+    color:white;
+}
+
+.fixture-title{
+    font-size:15px;
+    font-weight:600;
 }
 
 .hero {
@@ -35,17 +87,7 @@ p{
     background-color:rgba(0,0,0,0.4);
     border-radius:4px;    
 }
-  /*.hero:before {
-    content: '';
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	background-image: linear-gradient(to bottom right,green,black);
-	opacity: .3; 
-    height: 50vh;
-  }*/
+  
 .hero .container{
     position: relative;
     top: 45%;
@@ -57,18 +99,64 @@ p{
 }
 .osa-logo{
     max-width: 100px;
+    vertical-align:top;
 }
 .canada-logo {
     max-width: 100px;
     margin-left: 20px;
+    vertical-align:top;
 }
 .ltpd-logo {
     max-width: 200px;
     padding-top: 20px;
 }
 
+.panel{
+    background-color:rgba(0,0,0,0.05) !important;
+}
+
+/* Carousel Fade Effect */
+.slider{
+    min-height: 275px; 
+    max-height: 275px; 
+}
+
+.carousel.carousel-fade .item {
+	-webkit-transition: opacity 1s ease;
+	-moz-transition: opacity 1s ease;
+	-ms-transition: opacity 1s ease;
+	-o-transition: opacity 1s ease;
+	transition: opacity 1s ease;
+	opacity: 0.85;
+}
+.carousel.carousel-fade .active.item {
+	opacity: 1;
+}
+.carousel.carousel-fade .active.left,
+.carousel.carousel-fade .active.right {
+	left: 0;
+	z-index: 2;
+	opacity: 0;
+	filter: alpha(opacity=0);
+    transform:translate3d(0,0,0);
+}
+
+.carousel h2, .carousel h1{
+    color:white;
+    background-color:rgba(0,0,0,0.4);
+    padding:0;
+    border-radius:5px;
+    font-weight:500;
+}
+
+/*end carousel*/
+
 .media{
     padding:10px 5px 10px 5px;
+}
+
+.media > .media-left > img{
+    max-height:80px;
 }
 
 /* Navbar */
@@ -89,6 +177,7 @@ p{
     font-size: 14px;
     font-weight:600;
     transition: 0.4s;
+    text-decoration:none;
 }
 .navbar-default .navbar-nav>li>a:focus {
     color: #f2f2f2;
@@ -102,12 +191,60 @@ p{
     font-size: 14px;
     font-weight:400;
     transition: 0.4s;
+    text-decoration:none;
 }
 
 .dropdown-menu>li>a:hover{
     font-size: 14px;
     font-weight:400;
     text-decoration:underline;
+}
+
+@media screen and (min-width: 992px){
+    .navbar-default .navbar-nav .open .dropdown-menu>li>a {
+        color: black;
+    }
+
+    .dropdown-menu>li>a{
+        color: #f2f2f2;
+    }
+    .dropdown-menu>li>a:hover{
+        color: #e60d2e;
+        text-decoration:underline;
+    }
+
+    .carousel-overlay {
+	    position: absolute;
+	    top: 175px;
+	    right: 0;
+	    left: 0;
+    }
+    .slider{
+        min-height: 475px; 
+        max-height: 475px; 
+    }
+}
+
+@media screen and (max-width: 991px){
+    .navbar-default .navbar-nav .open .dropdown-menu>li>a {
+        color: black;
+    }
+    .dropdown-menu>li>a{
+        color: #f2f2f2;
+    }
+    .dropdown-menu>li>a:hover{
+        text-decoration:underline;
+    }
+    .carousel-overlay {
+	    position: absolute;
+	    top: 150px;
+	    right: 0;
+	    left: 0;
+    }
+    .slider{
+        min-height: 400px; 
+        max-height: 400px; 
+    }
 }
 
 @media screen and (max-width: 767px){
@@ -118,10 +255,42 @@ p{
         color: #f2f2f2;
     }
     .dropdown-menu>li>a:hover{
-        color: #e60d2e;
         text-decoration:underline;
     }
+    .carousel-overlay {
+	    position: absolute;
+	    top: 125px;
+	    right: 0;
+	    left: 0;
+    }
+    .slider{
+        min-height: 350px; 
+        max-height: 350px; 
+    }
 }
+
+@media screen and (max-width: 640px){
+    .navbar-default .navbar-nav .open .dropdown-menu>li>a {
+        color: #f2f2f2;
+    }
+    .dropdown-menu>li>a{
+        color: #f2f2f2;
+    }
+    .dropdown-menu>li>a:hover{
+        text-decoration:underline;
+    }
+    .carousel-overlay {
+	    position: absolute;
+	    top: 40px;
+	    right: 0;
+	    left: 0;
+    }
+    .slider{
+        min-height: 275px; 
+        max-height: 275px; 
+    }
+}
+
 /* Blog */
 .blogsectionpart {
     padding-left: 0px!important;
@@ -133,11 +302,10 @@ p{
 }
 
 .blog-post{
+    border:solid 2px white;
+    border-radius:2px;
 	display:inline-block;
-	width: 33%;
-	float:left;
-    height: 300px;
-    margin:1px 1px 1px 1px;
+	height: 200px;
     background-color:rgba(0,0,0,0.9);
 }
 
@@ -148,22 +316,18 @@ p{
 .blog-section .heading-title h1:after,.contact-form-wrapper h1:after { right:0; margin:auto;}
 
 
-.blog-caption { padding:10px 0 0 0; float:left; width:100%;}
-.blog-caption span {font-family: 'Raleway', sans-serif !important;  color:#82b53f; font-size:13px; line-height:22px; font-weight:600; display:block; text-transform:uppercase;padding-bottom: 23px; }
-.blog-caption h2 { color:#242424;font-size:20px; text-transform: capitalize; font-weight:700;  padding:5px 0px 5px 0px;  background-color:rgba(0,0,0,0.3)}
-.blog-caption h2 a { color:#242424; }
-.blog-caption p { color:#888888;}
-.blog-caption .button { font-size: 15px;  font-weight: 700;  background: #0859a6;  padding: 14px 19px 13px 19px;  margin-top: 26px; }
-.blog-details img { width:100%;}
-@media screen and (max-width: 640px){
-  .blog-post{width: 100%!important;}
-}
+.blog-caption { padding:2px 0 0 0; float:left; width:100%;}
+.blog-caption span {color:#fff; font-size:13px; font-weight:600; display:block;  background-color:rgba(0,0,0,0.4)}
+.blog-caption h2 { color:#fff; font-size:18px; font-weight:600;  padding:5px 0px 5px 0px;  background-color:rgba(0,0,0,0.4)}
+.blog-caption p { color:black; letter-spacing: 2px; font-size: 12px; text-align:center;font-weight:800;background-color:rgba(255,255,255,0.8)}
+.blog-caption .button { font-size: 15px;  font-weight: 700;  background: #0859a6;  padding: 14px 19px 13px 19px;  margin-top: 26px;  }
+
 
 
 /* Footer */
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
-footer { background-color:#0c1a1e; min-height:350px; font-family: 'Lato', sans-serif; }
+footer { background-color:#0c1a1e; min-height:350px; font-family: 'Lato', sans-serif;}
 .footerleft { margin-top:50px; padding:0 36px; }
 .logofooter { margin-bottom:10px; font-size:25px; color:#fff; font-weight:700;}
 .logofooter .mapola-logo {
@@ -186,8 +350,9 @@ footer { background-color:#0c1a1e; min-height:350px; font-family: 'Lato', sans-s
 .footer-ul li {
     line-height: 29px;
     font-size: 12px;
-    width: 48%;
     display: inline-block;
+    padding-left:10px;
+    padding-right:10px;
 }
 
  .icon-ul { list-style-type:none !important; margin:0px; padding:0px;}
@@ -197,7 +362,7 @@ footer { background-color:#0c1a1e; min-height:350px; font-family: 'Lato', sans-s
  
  .copyright { min-height:40px; background-color:#000000;}
  .copyright p { text-align:left; color:#FFF; padding:10px 0; margin-bottom:0px;}
- .heading7 { font-size:21px; font-weight:700; color:#d9d6d6; margin-bottom:22px;}
+ .heading7 { font-size:21px; font-weight:700; color:#d9d6d6; margin-bottom:22px;margin-top:20px;}
  .post p { font-size:12px; color:#FFF; line-height:20px;}
  .post p span { display:block; color:#8f8f8f;}
  .bottom_ul { list-style-type:none; float:right; margin-bottom:0px;}
@@ -255,7 +420,6 @@ footer { background-color:#0c1a1e; min-height:350px; font-family: 'Lato', sans-s
 }
 
 .effect-lily p {
-	color: rgba(255,255,255,0.8);
 	opacity: 0;
 	-webkit-transition: opacity 0.2s, -webkit-transform 0.35s;
 	transition: opacity 0.2s, transform 0.35s;
@@ -280,13 +444,13 @@ footer { background-color:#0c1a1e; min-height:350px; font-family: 'Lato', sans-s
 	transition-duration: 0.35s;
 }
 
-.blog-post:hover {
+/*.blog-post:hover {
     	-webkit-transition-delay: 0.10s;
 	transition-delay: 0.10s;
 	-webkit-transition-duration: 0.15s;
 	transition-duration: 0.15s;
     background-size:110%;
-}
+}*/
 
 a.event, a.event:hover{
     background-color:white;

@@ -2,7 +2,7 @@
 @using System.Globalization
 @using TeamAdmin.Lib.Util
 
-<section>
+<section class="container">
     <div id="bg-fade-carousel" class="carousel slide carousel-fade" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#bg-fade-carousel" data-slide-to="0" class="active"></li>
@@ -12,26 +12,19 @@
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
-            <div class="item active">
-                <div class="slider" style="background-size: cover;background-position: center;background-image: url('/images/hero@2x.jpg');"></div>
-                <div class="container carousel-overlay text-center ">                    
-                    <h1>
-                        Welcome to Mapola FC Academy
-                    </h1>
-                </div>
-            </div>
-
             @if (Model != null && Model.News != null && Model.News.Count() >= 3)
             {
+                int i = 0;
                 @foreach (var news in Model.News.Take(3))
                 {
-                    <div class="item">
+                    <div class="item @(i==0?"active": "")">
                         <div class="slider" style="background-size: cover;background-position: center;background-image: url('@news.Media.FirstOrDefault().Url?w=400&mode=max');"></div>
                         <div class="container carousel-overlay text-center ">
                             <h2>@news.Title</h2>
                             <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()" class="btn btn-default">Read More</a>
                         </div>
                     </div>
+                    i++;
                 }
             }
 
@@ -39,49 +32,108 @@
     </div>
     <!--end bg-carousel-->
 </section>
-<section>
-    @*--------------------------------------------------------*@
-    <article class="container">
-        <div class="col-sm-8">
+
+<section class="container">
+
+        <article class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
             <header>
                 <h1 style="font-size:large;">Mapola FC Academy</h1>
             </header>
             <p>Mapola FC is a not-for-profit organization in Brampton ON (Canada), aiming to provide the best soccer development platform for passionate, committed and ambitious players.</p>
             <p>We have partnered with Scottish giants Rangers FC to provide an innovative and dynamic training program targeting key areas of soccer development such technical precision, speed, agility, strength, power, flexibility, balance, game intelligence and mental toughness.</p>
             <p>Our core values include personal improvement, enjoyment of the game, the pursuit of excellence, honesty and integrity.</p>
-        </div>
-        <div class="col-sm-4">
-            <h4>Sanctioned By</h4>
-            <img class="osa-logo" src="~/images/osa-logo.svg" alt="Ontario Soccer Association">
-            <img class="canada-logo" src="~/images/canada.png" alt="Canada">
-            <img class="ltpd-logo" src="~/images/ltpd.png" alt="LTPD">
+        </article>
+    <aside class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <h4>Sanctioned By</h4>        
+        <figure class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+            <a href="http://www.canadasoccer.com/" target="_blank" rel="nofollow"><img class="img-responsive" src="~/images/canada.png" alt="Canada Soccer"></a>
+        </figure>
 
-        </div>
-    </article>
+        <figure class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+            <a href="http://www.ontariosoccer.net/" target="_blank" rel="nofollow">
+                <img src="~/images/osa-logo.svg" alt="Ontario Soccer">
+            </a>
+        </figure>
+        <figure class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+            <a href="http://www.ontariosoccer.net/news_article/show/774224?referrer_id=2958561" target="_blank" rel="nofollow">
+                <img src="~/images/oasl.jpg" alt="Ontario Academy Soccer League">
+            </a>        
+        </figure>
+        <figure class="col-xs-6 col-sm-12 col-md-12 col-lg-12">
+            <a href="" target="_blank" rel="nofollow">
+                <img class="img-responsive" src="~/images/ltpd.png" alt="Long Term Player Development">
+            </a>
+        </figure>
+    </aside>
 </section>
-<section class="blog-section">
-    <div class="container">
-        <h2>Latest News</h2>
+
+<section class="container">
+    <article class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+        <header>
+            <h3>Latest News</h3>
+        </header>
 
         @if (Model != null && Model.News != null && Model.News.Count() > 0)
         {
+            <div><a href="/news">More News</a></div>
             @foreach (var news in Model.News.Take(6))
-            {
-                <div class="blog-post effect-lily" style="padding: 50px 10px; background:linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),url('@news.Media.FirstOrDefault().Url?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
-                    <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()" style="font-weight:500; color: white;">
+                {
+                <div class="blog-post effect-lily col-xs-12 col-sm-6 col-md-4 col-lg-4" style="background:url('@news.Media.FirstOrDefault().Url?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
+                    <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()">
                         <div class="blog-details">
                             <div class="blog-caption text-center">
-                                <span style="color:white; text-shadow: 1px 1px 0px #515151;">@news.DatePublished.ToString("MMM dd yyyy")</span>
-                                <h2 style="color:white; text-shadow: 1px 1px 0px #515151;">@news.Title</h2>
-                                <p style="color:white; letter-spacing: 2px; font-size: 12px;text-shadow: 1px 1px 0px #515151;text-align:center;font-weight:800;">READ MORE</p>
+                                <span>@news.DatePublished.ToString("MMM dd yyyy")</span>
+                                <h2>@news.Title</h2>
+                                <p>READ MORE</p>
                             </div>
                         </div>
                     </a>
                 </div>
             }
         }
-    </div>
+    </article>
 
+    <aside class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <header>
+            <h3>Fixtures</h3><a href="/events">More Events</a>
+        </header>
+        @if (Model != null && Model.Events != null && Model.Events.Count() > 0)
+        {
+            
+            <div class="panel panel-default">
+                @foreach (var group in Model.Events.Take(5))
+                {
+                    @foreach (var ev in group)
+                    {
+                        <div class="fixture">
+                            <div class="fixture-date">
+                                <span class="fixture-month">@ev.StartDate.ToString("MMM")</span>
+                                <span class="fixture-day">@ev.StartDate.ToString("dd")</span>
+                                <span>@ev.StartDate.ToString("ddd")</span>
+                            </div>
+                            <a class="fixture-title" href="/events/@ev.EventId">@ev.Teams.FirstOrDefault().DisplayName vs. @ev.Title</a>
+                            <div>
+                                <span class="glyphicon glyphicon-time"></span><span> @ev.StartDate.ToString("h:mmtt") - @ev.EndDate.ToString("h:mmtt")</span>
+                            </div>
+                            <div class="fixture-address">@ev.Address</div>
+                        </div>
+                    }
+                }
+            </div>
+        }
+
+    </aside>
+
+
+
+</section>
+
+<section class="container">
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <header><h3>Mapola FC TV</h3></header>
+        <p>Check out our latest games, training sessions and other events</p>
+        <p>Videos under construction</p>
+    </article>
 </section>
 
 @section scripts{
@@ -96,4 +148,23 @@
 }
 @section headerlinks{
     <meta name="description" content="Mapola FC Academy is a not-for-profit organization in Brampton ON (Canada), aiming to provide the best soccer development platform for passionate, committed and ambitious players.">
+    <style>
+        body {
+            background: url(../images/hero@2x.jpg);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        section.container{
+            background-color:rgba(255,255,255,0.93);
+            border-radius:2px;
+            padding:5px 5px 5px 5px;
+        }
+
+        figure img{
+            max-height:100px;
+            margin-bottom:10px;
+        }
+    </style>
 }
