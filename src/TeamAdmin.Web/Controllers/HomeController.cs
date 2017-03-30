@@ -49,6 +49,12 @@ namespace TeamAdmin.Web.Controllers
             return View();
         }
 
+        [HttpGet("staff")]
+        public IActionResult Staff()
+        {
+            return View();
+        }
+
         [HttpGet("contact")]
         public IActionResult Contact()
         {
