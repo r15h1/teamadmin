@@ -122,6 +122,11 @@ section{
     background-color:rgba(0,0,0,0.05) !important;
 }
 
+.thumbnail{
+    background-color:rgba(0,0,0,0);
+    border:none;
+}
+
 /* Carousel Fade Effect */
 .slider{
     min-height: 275px; 
@@ -335,6 +340,12 @@ section{
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
 footer { background-color:#0c1a1e; min-height:350px; font-family: 'Lato', sans-serif;}
+footer img{
+    max-height:80px;
+    margin:10px 10px 10px 10px;
+}
+
+
 .footerleft { margin-top:50px; padding:0 36px; }
 .logofooter { margin-bottom:10px; font-size:25px; color:#fff; font-weight:700;}
 .logofooter .mapola-logo {
