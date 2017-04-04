@@ -18,7 +18,7 @@
                 @foreach (var news in Model.News.Take(3))
                 {
                     <div class="item @(i==0?"active": "")">
-                        <div class="slider" style="background-size: cover;background-position: center;background-image: url('@news.Media.FirstOrDefault().Url?w=400&mode=max');"></div>
+                        <div class="slider" style="background-size: cover;background-position: center;background-image: url('@news.Media.FirstOrDefault().Url?w=800&mode=max');"></div>
                         <div class="container carousel-overlay text-center ">
                             <h2>@news.Title</h2>
                             <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()" class="btn btn-default">Read More</a>
@@ -131,8 +131,12 @@
 <section class="container">
     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <header><h3>Mapola FC TV</h3></header>
-        <p>Check out our latest games, training sessions and other events</p>
-        <p>Videos under construction</p>
+        <p>Check out our latest games, training sessions and other videos.</p>
+        <div id="badge">
+            <div class="vimeoBadge horizontal">
+                <script src="https://vimeo.com/mapolafc/badgeo/?script=1&badge_layout=horizontal&badge_quantity=8&badge_size=200&badge_stream=uploaded&show_titles=yes&badge_channel=1166834&badge_group=425480"></script>
+            </div>
+        </div>
     </article>
 </section>
 
@@ -142,6 +146,10 @@
             $('.carousel').carousel({
                 "interval": 3000,
                 "pause":false
+            });
+
+            $('.carousel').on('slide.bs.carousel', function (e) { 
+                var $animatingElems = $(e.relatedTarget);
             });
         });
     </script>
@@ -175,5 +183,17 @@
             max-height:100px;
             margin-bottom:10px;
         }
+
+        .vimeoBadge { margin: 0 auto; padding: 0; font: normal 11px verdana,sans-serif; }
+        .vimeoBadge img { border: 0; border-radius:2px;}
+        .vimeoBadge a, .vimeoBadge a:link, .vimeoBadge a:visited, .vimeoBadge a:active { text-decoration: none; cursor: pointer;}
+        /*.vimeoBadge #vimeo_badge_logo { margin-top:10px; width: 57px; height: 16px; }*/
+        .vimeoBadge .credit { font: normal 11px Lato, sans-serif; font-weight:600;}
+        .vimeoBadge .clip { padding:0; float:left; margin:10px 10px 10px 25px; line-height:0; }
+        .vimeoBadge.vertical .clip { float: none; }
+        .vimeoBadge .caption { font: 13px verdana,sans-serif; overflow:hidden; width: auto; height: 50px; font-weight:600;}
+        .vimeoBadge .clear { display: block; clear: both; visibility: hidden; }
+        .vimeoBadge .s160 { width: 160px; } .vimeoBadge .s80 { width: 80px; } .vimeoBadge .s100 { width: 100px; } .vimeoBadge .s200 { width: 200px; }
+        
     </style>
 }
