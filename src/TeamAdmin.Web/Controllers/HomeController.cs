@@ -61,6 +61,12 @@ namespace TeamAdmin.Web.Controllers
             return View();
         }
 
+        [HttpGet("documents")]
+        public IActionResult Documents()
+        {
+            return View();
+        }
+
         [HttpGet("contact")]
         public IActionResult Contact()
         {
