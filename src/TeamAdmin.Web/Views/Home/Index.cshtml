@@ -8,6 +8,8 @@
             <li data-target="#bg-fade-carousel" data-slide-to="0" class="active"></li>
             <li data-target="#bg-fade-carousel" data-slide-to="1"></li>
             <li data-target="#bg-fade-carousel" data-slide-to="2"></li>
+            <li data-target="#bg-fade-carousel" data-slide-to="3"></li>
+            <li data-target="#bg-fade-carousel" data-slide-to="4"></li>
         </ol>
 
         <!-- Wrapper for slides -->
@@ -15,7 +17,7 @@
             @if (Model != null && Model.News != null && Model.News.Count() >= 3)
             {
                 int i = 0;
-                @foreach (var news in Model.News.Take(3))
+                @foreach (var news in Model.News.Take(5))
                 {
                     <div class="item @(i==0?"active": "")">
                         <div class="slider" style="background-size: cover;background-position: center;background-image: url('@news.Media.FirstOrDefault().Url?w=800&mode=max');"></div>
