@@ -7,13 +7,13 @@
         {
             @foreach (var team in Model)
             {
-                <div class="blog-post effect-lily" style="padding: 50px 10px; background:linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),url('@(team.Media.Count() > 0 ? @team.Media.FirstOrDefault().Url : @Settings.ImageUrlRoot + "/no_image.jpeg")?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
-                    <a href="/teams/@team.TeamId/@team.Name.MakeSEOFriendlyUrl()" style="font-weight:500; color: white;">
+                <div class="blog-post effect-lily col-xs-12 col-sm-6 col-md-4 col-lg-3" style="background:url('@(team.Media.Count() > 0 ? @team.Media.FirstOrDefault().Url : @Settings.ImageUrlRoot + "/no_image.jpeg")?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
+                    <a href="/teams/@team.TeamId/@team.Name.MakeSEOFriendlyUrl()">
                         <div class="blog-details">
                             <div class="blog-caption text-center">
-                                <span style="color:white; text-shadow: 1px 1px 0px #515151;">@team.Name</span>
-                                <h2 style="color:white; text-shadow: 1px 1px 0px #515151;">@team.DisplayName</h2>
-                                <p style="color:white; letter-spacing: 2px; font-size: 12px;text-shadow: 1px 1px 0px #515151;text-align:center;font-weight:800;">MORE</p>
+                                <span>@team.Name</span>
+                                <h2>@team.DisplayName</h2>
+                                <p>MORE</p>
                             </div>
                         </div>
                     </a>

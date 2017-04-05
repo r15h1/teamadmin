@@ -1,24 +1,24 @@
 ﻿@model IEnumerable<TeamAdmin.Core.Post>
 @using TeamAdmin.Lib.Util
-<section class="blog-section">
     <div class="container">
         <h1>Latest News</h1>
         @if (Model != null && Model.Count() > 0)
         {
-            @foreach (var news in Model)
-            {
-                <div class="blog-post effect-lily" style="padding: 50px 10px; background:linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),url('@news.Media.FirstOrDefault().Url?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
-                    <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()" style="font-weight:500; color: white;">
-                        <div class="blog-details">
-                            <div class="blog-caption text-center">
-                                <span style="color:white; text-shadow: 1px 1px 0px #515151;">@news.DatePublished.ToString("MMM dd yyyy")</span>
-                                <h2 style="color:white; text-shadow: 1px 1px 0px #515151;">@news.Title</h2>
-                                <p style="color:white; letter-spacing: 2px; font-size: 12px;text-shadow: 1px 1px 0px #515151;text-align:center;font-weight:800;">READ MORE</p>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                @foreach (var news in Model)
+                {
+                    <div class="blog-post effect-lily col-xs-12 col-sm-6 col-md-4 col-lg-3" style="background:url('@news.Media.FirstOrDefault().Url?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
+                        <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()">
+                            <div class="blog-details">
+                                <div class="blog-caption text-center">
+                                    <span>@news.DatePublished.ToString("MMM dd yyyy")</span>
+                                    <h2>@news.Title</h2>
+                                    <p>READ MORE</p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-            }
+                        </a>
+                    </div>
+                }
+            </div>
         }
     </div>
-</section>
