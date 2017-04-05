@@ -16,7 +16,7 @@ namespace TeamAdmin.Web.Controllers
 
         public IActionResult Index()
         {
-            var news = postRepository.GetPosts(clubId);
+            var news = postRepository.GetPosts(clubId, Core.PostStatus.PUBLISHED);
             return View(news);
         }
 

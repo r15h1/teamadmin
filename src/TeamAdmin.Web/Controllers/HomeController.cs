@@ -34,7 +34,7 @@ namespace TeamAdmin.Web.Controllers
         public IActionResult Index()
         {
 
-            var news = postRepository.GetPosts(clubId);
+            var news = postRepository.GetPosts(clubId, Core.PostStatus.PUBLISHED);
             var events = eventRepository.GetEvents(new Core.Club { ClubId = clubId });
             var model = new HomePageModel {
                 Events = events.GroupBy(e => e.StartDate.Date, e => e).OrderBy(k => k.Key),

@@ -51,6 +51,17 @@ namespace TeamAdmin.Lib.Repositories
             return null;
         }
 
+        public IEnumerable<Core.Post> GetPosts(int clubId, PostStatus status)
+        {
+            using (var context = ContextFactory.Create<PostContext>())
+            {
+                List<EFContext.Post> posts = context.Posts.Include(m => m.PostMedia).Where(p => p.ClubId == clubId && p.PostStatus == (byte) status).OrderByDescending(p => p.DatePublished).ToList();
+                if (posts != null && posts.Count() > 0)
+                    return mapper.Map<List<Core.Post>>(posts);
+            }
+            return null;
+        }
+
         public Core.Post SavePost(Core.Post post)
         {
             if (post.PostId.HasValue)

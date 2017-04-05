@@ -11,5 +11,6 @@ namespace TeamAdmin.Core.Repositories
         Post GetPost(long value);
         bool DeletePost(long value);
         IEnumerable<Post> GetPosts(int clubId);
+        IEnumerable<Post> GetPosts(int clubId, PostStatus status);
     }
 }

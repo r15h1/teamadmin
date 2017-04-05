@@ -157,6 +157,12 @@
                         }
                     }
                 });
+
+                $('#fileUploader').on('filecleared', function (event) {
+                    console.log("filecleared");
+                    //$('#myform').remove($("input[name='images']"));
+                    $("input[name='images']", $('#myform')).remove();
+                });
             });
         </script>
     }
