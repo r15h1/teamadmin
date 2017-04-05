@@ -15,42 +15,35 @@
         </div>
     }
 
-
-
     @if (Model != null && events != null && events.Count() > 0)
     {
         <h2>Upcoming Events</h2>
-        <div class="row">
-            @foreach (var evnt in events)
-            {
-                <div class="col-sm-6 col-md-4">
-                    <div class="media">
-                        <div class="media-left">
-                            <div class="media-object calendar-item">
-                                <div class="calendar-month">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(evnt.Key.Month).ToUpper())</div>
-                                <div class="calendar-date">@evnt.Key.Day.ToString("00")</div>
-                                <div class="calendar-day">@(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedDayName(evnt.Key.DayOfWeek).ToUpper())</div>
+            <div class="row">
+                @foreach (var evnt in events)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="media">
+                            <div class="media-body list-group">
+                                @foreach (var ev in evnt)
+                                {
+                                    <div class="fixture">
+                                        <div class="fixture-date">
+                                            <span class="fixture-month">@ev.StartDate.ToString("MMM")</span>
+                                            <span class="fixture-day">@ev.StartDate.ToString("dd")</span>
+                                            <span>@ev.StartDate.ToString("ddd")</span>
+                                        </div>
+                                        <div class="fixture-title"><a href="/events/@ev.EventId">@ev.Teams.FirstOrDefault().DisplayName vs. @ev.Title</a></div>
+                                        <div>
+                                            <span class="glyphicon glyphicon-time"></span><span class="fixture-time"> @ev.StartDate.ToString("h:mmtt") - @ev.EndDate.ToString("h:mmtt")</span>
+                                        </div>
+                                        <div class="fixture-address">@ev.Address</div>
+                                    </div>
+                                }
                             </div>
                         </div>
-                        <div class="media-body list-group">
-                            @foreach (var item in evnt)
-                            {
-                                <div class="media-heading list-group-item" style="background-color:white;">
-                                    <span style="color:rgb(8, 89, 176);font-weight:700; text-transform:capitalize;">@item.EventType:</span>
-                                    @foreach (var t in item.Teams)
-                                    {
-                                        <span style="margin-right:5px;font-weight:700;">@(string.IsNullOrWhiteSpace(t.DisplayName) ? t.Name : t.DisplayName) @(item.EventType == TeamAdmin.Core.EventType.GAME ? "vs " + @item.Title : "")</span>
-                                    }
-                                    <div style="color:rgb(8, 89, 176);font-weight:700;"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> @item.StartDate.ToString("hh:mmtt") - @item.EndDate.ToString("hh:mmtt")</div>
-                                    <div>@item.Address</div>
-
-                                </div>
-                            }
-                        </div>
                     </div>
-                </div>
-            }
-        </div>
+                }
+            </div>
     }
 
     @if (Model != null && Model.Players != null && Model.Players.Count() > 0)
@@ -75,7 +68,7 @@
                         <div class="media-body">
                             <h4 class="media-heading">@player.FirstName @player.LastName.FirstOrDefault()</h4>
                             <div>@player.Position</div>
-                            @if(player.SquadNumber.HasValue)
+                            @if (player.SquadNumber.HasValue)
                             {
                                 <div>#@player.SquadNumber</div>
                             }
