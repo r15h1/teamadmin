@@ -49,6 +49,12 @@ namespace TeamAdmin.Web.Controllers
             return View();
         }
 
+        [HttpGet("testimonials")]
+        public IActionResult Testimonials()
+        {
+            return View();
+        }
+
         [HttpGet("academy-graduates")]
         public IActionResult AcademyGraduates()
         {

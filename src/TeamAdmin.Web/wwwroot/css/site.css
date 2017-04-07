@@ -131,6 +131,30 @@ section{
     border:none;
 }
 
+.testimonial{
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.testimonial p{    
+    border-radius:5px;
+    font-style: italic;
+    line-height:22px;    
+    margin: auto;    
+    padding: 10px;    
+}
+
+.testimonial p:after{
+    font-size: 40px;
+    content: "\201D";
+    bottom:-0.5em;
+}
+
+.testimonial p:before{
+    font-size: 40px;
+    content: "\201C";
+}
+
 /* Carousel Fade Effect */
 .slider{
     min-height: 275px; 
@@ -473,3 +497,32 @@ footer img{
 	transition-duration: 0.15s;
     background-size:110%;
 }*/
+
+
+blockquote {
+border:none;
+font-family: Georgia, Times, serif;
+font-style: italic;
+width: 500px;
+margin: 0.25em 0;
+padding: 0.25em 40px;
+position: relative;
+color: #383838;
+text-align:center;
+}
+
+blockquote:before {
+display: block;
+position: absolute;
+left: -20px;
+top: -20px;
+color: #7a7a7a;
+}
+
+blockquote cite {
+color: rgba(0,0,0,0.4);
+font-size: 14px;
+font-weight:600;
+display: block;
+margin-top: 5px;
+}

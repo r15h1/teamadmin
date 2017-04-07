@@ -36,7 +36,6 @@
 </section>
 
 <section class="container">
-
         <article class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
             <header>
                 <h1 style="font-size:large;">Mapola FC Academy</h1>
@@ -68,134 +67,199 @@
         </figure>
     </aside>
 </section>
-
 <section class="container">
-    <article class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-        <header>
-            <h3>Latest News</h3>
-        </header>
+    <header class="container"><h1 style="font-size:large;">Testimonials</h1></header>
+    <blockquote class="col-xs-12 col-sm-4 col-md-4 col-lg-4">        
+        <cite>Candace Thomas</cite>
+        My son started training with Mapola at age 6 with no confidence and very little skill, he is now a star player with a wealth of knowledge and discipline learned over the last two years.
+    </blockquote>
+    <blockquote class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
+        <cite>Christine Lynch</cite>  
+        Mapola FC has given my son the environment in which to grow as an athlete and receive opportunities from TFC and FC Barcelona in Spain.
+    </blockquote>
+    <blockquote class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
+        <cite>Mark Nonis</cite>
+        The coach made sure every single player introduced themselves and welcomed my son to the team.  That won my heart, let alone the drills during the practice were something I've never seen before.
+    </blockquote>
+    <p style="margin-left:15px;"><a href="/testimonials">Read full testimonials</a></>
+</section>
+<section class="container">
+        <article class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <header>
+                <h3>Latest News</h3>
+            </header>
 
-        @if (Model != null && Model.News != null && Model.News.Count() > 0)
-        {
-            <div><a href="/news">More News</a></div>
-            @foreach (var news in Model.News.Take(6))
+            @if (Model != null && Model.News != null && Model.News.Count() > 0)
+            {
+                <div><a href="/news">More News</a></div>
+                @foreach (var news in Model.News.Take(6))
                 {
-                <div class="blog-post effect-lily col-xs-12 col-sm-6 col-md-4 col-lg-4" style="background:url('@news.Media.FirstOrDefault().Url?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
-                    <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()">
-                        <div class="blog-details">
-                            <div class="blog-caption text-center">
-                                <span>@news.DatePublished.ToString("MMM dd yyyy")</span>
-                                <h2>@news.Title</h2>
-                                <p>READ MORE</p>
+                    <div class="blog-post effect-lily col-xs-12 col-sm-6 col-md-4 col-lg-4" style="background:url('@news.Media.FirstOrDefault().Url?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
+                        <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()">
+                            <div class="blog-details">
+                                <div class="blog-caption text-center">
+                                    <span>@news.DatePublished.ToString("MMM dd yyyy")</span>
+                                    <h2>@news.Title</h2>
+                                    <p>READ MORE</p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
+                }
+            }
+        </article>
+
+        <aside class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <header>
+                <h3>Fixtures</h3><a href="/events">More Events</a>
+            </header>
+            @if (Model != null && Model.Events != null && Model.Events.Count() > 0)
+            {
+
+                <div class="panel panel-default">
+                    @foreach (var group in Model.Events.Take(5))
+                {
+                        @foreach (var ev in group)
+                    {
+                            <div class="fixture">
+                                <div class="fixture-date">
+                                    <span class="fixture-month">@ev.StartDate.ToString("MMM")</span>
+                                    <span class="fixture-day">@ev.StartDate.ToString("dd")</span>
+                                    <span>@ev.StartDate.ToString("ddd")</span>
+                                </div>
+                                <div class="fixture-title"><a href="/events/@ev.EventId">@ev.Teams.FirstOrDefault().DisplayName vs. @ev.Title</a></div>
+                                <div>
+                                    <span class="glyphicon glyphicon-time"></span><span class="fixture-time"> @ev.StartDate.ToString("h:mmtt") - @ev.EndDate.ToString("h:mmtt")</span>
+                                </div>
+                                <div class="fixture-address">@ev.Address</div>
+                            </div>
+                        }
+                    }
                 </div>
             }
-        }
-    </article>
 
-    <aside class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-        <header>
-            <h3>Fixtures</h3><a href="/events">More Events</a>
-        </header>
-        @if (Model != null && Model.Events != null && Model.Events.Count() > 0)
-        {
-            
-            <div class="panel panel-default">
-                @foreach (var group in Model.Events.Take(5))
-                {
-                    @foreach (var ev in group)
-                    {
-                        <div class="fixture">
-                            <div class="fixture-date">
-                                <span class="fixture-month">@ev.StartDate.ToString("MMM")</span>
-                                <span class="fixture-day">@ev.StartDate.ToString("dd")</span>
-                                <span>@ev.StartDate.ToString("ddd")</span>
-                            </div>
-                            <div  class="fixture-title"><a href="/events/@ev.EventId">@ev.Teams.FirstOrDefault().DisplayName vs. @ev.Title</a></div>
-                            <div>
-                                <span class="glyphicon glyphicon-time"></span><span class="fixture-time"> @ev.StartDate.ToString("h:mmtt") - @ev.EndDate.ToString("h:mmtt")</span>
-                            </div>
-                            <div class="fixture-address">@ev.Address</div>
-                        </div>
-                    }
+        </aside>
+
+
+
+    </section>
+
+    <section class="container">
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <header><h3>Mapola FC TV</h3></header>
+            <p>Check out our latest games, training sessions and other videos.</p>
+            <div id="badge">
+                <div class="vimeoBadge horizontal">
+                    <script src="https://vimeo.com/mapolafc/badgeo/?script=1&badge_layout=horizontal&badge_quantity=8&badge_size=200&badge_stream=uploaded&show_titles=yes&badge_channel=1166834&badge_group=425480"></script>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    @section scripts{
+        <script>
+            $(document).ready(function () {
+                $('.carousel').carousel({
+                    "interval": 3000,
+                    "pause": false
+                });
+
+                $('.carousel').on('slide.bs.carousel', function (e) {
+                    var $animatingElems = $(e.relatedTarget);
+                });
+            });
+        </script>
+    }
+    @section headerlinks{
+        <meta name="description" content="Mapola FC Academy is a not-for-profit organization in Brampton ON (Canada), aiming to provide the best soccer development platform for passionate, committed and ambitious players.">
+        <style>
+            body {
+                background: url(../images/hero@2x.jpg);
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+            }
+
+            section.container {
+                background-color: rgba(255,255,255,0.97);
+                border-radius: 2px;
+                padding: 5px 5px 5px 5px;
+                max-width: 1000px;
+            }
+
+            footer .container {
+                max-width: 1000px;
+            }
+
+            .container .carousel-overlay {
+                max-width: 1000px;
+            }
+
+            figure img {
+                max-height: 100px;
+                margin-bottom: 10px;
+            }
+
+            .vimeoBadge {
+                margin: 0 auto;
+                padding: 0;
+                font: normal 11px verdana,sans-serif;
+            }
+
+                .vimeoBadge img {
+                    border: 0;
+                    border-radius: 2px;
                 }
-            </div>
-        }
 
-    </aside>
+                .vimeoBadge a, .vimeoBadge a:link, .vimeoBadge a:visited, .vimeoBadge a:active {
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+                /*.vimeoBadge #vimeo_badge_logo { margin-top:10px; width: 57px; height: 16px; }*/
+                .vimeoBadge .credit {
+                    font: normal 11px Lato, sans-serif;
+                    font-weight: 600;
+                }
 
+                .vimeoBadge .clip {
+                    padding: 0;
+                    float: left;
+                    margin: 10px 10px 10px 25px;
+                    line-height: 0;
+                }
 
+                .vimeoBadge.vertical .clip {
+                    float: none;
+                }
 
-</section>
+                .vimeoBadge .caption {
+                    font: 13px verdana,sans-serif;
+                    overflow: hidden;
+                    width: auto;
+                    height: 50px;
+                    font-weight: 600;
+                }
 
-<section class="container">
-    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <header><h3>Mapola FC TV</h3></header>
-        <p>Check out our latest games, training sessions and other videos.</p>
-        <div id="badge">
-            <div class="vimeoBadge horizontal">
-                <script src="https://vimeo.com/mapolafc/badgeo/?script=1&badge_layout=horizontal&badge_quantity=8&badge_size=200&badge_stream=uploaded&show_titles=yes&badge_channel=1166834&badge_group=425480"></script>
-            </div>
-        </div>
-    </article>
-</section>
+                .vimeoBadge .clear {
+                    display: block;
+                    clear: both;
+                    visibility: hidden;
+                }
 
-@section scripts{
-    <script>
-        $(document).ready(function () {
-            $('.carousel').carousel({
-                "interval": 3000,
-                "pause":false
-            });
+                .vimeoBadge .s160 {
+                    width: 160px;
+                }
 
-            $('.carousel').on('slide.bs.carousel', function (e) { 
-                var $animatingElems = $(e.relatedTarget);
-            });
-        });
-    </script>
-}
-@section headerlinks{
-    <meta name="description" content="Mapola FC Academy is a not-for-profit organization in Brampton ON (Canada), aiming to provide the best soccer development platform for passionate, committed and ambitious players.">
-    <style>
-        body {
-            background: url(../images/hero@2x.jpg);
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
+                .vimeoBadge .s80 {
+                    width: 80px;
+                }
 
-        section.container{
-            background-color:rgba(255,255,255,0.97);
-            border-radius:2px;
-            padding:5px 5px 5px 5px;
-            max-width:1000px;
-        }
+                .vimeoBadge .s100 {
+                    width: 100px;
+                }
 
-        footer .container{            
-            max-width:1000px;
-        }
-
-        .container .carousel-overlay{
-            max-width:1000px;
-        }
-
-        figure img{
-            max-height:100px;
-            margin-bottom:10px;
-        }
-
-        .vimeoBadge { margin: 0 auto; padding: 0; font: normal 11px verdana,sans-serif; }
-        .vimeoBadge img { border: 0; border-radius:2px;}
-        .vimeoBadge a, .vimeoBadge a:link, .vimeoBadge a:visited, .vimeoBadge a:active { text-decoration: none; cursor: pointer;}
-        /*.vimeoBadge #vimeo_badge_logo { margin-top:10px; width: 57px; height: 16px; }*/
-        .vimeoBadge .credit { font: normal 11px Lato, sans-serif; font-weight:600;}
-        .vimeoBadge .clip { padding:0; float:left; margin:10px 10px 10px 25px; line-height:0; }
-        .vimeoBadge.vertical .clip { float: none; }
-        .vimeoBadge .caption { font: 13px verdana,sans-serif; overflow:hidden; width: auto; height: 50px; font-weight:600;}
-        .vimeoBadge .clear { display: block; clear: both; visibility: hidden; }
-        .vimeoBadge .s160 { width: 160px; } .vimeoBadge .s80 { width: 80px; } .vimeoBadge .s100 { width: 100px; } .vimeoBadge .s200 { width: 200px; }
-        
-    </style>
-}
+                .vimeoBadge .s200 {
+                    width: 200px;
+                }
+        </style>
+    }
