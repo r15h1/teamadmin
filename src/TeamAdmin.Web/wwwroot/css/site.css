@@ -255,9 +255,13 @@ section{
 
     .carousel-overlay {
 	    position: absolute;
-	    top: 175px;
+	    top: 285px;
 	    right: 0;
 	    left: 0;
+    }
+
+    .carousel h2{
+        font-size:1.75em;
     }
     .slider{
         min-height: 475px; 
@@ -277,10 +281,15 @@ section{
     }
     .carousel-overlay {
 	    position: absolute;
-	    top: 150px;
+	    top: 235px;
 	    right: 0;
 	    left: 0;
     }
+
+    .carousel h2{
+        font-size:1.75em;
+    }
+
     .slider{
         min-height: 400px; 
         max-height: 400px; 
@@ -299,10 +308,15 @@ section{
     }
     .carousel-overlay {
 	    position: absolute;
-	    top: 125px;
+	    top: 175px;
 	    right: 0;
 	    left: 0;
     }
+    
+    .carousel h2{
+        font-size:1.5em;
+    }
+
     .slider{
         min-height: 350px; 
         max-height: 350px; 
@@ -321,10 +335,15 @@ section{
     }
     .carousel-overlay {
 	    position: absolute;
-	    top: 40px;
+	    top: 120px;
 	    right: 0;
 	    left: 0;
     }
+
+    .carousel h2{
+        font-size:1.2em;
+    }
+
     .slider{
         min-height: 275px; 
         max-height: 275px; 
