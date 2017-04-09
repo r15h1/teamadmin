@@ -62,7 +62,7 @@ namespace TeamAdmin.Web.Controllers
                 Body = Serialize(model),
                 DateCreated = DateTime.UtcNow,
                 Email = model.Email,
-                MessageType = Core.MessageType.TryOut,
+                MessageType = Core.MessageType.SummerCamp,
                 Name = $"{model.PlayerFullName}",
                 Subject = $"Summer Camp for {model.PlayerFullName}"
             };
@@ -86,7 +86,7 @@ namespace TeamAdmin.Web.Controllers
                 Body = Serialize(model),
                 DateCreated = DateTime.UtcNow,
                 Email = model.PrimaryGuardianEmail,
-                MessageType = Core.MessageType.TryOut,
+                MessageType = Core.MessageType.Registration,
                 Name = $"{model.PrimaryGuardianFullName}",
                 Subject = $"Register {model.PlayerFirstName} {model.PlayerLastName} for {model.AgeGroup}"
             };
