@@ -37,6 +37,9 @@ namespace TeamAdmin.Lib.zz
         public string Province { get; set; }
 
         [Required]
+        public string PostalCode { get; set; }
+
+        [Required]
         [Phone]
         [Display(Name = "Primary Contact #")]
         [RegularExpression(@"(\+\d)?\d{10}(\s)?(x\d+)?$", ErrorMessage = "Valid phone# formats: 6479991234, +16479991234, 6479991234 x1234, +16479991234 x1234")]

@@ -147,6 +147,7 @@ namespace TeamAdmin.Web.Controllers
             builder.AppendLine($"Address: {result.Address}");
             builder.AppendLine($"City: {result.City}");
             builder.AppendLine($"Province: {result.Province}");
+            builder.AppendLine($"PostalCode: {result.PostalCode}");
             builder.AppendLine($"Primary Contact#: {result.PrimaryContactNumber}");
             builder.AppendLine($"Player's Primary Email: {result.PlayerEmail}");
             builder.AppendLine($"Player's Date of Birth: {result.PlayerDateOfBirth}\n");
