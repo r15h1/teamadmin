@@ -37,6 +37,7 @@ namespace TeamAdmin.Web.Services
                 .ForMember(m => m.Province, opt => opt.MapFrom(p => p.Address.Province));
 
             CreateMap<TeamAdmin.Web.Models.Message, Core.Message>().ReverseMap();
+            CreateMap<TeamAdmin.Web.Models.AdminViewModels.Notification, Core.Notification>().ReverseMap();
         }
     }
 

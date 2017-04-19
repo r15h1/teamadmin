@@ -1,0 +1,40 @@
+﻿@model IEnumerable<TeamAdmin.Web.Models.AdminViewModels.Notification>
+
+<div class="container">
+    <h1>Notifications</h1>
+    <div class="btn-toolbar" role="toolbar"><a class="btn btn-default pull-right" asp-controller="AdminNotifications" asp-action="Add">Add Notification</a></div>
+    @if (Model != null && Model.Count() > 0)
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr class="bg-primary">
+                        <th class="col-md-1 col-sm-1 col-xs-1">Id</th>
+                        <th class="col-md-5 col-sm-4 col-xs-5">Message</th>
+                        <th class="col-md-2 col-sm-2 col-xs-2">Starts On</th>
+                        <th class="col-md-2 col-sm-2 col-xs-2">Ends On</th>
+                        <th class="col-md-1 col-sm-1 col-xs-1">Status</th>
+                        <th class="col-md-1 col-sm-1 col-xs-1">Edit</th>
+                        <th class="col-md-1 col-sm-1 col-xs-1">Delete</th>
+                    </tr>
+                </thead>
+                @foreach (var notification in Model)
+                {
+                    <tr>
+                        <td>@notification.NotificationId</td>
+                        <td>@(notification.Message.Length > 50 ? notification.Message.Substring(50) + "..." : notification.Message)</td>
+                        <td>@notification.StartDate.Value.ToString("dd MMM yyyy")</td>
+                        <td>@notification.ExpiryDate.Value.ToString("dd MMM yyyy")</td>
+                        <td>@notification.Status</td>
+                        <td class="text-center"><a href="/admin/notifications/edit/@notification.NotificationId"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="edit"></i></a></td>
+                        <td class="text-center"><a href="/admin/notifications/delete/@notification.NotificationId"><i class="glyphicon glyphicon-remove" data-toggle="tooltip" title="delete"></i></a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>There is no notification (ticker) registered yet!</p>
+    }
+</div>

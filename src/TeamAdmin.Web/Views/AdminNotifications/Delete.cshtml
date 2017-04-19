@@ -1,0 +1,29 @@
+@model TeamAdmin.Web.Models.AdminViewModels.Notification
+<div class="container">
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Notification</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>Notification Id:</dt>
+            <dd>@Model.NotificationId</dd>
+            <dt>Message:</dt>
+            <dd>@Model.Message</dd>
+            <dt>Starts on:</dt>
+            <dd>@Model.StartDate.Value.ToString("dd MMM yyyy")</dd>
+            <dt>Ends on:</dt>
+            <dd>@Model.ExpiryDate.Value.ToString("dd MMM yyyy")</dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <div class="form-actions no-color">
+                <input type="hidden" name="NotificationId" value="@Model.NotificationId"/>
+                <input type="hidden" name="Message" value="@Model.Message" />
+                <input type="hidden" name="StartDate" value="@Model.StartDate" />
+                <input type="hidden" name="ExpiryDate" value="@Model.ExpiryDate" />
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>

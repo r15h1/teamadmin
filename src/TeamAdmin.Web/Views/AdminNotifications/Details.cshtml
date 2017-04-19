@@ -1,0 +1,45 @@
+@model TeamAdmin.Web.Models.AdminViewModels.Notification
+<div class="container">
+    <h1>Add/Edit Notification</h1>
+    <form asp-action="save" name="myform" id="myform" method="post">
+        <div class="form-horizontal">
+            <div asp-validation-summary="All" class="text-danger col-md-offset-2"></div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="col-md-2 control-label">Starts On</label>
+                <div class="col-md-3">
+                    <input type="date" asp-for="StartDate" class="form-control" required />
+                    <span asp-validation-for="StartDate" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExpiryDate" class="col-md-2 control-label">Ends On</label>
+                <div class="col-md-3">
+                    <input type="date" asp-for="ExpiryDate"  class="form-control" required />
+                    <span asp-validation-for="ExpiryDate" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Message" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <textarea autofocus class="form-control" asp-for="Message" rows="10" required>@Model.Message</textarea>
+                    <span asp-validation-for="Message" class="text-danger" />
+                </div>
+            </div>            
+            <div class="form-group">
+                <div class="col-md-offset-1 col-md-1">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+        <input type="hidden" asp-for="NotificationId" />        
+    </form>
+
+    <div>
+        <a href="/admin/notifications">Back to List</a>
+    </div>
+</div>  
+
+    @section scripts {
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>        
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    }
