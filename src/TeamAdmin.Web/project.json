@@ -78,9 +78,10 @@
 
   "publishOptions": {
     "include": [
-      "wwwroot",
+      "wwwroot/css",
+      "wwwroot/lib",
+      "wwwroot/js",
       "**/*.cshtml",
-      "settings.json",
       "web.config"
     ]
   },

@@ -574,7 +574,7 @@ margin-top: 5px;
   width: 100%;
   overflow: hidden;
   height: 4rem;
-  background-color: Yellow;
+  background-color: rgb(176, 39, 8);
   padding-left: 100%;
 }
 
@@ -597,7 +597,7 @@ margin-top: 5px;
   display: inline-block;
   padding: 0 2rem;
   font-size: 1.75rem;
-  color: rgb(8, 89, 176);
+  color:white;
 }
 
 a.event, a.event:hover{
