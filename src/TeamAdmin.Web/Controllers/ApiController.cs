@@ -82,7 +82,7 @@ namespace TeamAdmin.Web.Controllers
 
             var events = eventRepository.GetEvents(new Team(1) { TeamId = team.Value }).Select(e => new {
                 start = e.StartDate, end = e.EndDate, id = e.EventId,
-                title = $"{e.EventType.ToString()}: {string.Join(",", e.Teams.Select(t => t.DisplayName))} {(e.EventType == EventType.GAME ? " vs " : " | ")} {e.Title}",
+                title = $"{e.EventType.ToString()}: {e.Title}",
                 description = e.Description,
                 location = e.Address,
                 url = $"{Settings.SiteUrl}events/{e.EventId}",

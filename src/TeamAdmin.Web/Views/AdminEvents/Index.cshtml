@@ -22,7 +22,7 @@
                         <td>@ev.StartDate.ToString("ddd dd MMM")</td>
                         <td>@ev.EventType</td>
                         <td>@(string.Join(", ", ev.Teams.Select(t => t.DisplayName).ToArray()))</td>
-                        <td>@(ev.EventType == TeamAdmin.Core.EventType.GAME ? "vs." : "") @ev.Title</td>
+                        <td>@ev.Title</td>
                         <td>@ev.StartDate.ToString("hh:mm tt")</td>
                         <td>@ev.EndDate.ToString("hh:mm tt")</td>
                         <td class="text-center"><a href="/admin/events/@ev.EventId"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="edit"></i></a></td>
