@@ -22,7 +22,7 @@
                 {
                     <tr>
                         <td>@notification.NotificationId</td>
-                        <td>@(notification.Message.Length > 50 ? notification.Message.Substring(50) + "..." : notification.Message)</td>
+                        <td title="@notification.Message">@(notification.Message.Length > 65 ? notification.Message.Substring(0, 65) + "..." : notification.Message)</td>
                         <td>@notification.StartDate.Value.ToString("dd MMM yyyy")</td>
                         <td>@notification.ExpiryDate.Value.ToString("dd MMM yyyy")</td>
                         <td>@notification.Status</td>

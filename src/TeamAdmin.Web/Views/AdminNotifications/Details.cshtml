@@ -21,7 +21,7 @@
             <div class="form-group">
                 <label asp-for="Message" class="col-md-2 control-label"></label>
                 <div class="col-md-10">
-                    <textarea autofocus class="form-control" asp-for="Message" rows="10" required>@Model.Message</textarea>
+                    <textarea autofocus class="form-control" asp-for="Message" rows="10" required maxlength="250">@Model.Message</textarea>
                     <span asp-validation-for="Message" class="text-danger" />
                 </div>
             </div>            

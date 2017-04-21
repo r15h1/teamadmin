@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TeamAdmin.Core.Caching;
 using TeamAdmin.Core.Repositories;
+using TeamAdmin.Lib.Caching;
 using TeamAdmin.Lib.Repositories;
 using TeamAdmin.Lib.Util;
 using TeamAdmin.Web.Data;
@@ -53,6 +55,7 @@ namespace TeamAdmin.Web
                 .AddDefaultTokenProviders();
 
             services.AddAutoMapper();
+            services.AddMemoryCache();
 
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddMvc();
@@ -67,6 +70,7 @@ namespace TeamAdmin.Web
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<IProgramRepository, ProgramRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddSingleton<ICacheService, CacheService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,7 +96,6 @@ namespace TeamAdmin.Web
             app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

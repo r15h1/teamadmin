@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using TeamAdmin.Core.Repositories;
 using TeamAdmin.Web.Models.AdminViewModels;
 using System.Collections.Generic;
+using TeamAdmin.Core.Caching;
 
 namespace TeamAdmin.Web.Controllers
 {
@@ -12,14 +13,16 @@ namespace TeamAdmin.Web.Controllers
     [Route("admin/notifications")]
     public class AdminNotificationsController : Controller
     {
-        INotificationRepository notificationRepository;
         int clubId = 1;
+        private INotificationRepository notificationRepository;        
         private IMapper mapper;
+        private ICacheService cache;
 
-        public AdminNotificationsController(INotificationRepository notificationRepository, IMapper mapper)
+        public AdminNotificationsController(INotificationRepository notificationRepository, IMapper mapper, ICacheService cache)
         {
             this.notificationRepository = notificationRepository;
             this.mapper = mapper;
+            this.cache = cache;
         }
 
         [HttpGet("")]
@@ -53,6 +56,7 @@ namespace TeamAdmin.Web.Controllers
             }
 
             SaveNotification(notification);
+            cache.ResetNotifications();
             return RedirectToAction("Index");
         }
 
@@ -95,6 +99,7 @@ namespace TeamAdmin.Web.Controllers
             try
             {
                 notificationRepository.DeleteNotification(notification.NotificationId.Value);
+                cache.ResetNotifications();
                 return RedirectToAction("Index");
             }
             catch

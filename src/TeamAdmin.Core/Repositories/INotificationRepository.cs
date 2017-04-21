@@ -7,7 +7,7 @@ namespace TeamAdmin.Core.Repositories
 {
     public interface INotificationRepository
     {
-        IEnumerable<Notification> GetNotifications(int clubId, bool? active = true);        
+        IEnumerable<Notification> GetNotifications(int clubId, bool active = false);        
         Notification SaveNotification(Notification notification);
         Notification GetNotification(long id);
         bool DeleteNotification(long id);

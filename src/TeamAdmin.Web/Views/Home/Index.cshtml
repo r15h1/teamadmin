@@ -1,7 +1,20 @@
 ﻿@model TeamAdmin.Web.Models.HomePageModel
 @using System.Globalization
 @using TeamAdmin.Lib.Util
+@inject TeamAdmin.Core.Caching.ICacheService @cachingService
 
+@{
+    var activeNotifications = cachingService.GetActiveNotifications();
+    if (activeNotifications != null && activeNotifications.Count() > 0)
+    {
+        @Html.Raw("<div class=\"ticker-wrap\"><div class=\"ticker\">");
+        @foreach (var notification in activeNotifications)
+                {
+            <div class="ticker__item">@notification.Message</div>
+        }
+        @Html.Raw("</div></div>");
+    }
+}
 <section class="container">
     <div id="bg-fade-carousel" class="carousel slide carousel-fade" data-ride="carousel">
         <ol class="carousel-indicators">

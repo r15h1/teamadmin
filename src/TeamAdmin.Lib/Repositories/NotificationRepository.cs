@@ -30,18 +30,13 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        public IEnumerable<Notification> GetNotifications(int clubId, bool? active = true)
+        public IEnumerable<Notification> GetNotifications(int clubId, bool active = false)
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {
-                //if (active.HasValue)
-                //{
-                //    DateTime today = DateTime.Today;
-                //    if (active.Value)
-                //        return context.Notifications.Where(n => n.ClubId == clubId && today >= n.StartDate && today < n.ExpiryDate).ToList();
+                if (active)
+                    return context.Notifications.Where(n => n.ClubId == clubId && DateTime.Today >= n.StartDate && DateTime.Today < n.ExpiryDate).ToList();
 
-                //    return context.Notifications.Where(n => n.ClubId == clubId && (today < n.StartDate || today >= n.ExpiryDate)).ToList();
-                //}
                 return context.Notifications.Where(n => n.ClubId == clubId).OrderByDescending(n => n.StartDate).OrderByDescending(n => n.ExpiryDate).ToList();
             }
         }
