@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="Images" class="col-md-1 control-label"></label>
+                <label asp-for="Images" class="col-md-1 control-label">Images (max 8)</label>
                 <div class="col-md-11">
                     <input type="file" class="form-control" name="fileUploader" id="fileUploader" multiple />
                 </div>
@@ -52,117 +52,167 @@
         <a href="/admin/news">Back to List</a>
     </div>
 </div>
-    @section headerlinks{
-        <link href="~/lib/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
-    }
+@section headerlinks{
+    <link href="~/lib/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+}
 
-    @section scripts {
+@section scripts {
 
-        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-        <script src="~/lib/tinymce/tinymce.min.js"></script>
-        <script src="~/lib/bootstrap-fileinput/js/fileinput.min.js"></script>
-        <script>
-            tinyMCE.init({
-                plugins: [
-                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                    'searchreplace wordcount visualblocks visualchars code fullscreen',
-                    'insertdatetime media nonbreaking save table contextmenu directionality',
-                    'emoticons template paste textcolor colorpicker textpattern imagetools'
-                ],
-                toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | print preview | code',
-                image_advtab: true,
-                selector: '#body',
-                menubar: false,
-                setup: function (editor) {
-                    editor.on('change', function () {
-                        editor.save();
-                    });
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/tinymce/tinymce.min.js"></script>
+    <script src="~/lib/bootstrap-fileinput/js/fileinput.min.js"></script>
+    <script>
+        tinyMCE.init({
+            plugins: [
+                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools'
+            ],
+            toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | print preview | code',
+            image_advtab: true,
+            selector: '#body',
+            menubar: false,
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save();
+                });
+            },
+            onchange_callback: function (editor) {
+                tinyMCE.triggerSave();
+                $("#" + editor.id).valid();
+            }
+        });
+
+        $(function () {
+            var validator = $("#myform").submit(function () {
+                // update underlying textarea before submit validation
+                tinyMCE.triggerSave();
+                var files = $('#fileUploader').fileinput('getFileStack');
+                for (var file in files) {
+                    console.log(file);
+                }
+
+            }).validate({
+                ignore: "",
+                rules: {
+                    title: "required",
+                    content: "required"
                 },
-                onchange_callback: function (editor) {
-                    tinyMCE.triggerSave();
-                    $("#" + editor.id).valid();
+                errorPlacement: function (label, element) {
+                    // position error label after generated textarea
+                    if (element.is("textarea")) {
+                        label.insertAfter(element.next());
+                    } else {
+                        label.insertAfter(element)
+                    }
                 }
             });
-
-            $(function () {
-                var validator = $("#myform").submit(function () {
-                    // update underlying textarea before submit validation
-                    tinyMCE.triggerSave();
-                }).validate({
-                    ignore: "",
-                    rules: {
-                        title: "required",
-                        content: "required"
-                    },
-                    errorPlacement: function (label, element) {
-                        // position error label after generated textarea
-                        if (element.is("textarea")) {
-                            label.insertAfter(element.next());
+            validator.focusInvalid = function () {
+                // put focus on tinymce on submit validation
+                if (this.settings.focusInvalid) {
+                    try {
+                        var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
+                        if (toFocus.is("textarea")) {
+                            tinyMCE.get(toFocus.attr("id")).focus();
                         } else {
-                            label.insertAfter(element)
+                            toFocus.filter(":visible").focus();
                         }
-                    }
-                });
-                validator.focusInvalid = function () {
-                    // put focus on tinymce on submit validation
-                    if (this.settings.focusInvalid) {
-                        try {
-                            var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
-                            if (toFocus.is("textarea")) {
-                                tinyMCE.get(toFocus.attr("id")).focus();
-                            } else {
-                                toFocus.filter(":visible").focus();
-                            }
-                        } catch (e) {
-                            // ignore IE throwing errors when focusing hidden elements
-                        }
+                    } catch (e) {
+                        // ignore IE throwing errors when focusing hidden elements
                     }
                 }
-            });
-        </script>
+            }
+        });
+    </script>
 
-        <script>
-            $(document).ready(function () {
-                $("#fileUploader").fileinput({
-                    'showUpload': true, 'previewFileType': 'jpg', 'uploadUrl': '/api/upload', 'uploadAsync': false,
-                    'initialPreview': [
-                        @{
-                        if(Model != null && Model.Images != null && Model.Images.Count() > 0)
-                        {
-                            int i = 0;
-                            foreach(var image in Model.Images)
+    <script>
+        $(document).ready(function () {
+            $("#fileUploader").fileinput({
+                'initialPreviewShowDelete':true,
+                'showUpload': false, // hide upload button
+                'showRemove': false, // hide remove button
+                'showClose':false,  //hide the x at the top right
+                'showUploadedThumbs':true,
+                'previewFileType': 'jpg',
+                'maxFileCount': 8,
+                'uploadUrl': '/api/upload',
+                'uploadAsync': false,
+                'fileActionSettings': {
+                    'showZoom': false,
+                    'showRemove': true,
+                    'showDrag':false
+                },
+
+                'initialPreview': [
+                    @{
+                            if (Model != null && Model.Images != null && Model.Images.Count() > 0)
                             {
-                                if (i == 0)
+                                for(int i= 0; i < Model.Images.Count(); i++)
                                 {
-                                    <text>'<img src= "@image?w=200" class="file-preview-image">'</text>
-                                }
-                                else
-                                {
-                                    <text >, '<img src= "@image?w=200" class="file-preview-image">'</text>
-                                }
-                                i++;
-                            }
-                        }
-                        }
-                    ]
-                });
-                $('#fileUploader').on('filebatchuploadsuccess', function (event, data, previewId, index) {
-                    var response = data.response;
-                    if (response && response.initialPreview && response.initialPreview.length > 0) {
-                        for (i = 0; i < response.initialPreview.length; i++) {
-                            var img = $.parseHTML(response.initialPreview[i]);
-                            var hidden = $("<input type='hidden' name='images' value='" + $(img).attr("src") + "'>");
-                            $('#myform').append(hidden);
-                            response.initialPreview[i] = "<img src='" + $(img).attr("src") + "?w=200'>";
-                        }
-                    }
-                });
 
-                $('#fileUploader').on('filecleared', function (event) {
-                    console.log("filecleared");
-                    //$('#myform').remove($("input[name='images']"));
-                    $("input[name='images']", $('#myform')).remove();
-                });
+                                    <text>@(i>0?",":"")'<img src= "@Model.Images[i]?w=150&h=100" class="file-preview-image">'</text>
+                                }
+                            }
+                        },
+                    ],
+                    'initialPreviewConfig': [
+                        @{
+                                if (Model != null && Model.Images != null && Model.Images.Count() > 0)
+                                {
+                                    for(int i= 0; i < Model.Images.Count(); i++)
+                                    {
+
+                                        <text>@(i>0?",":"")                                        
+                                            {'url':'/api/image','key':'@Model.Images[i]','extra':{'id':'@Model.Images[i]'}, caption:'@(Model.Images[i])'}                            
+                                        </text>
+                                    }
+                                }
+                            }
+                    ]
             });
-        </script>
-    }
+
+        $('#fileUploader').on('fileimagesloaded', function(event) {
+            console.log("fileimagesloaded");
+            $('#fileUploader').fileinput("upload");
+        });
+        
+        $('#fileUploader').on("filebatchselected", function (event, files) {
+            // trigger upload method immediately after files are selected
+            console.log("filebatchselected");
+            //$('#fileUploader').fileinput("upload");
+        });
+
+        $('#fileUploader').on('filebatchuploadsuccess', function (event, data, previewId, index) {
+            console.log("filebatchuploadsuccess");
+            var response = data.response;
+            if (response && response.initialPreview && response.initialPreview.length > 0) {
+                for (i = 0; i < response.initialPreview.length; i++) {
+                    var img = $.parseHTML(response.initialPreview[i]);
+                    var hidden = $("<input type='hidden' name='images' value='" + $(img).attr("src") + "'>");
+                    $('#myform').append(hidden);
+                    response.initialPreview[i] = "<img src='" + $(img).attr("src") + "?w=150&h=100'>";
+                }
+            }
+        });
+
+        $("#fileUploader").on("filepredelete", function (jqXHR) {
+            var abort = true;
+            if (confirm("Are you sure you want to delete this image?")) {
+                abort = false;
+            }
+            return abort;         
+        });
+
+        $('#fileUploader').on('filedeleted', function (event, key, jqXHR, data) {
+            console.log('filedeleted Key = ' + key);
+            $("input[name='images'][type='hidden'][value='" + key + "']", $('#myform')).remove();
+        });
+
+        $('#fileUploader').on('filedeleteerror', function (event, data, msg) {
+            alert('There was an error deleting the file. Please contact admin.');
+        });
+
+        });
+    </script>
+}

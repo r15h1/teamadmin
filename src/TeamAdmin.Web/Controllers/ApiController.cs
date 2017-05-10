@@ -33,10 +33,16 @@ namespace TeamAdmin.Web.Controllers
             this.eventRepository = eventRepository;
         }
 
+        [HttpPost("image")]
+        public async Task<IActionResult> DeleteImage()
+        {
+            return new JsonResult(new StringContent("ok"));
+        }
+
         [HttpPost("upload")]
         public async Task<IActionResult> Upload(IFormFileCollection files)
         {
-            List<string> locs = new List<string>();
+            UploadedData uploadedData = new UploadedData();            
             if (files == null || files.Count == 0) files = Request.Form.Files;
             var location = Settings.ImageDirectory + $"\\{DateTime.Today.ToString("yyyy-MM")}";
 
@@ -49,11 +55,13 @@ namespace TeamAdmin.Web.Controllers
                     using (var fileStream = new FileStream(Path.Combine(location, filename), FileMode.Create))
                     {
                         await file.CopyToAsync(fileStream);
-                        locs.Add($"<img src='{Settings.ImageUrlRoot}{DateTime.Today.ToString("yyyy-MM")}/{filename}'>");
+                        var url = $"{Settings.ImageUrlRoot}{DateTime.Today.ToString("yyyy-MM")}/{filename}";
+                        uploadedData.InitialPreview.Add($"<img src='{url}'>");
+                        uploadedData.InitialPreviewConfig.Add(new InitialPreviewConfig { Caption = filename, Key = $"{url}", Url = "/api/image", Extra = new { Id = $"{url}" } });
                     }
                 }
             }
-            return new JsonResult(new UploadedData { InitialPreview = locs });
+            return new JsonResult(uploadedData);
         }
 
         private string GenerateFileName(string location, string fileName)

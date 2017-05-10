@@ -98,9 +98,9 @@ namespace TeamAdmin.Web.Services
         }        
     }
 
-    public class NewsMediaResolver : IValueResolver<Core.Post, Models.AdminViewModels.News, IEnumerable<string>>
+    public class NewsMediaResolver : IValueResolver<Core.Post, Models.AdminViewModels.News, IList<string>>
     {
-        public IEnumerable<string> Resolve(Post source, News destination, IEnumerable<string> images, ResolutionContext context)
+        public IList<string> Resolve(Post source, News destination, IList<string> images, ResolutionContext context)
         {
             var imagelist = new List<string>();
             if(source.Media != null)

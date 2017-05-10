@@ -18,6 +18,6 @@ namespace TeamAdmin.Web.Models.AdminViewModels
         [Required]
         public string Title { get; set; }
 
-        public IEnumerable<string> Images { get; set; }
+        public IList<string> Images { get; set; }
     }
 }
