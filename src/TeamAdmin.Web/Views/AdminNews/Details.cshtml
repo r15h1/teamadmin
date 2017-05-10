@@ -174,13 +174,12 @@
 
         $('#fileUploader').on('fileimagesloaded', function(event) {
             console.log("fileimagesloaded");
-            $('#fileUploader').fileinput("upload");
         });
         
         $('#fileUploader').on("filebatchselected", function (event, files) {
             // trigger upload method immediately after files are selected
             console.log("filebatchselected");
-            //$('#fileUploader').fileinput("upload");
+            $('#fileUploader').fileinput("upload");
         });
 
         $('#fileUploader').on('filebatchuploadsuccess', function (event, data, previewId, index) {

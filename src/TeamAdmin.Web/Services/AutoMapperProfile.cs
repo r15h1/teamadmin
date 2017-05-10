@@ -56,9 +56,9 @@ namespace TeamAdmin.Web.Services
         }
     }
 
-    public class TeamViewModelImageResolver : IValueResolver<Core.Team, Models.AdminViewModels.Team, IEnumerable<string>>
+    public class TeamViewModelImageResolver : IValueResolver<Core.Team, Models.AdminViewModels.Team, IList<string>>
     {
-        public IEnumerable<string> Resolve(Core.Team source, Models.AdminViewModels.Team destination, IEnumerable<string> destMember, ResolutionContext context)
+        public IList<string> Resolve(Core.Team source, Models.AdminViewModels.Team destination, IList<string> destMember, ResolutionContext context)
         {
             var imagelist = new List<string>();
             if (source.Media != null)
@@ -70,9 +70,9 @@ namespace TeamAdmin.Web.Services
         }
     }
 
-    public class TeamViewModelUniformResolver : IValueResolver<Core.Team, Models.AdminViewModels.Team, IEnumerable<string>>
+    public class TeamViewModelUniformResolver : IValueResolver<Core.Team, Models.AdminViewModels.Team, IList<string>>
     {
-        public IEnumerable<string> Resolve(Core.Team source, Models.AdminViewModels.Team destination, IEnumerable<string> destMember, ResolutionContext context)
+        public IList<string> Resolve(Core.Team source, Models.AdminViewModels.Team destination, IList<string> destMember, ResolutionContext context)
         {            
             var imagelist = new List<string>();
             if (source.Media != null)

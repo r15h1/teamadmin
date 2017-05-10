@@ -14,7 +14,7 @@ namespace TeamAdmin.Web.Models.AdminViewModels
         [Required]
         public string Name { get; set; }
         public string DisplayName { get; set; }
-        public IEnumerable<string> Images { get; set; }
-        public IEnumerable<string> Uniforms { get; set; }
+        public IList<string> Images { get; set; } = new List<string>();
+        public IList<string> Uniforms { get; set; } = new List<string>();
     }
 }
