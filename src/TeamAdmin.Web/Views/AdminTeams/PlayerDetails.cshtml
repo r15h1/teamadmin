@@ -149,29 +149,93 @@
         <script>
             $(document).ready(function () {
                 $("#pictureUploader").fileinput({
-                    'showUpload': true, 'previewFileType': 'jpg', 'uploadUrl': '/api/upload', 'uploadAsync': false, 'overwriteInitial': true,
+                    'overwriteInitial': true,
+                    'initialPreviewShowDelete': true,
+                    'showUpload': false, // hide upload button
+                    'showRemove': false, // hide remove button
+                    'showClose': false,  //hide the x at the top right
+                    'showUploadedThumbs': true,
+                    'previewFileType': 'jpg',
+                    'maxFileCount': 8,
+                    'uploadUrl': '/api/upload',
+                    'uploadAsync': false,
+                    'fileActionSettings': {
+                        'showZoom': false,
+                        'showRemove': true,
+                        'showDrag': false
+                    },
 
                     'initialPreview': [
                         @{
-                        if(Model != null && !string.IsNullOrWhiteSpace(Model.PhotoUrl))
-                        {
-                            <text>'<img src= "@Model.PhotoUrl?w=200" class="file-preview-image">'</text>
+                            if(Model != null && !string.IsNullOrWhiteSpace(Model.PhotoUrl))
+                            {
+                                <text>'<img src= "@Model.PhotoUrl?w=150&h=100" class="file-preview-image">'</text>
+                            }
                         }
-                    }
+                    ],
+
+                    'initialPreviewConfig': [
+                        @{
+                            if (Model != null && !string.IsNullOrWhiteSpace(Model.PhotoUrl))
+                            {
+                                <text>{ 'url': '/api/image', 'key': '@Model.PhotoUrl', 'extra': { 'id': '@Model.PhotoUrl' }, caption: '@(Model.PhotoUrl)' }</text>
+                            }
+                        }
+
                     ]
                 });
 
 
+                //$('#pictureUploader').on('filebatchuploadsuccess', function (event, data, previewId, index) {
+                //    var response = data.response;
+                //    if (response && response.initialPreview && response.initialPreview.length > 0) {
+                //        for (i = 0; i < response.initialPreview.length; i++) {
+                //            var img = $.parseHTML(response.initialPreview[i]);
+                //            var hidden = $("<input type='hidden' name='photourl' value='" + $(img).attr("src") + "'>");
+                //            $('#myform').append(hidden);
+                //            response.initialPreview[i] = "<img src='" + $(img).attr("src") + "?w=200'>";
+                //        }
+                //    }
+                //});
+
+                $('#pictureUploader').on('fileimagesloaded', function (event) {
+                    console.log("fileimagesloaded");
+                });
+
+                $('#pictureUploader').on("filebatchselected", function (event, files) {
+                    // trigger upload method immediately after files are selected
+                    console.log("filebatchselected");
+                    $('#pictureUploader').fileinput("upload");
+                });
+
                 $('#pictureUploader').on('filebatchuploadsuccess', function (event, data, previewId, index) {
+                    console.log("filebatchuploadsuccess");
                     var response = data.response;
                     if (response && response.initialPreview && response.initialPreview.length > 0) {
                         for (i = 0; i < response.initialPreview.length; i++) {
                             var img = $.parseHTML(response.initialPreview[i]);
                             var hidden = $("<input type='hidden' name='photourl' value='" + $(img).attr("src") + "'>");
                             $('#myform').append(hidden);
-                            response.initialPreview[i] = "<img src='" + $(img).attr("src") + "?w=200'>";
+                            response.initialPreview[i] = "<img src='" + $(img).attr("src") + "?w=150&h=100'>";
                         }
                     }
+                });
+
+                $("#pictureUploader").on("filepredelete", function (jqXHR) {
+                    var abort = true;
+                    if (confirm("Are you sure you want to delete this image?")) {
+                        abort = false;
+                    }
+                    return abort;
+                });
+
+                $('#pictureUploader').on('filedeleted', function (event, key, jqXHR, data) {
+                    console.log('filedeleted Key = ' + key);
+                    $("input[name='photourl'][type='hidden'][value='" + key + "']", $('#myform')).remove();
+                });
+
+                $('#pictureUploader').on('filedeleteerror', function (event, data, msg) {
+                    alert('There was an error deleting the file. Please contact admin.');
                 });
             });
         </script>
