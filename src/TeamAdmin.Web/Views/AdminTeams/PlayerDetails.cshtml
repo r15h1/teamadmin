@@ -8,13 +8,13 @@
             <div class="form-group">
                 <label asp-for="FirstName" class="col-md-2 control-label">First Name*</label>
                 <div class="col-md-10">
-                    <input asp-for="FirstName" class="form-control" name="FirstName" id="FirstName" title="First Name is a required field" required />
+                    <input asp-for="FirstName" class="form-control" name="FirstName" id="FirstName" title="First Name is a required field" required maxlength="50"/>
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="LastName" class="col-md-2 control-label">Last Name*</label>
                 <div class="col-md-10">
-                    <input asp-for="LastName" class="form-control" name="LastName" id="LastName" title="Last Name is a required field" required />
+                    <input asp-for="LastName" class="form-control" name="LastName" id="LastName" title="Last Name is a required field" required maxlength="50"/>
                 </div>
             </div>
             <div class="form-group">
@@ -28,25 +28,25 @@
                 <div class="form-group">
                     <label asp-for="Address" class="col-md-2 control-label"></label>
                     <div class="col-md-10">
-                        <input asp-for="Address" class="form-control" name="Address" id="Address" />
+                        <input asp-for="Address" class="form-control" name="Address" id="Address" maxlength="500"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label asp-for="City" class="col-md-2 control-label"></label>
                     <div class="col-md-10">
-                        <input asp-for="City" class="form-control" name="City" id="City" />
+                        <input asp-for="City" class="form-control" name="City" id="City" maxlength="50"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label asp-for="Province" class="col-md-2 control-label"></label>
                     <div class="col-md-10">
-                        <input asp-for="Province" class="form-control" name="Province" id="Province" />
+                        <input asp-for="Province" class="form-control" name="Province" id="Province" maxlength="50"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label asp-for="PostalCode" class="col-md-2 control-label"></label>
                     <div class="col-md-10">
-                        <input asp-for="PostalCode" class="form-control" name="PostalCode" id="PostalCode" pattern="[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$" title="Postal Code may be specified in the following formats: No Space - 'M9R1S5', With a single space - 'M9R 1S5''" />
+                        <input asp-for="PostalCode" class="form-control" name="PostalCode" id="PostalCode" pattern="[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$" title="Postal Code may be specified in the following formats: No Space - 'M9R1S5', With a single space - 'M9R 1S5''" maxlength="6"/>
                     </div>
                 </div>
             </fieldset>
@@ -56,25 +56,25 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">Contact Name</label>
                     <div class="col-md-10">
-                        <input class="form-control" name="contactinfo[0].contactname" id="contactinfo[0].contactname" type="text" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 0 ? Model.ContactInfo[0].ContactName : null)" />
+                        <input class="form-control" name="contactinfo[0].contactname" id="contactinfo[0].contactname" type="text" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 0 ? Model.ContactInfo[0].ContactName : null)" maxlength="100"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Telephone</label>
                     <div class="col-md-10">
-                        <input class="form-control" name="contactinfo[0].telephone" id="contactinfo[0].telephone" type="tel" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 0 ? Model.ContactInfo[0].Telephone : null)" />
+                        <input class="form-control" name="contactinfo[0].telephone" id="contactinfo[0].telephone" type="tel" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 0 ? Model.ContactInfo[0].Telephone : null)" maxlength="50"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Email</label>
                     <div class="col-md-10">
-                        <input class="form-control" name="contactinfo[0].email" id="contactinfo[0].email" type="email" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 0 ? Model.ContactInfo[0].Email : null)" />
+                        <input class="form-control" name="contactinfo[0].email" id="contactinfo[0].email" type="email" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 0 ? Model.ContactInfo[0].Email : null)" maxlength="256"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Notes</label>
                     <div class="col-md-10">
-                        <input class="form-control" name="contactinfo[0].notes" id="contactinfo[0].notes" type="text" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 0 ? Model.ContactInfo[0].Notes : null)" />
+                        <input class="form-control" name="contactinfo[0].notes" id="contactinfo[0].notes" type="text" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 0 ? Model.ContactInfo[0].Notes : null)" maxlength="1000"/>
                     </div>
                 </div>
             </fieldset>
@@ -84,25 +84,25 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">Contact Name</label>
                     <div class="col-md-10">
-                        <input class="form-control" name="contactinfo[1].contactname" id="contactinfo[1].contactname" type="text" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 1 ? Model.ContactInfo[0].ContactName : null)" />
+                        <input class="form-control" name="contactinfo[1].contactname" id="contactinfo[1].contactname" type="text" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 1 ? Model.ContactInfo[0].ContactName : null)" maxlength="100"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Telephone</label>
                     <div class="col-md-10">
-                        <input class="form-control" name="contactinfo[1].telephone" id="contactinfo[1].telephone" type="tel" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 1 ? Model.ContactInfo[0].Telephone : null)" />
+                        <input class="form-control" name="contactinfo[1].telephone" id="contactinfo[1].telephone" type="tel" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 1 ? Model.ContactInfo[0].Telephone : null)" maxlength="50"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Email</label>
                     <div class="col-md-10">
-                        <input class="form-control" name="contactinfo[1].email" id="contactinfo[1].email" type="email" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 1 ? Model.ContactInfo[0].Email : null)" />
+                        <input class="form-control" name="contactinfo[1].email" id="contactinfo[1].email" type="email" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 1 ? Model.ContactInfo[0].Email : null)" maxlength="256"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Notes</label>
                     <div class="col-md-10">
-                        <input class="form-control" name="contactinfo[1].notes" id="contactinfo[1].notes" type="text" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 1 ? Model.ContactInfo[0].Notes : null)" />
+                        <input class="form-control" name="contactinfo[1].notes" id="contactinfo[1].notes" type="text" value="@(Model != null && Model.ContactInfo != null && Model.ContactInfo.Count > 1 ? Model.ContactInfo[0].Notes : null)" maxlength="1000"/>
                     </div>
                 </div>
             </fieldset>
@@ -118,7 +118,7 @@
                 <div class="form-group">
                     <label asp-for="Position" class="col-md-2 control-label"></label>
                     <div class="col-md-10">
-                        <input asp-for="Position" class="form-control" name="Position" id="Position" />
+                        <input asp-for="Position" class="form-control" name="Position" id="Position" maxlength="50"/>
                     </div>
                 </div>
                 <div class="form-group">
