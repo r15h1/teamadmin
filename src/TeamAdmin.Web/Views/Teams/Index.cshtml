@@ -7,7 +7,7 @@
         {
             @foreach (var team in Model)
             {
-                <div class="blog-post effect-lily col-xs-12 col-sm-6 col-md-4 col-lg-3" style="background:url('@(team.Media.Count() > 0 ? @team.Media.FirstOrDefault().Url : @Settings.ImageUrlRoot + "/no_image.jpeg")?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
+                <div class="blog-post effect-lily col-xs-12 col-sm-6 col-md-4 col-lg-3" style="background:url('@(team.Media !=null && team.Media.Count() > 0 ? @team.Media.FirstOrDefault().Url : @Settings.ImageUrlRoot + "/no_image.jpeg")?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
                     <a href="/teams/@team.TeamId/@team.Name.MakeSEOFriendlyUrl()">
                         <div class="blog-details">
                             <div class="blog-caption text-center">

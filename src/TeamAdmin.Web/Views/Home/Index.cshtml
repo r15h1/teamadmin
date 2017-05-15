@@ -33,7 +33,7 @@
                 @foreach (var news in Model.News.Take(5))
                 {
                     <div class="item @(i==0?"active": "")">
-                        <div class="slider" style="background-size: cover;background-position: center;background-image: url('@news.Media.FirstOrDefault().Url?w=800&mode=max');"></div>
+                        <div class="slider" style="background-size: cover;background-position: center;background-image: url('@(news.Media == null || news.Media.Count() == 0 ? @Settings.ImageUrlRoot + "/no_image.jpeg" : @news.Media.FirstOrDefault().Url)?w=800&mode=max');"></div>
                         <div class="container carousel-overlay text-center ">
                             <h2>@news.Title</h2>
                             <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()" class="btn btn-default">Read More</a>
@@ -107,7 +107,7 @@
                 <div><a href="/news">More News</a></div>
                 @foreach (var news in Model.News.Take(6))
                 {
-                    <div class="blog-post effect-lily col-xs-12 col-sm-6 col-md-4 col-lg-4" style="background:url('@news.Media.FirstOrDefault().Url?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
+                    <div class="blog-post effect-lily col-xs-12 col-sm-6 col-md-4 col-lg-4" style="background:url('@(news.Media == null || news.Media.Count() == 0 ? @Settings.ImageUrlRoot + "/no_image.jpeg" : @news.Media.FirstOrDefault().Url)?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
                         <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()">
                             <div class="blog-details">
                                 <div class="blog-caption text-center">

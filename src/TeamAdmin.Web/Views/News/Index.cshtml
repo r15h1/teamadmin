@@ -7,7 +7,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 @foreach (var news in Model)
                 {
-                    <div class="blog-post effect-lily col-xs-12 col-sm-6 col-md-4 col-lg-3" style="background:url('@news.Media.FirstOrDefault().Url?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
+                    <div class="blog-post effect-lily col-xs-12 col-sm-6 col-md-4 col-lg-3" style="background:url('@(news.Media == null || news.Media.Count() == 0 ? @Settings.ImageUrlRoot + "/no_image.jpeg" : @news.Media.FirstOrDefault().Url)?w=400&h=234&mode=crop');  background-size: cover; background-position: center;">
                         <a href="/news/@news.PostId/@news.Title.MakeSEOFriendlyUrl()">
                             <div class="blog-details">
                                 <div class="blog-caption text-center">
