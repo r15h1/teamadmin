@@ -11,6 +11,6 @@
     "purl": "2.3.1",
     "tinymce": "4.3.7",
     "bootstrap-fileinput": "4.3.5",
-    "jquery-tokenize": "2.5.2"
+    "select2": "4.0.3"
   }
 }

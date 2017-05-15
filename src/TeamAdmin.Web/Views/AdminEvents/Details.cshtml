@@ -26,9 +26,18 @@
             </div>
 
             <div class="form-group">
-                <label class="col-md-2 control-label">Teams</label>
+                <label class="col-md-2 control-label" id="TeamLabel">Teams</label>
                 <div class="col-md-10">
-                    <select name="Teams" id="Teams" asp-items="@(new SelectList(Model.TeamList, "TeamId", "Name"))" multiple asp-for="Teams"></select>
+                    <select name="Teams" id="Teams" asp-items="@(new SelectList(Model.TeamList, "TeamId", "Name"))" asp-for="Teams" class="form-control" required></select>
+                    <span asp-validation-for="Teams" class="text-danger" />
+                </div>
+            </div>
+
+            <div class="form-group" id="OpponentGroup">
+                <label class="col-md-2 control-label">Opponent</label>
+                <div class="col-md-10">
+                    <select name="Opponent" id="Opponent" class="form-control"></select>
+                    <span  class="text-danger" asp-validation-for="Opponent"/>
                 </div>
             </div>
 
@@ -75,14 +84,43 @@
     @section scripts {
         <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
         <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-        <script src="~/lib/jquery-tokenize/jquery.tokenize.js"></script>
+        <script src="~/lib/select2/dist/js/select2.min.js"></script>
         <script>
             $(document).ready(function () {
-                $('#Teams').tokenize({
-                    autosize: true,
-                    datas: 'select',
-                    displayDropdownOnFocus: true
-                });
+                var GAME = 1, EXHIBITION_GAME = 6;
+                var select2 = $('#Teams').select2();
+                var opponent = $('#Opponent');
+                var teamLabel = $("#TeamLabel");
+
+                function setUpMultiSelection() {
+                    if ($("#eventtype").val() == GAME || $("#eventtype").val() == EXHIBITION_GAME) {
+                        console.log('game');
+                        $("#OpponentGroup").show();
+                        opponent.prop('required', true);
+
+                        if (!select2.val())
+                        {
+                            $("#Teams").removeAttr("multiple");
+                            $("#Teams").prop('selectedIndex', -1);
+                        }
+                        else if (typeof select2.val() != "string" && select2.val().length > 1) {
+                            console.log('clearing ' + select2.val().length);
+                            select2.val(null).trigger("change");
+                            $("#Teams").removeAttr("multiple");
+                            $("#Teams").prop('selectedIndex', -1);                            
+                        } else {
+                            $("#Teams").removeAttr("multiple");                            
+                        }
+                        teamLabel.text("Team");
+                    }
+                    else {
+                        console.log('not game');
+                        $("#OpponentGroup").hide();
+                        opponent.removeAttr("required");
+                        $("#Teams").attr("multiple", "multiple");
+                        teamLabel.text("Teams");
+                    }
+                }
 
                 $(function () {
                     var validator = $("#myform").submit(function () {
@@ -111,11 +149,13 @@
                     }
                 });
 
-                //location
-                //$("#location").change(updateMap);
-                //$("#location").keyup(updateMap);
+                $("#eventtype").change(function () {
+                    setUpMultiSelection();
+                });
+
                 $("#address").on('input', updateMap);
                 updateMap();
+                setUpMultiSelection();
                 function updateMap() {
                     if ($("#address").val().trim().length < 5) {
                         $("#mapHolder").attr("style", "display:none;");
@@ -129,6 +169,4 @@
         </script>
     }
 
-    @section headerlinks{
-        <link href="~/lib/jquery-tokenize/jquery.tokenize.css" rel="stylesheet" />
-    }
+    @section headerlinks{ <link href="~/lib/select2/dist/css/select2.min.css" rel="stylesheet" /> }

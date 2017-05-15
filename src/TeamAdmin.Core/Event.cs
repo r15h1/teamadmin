@@ -27,6 +27,7 @@ namespace TeamAdmin.Core
         TRAINING = 2,
         MEETING = 3,
         CELEBRATION = 4,
-        OTHER = 5
+        OTHER = 5,
+        EXHIBITION_GAME = 6
     }
 }
