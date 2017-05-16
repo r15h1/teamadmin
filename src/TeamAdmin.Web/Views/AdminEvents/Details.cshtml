@@ -3,22 +3,22 @@
     <h1>Add an Event</h1>
     <form asp-action="Add" name="myform" id="myform" method="post">
         <div class="form-horizontal">
-            <div asp-validation-summary="All" class="text-danger"></div>
+            @*<div asp-validation-summary="All" class="text-danger"></div>*@
             <div class="form-group">
-                <label asp-for="EventType" class="col-md-2 control-label">What</label>
+                <label asp-for="EventType" class="col-md-2 control-label">What *</label>
                 <div class="col-md-10">
                     <select class="btn btn-default" id="eventtype" name="eventtype" asp-for="EventType" asp-items="Html.GetEnumSelectList<TeamAdmin.Core.EventType>()"></select>
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="StartDate" class="col-md-2 control-label">Starts on/at</label>
+                <label asp-for="StartDate" class="col-md-2 control-label">Starts on/at *</label>
                 <div class="col-md-10">
                     <input asp-for="StartDate" class="form-control" name="StartDate" id="StartDate" type="datetime-local" required value="@(Model.StartDate.HasValue ? Model.StartDate.Value.ToString("yyyy-MM-ddThh:mm") : DateTime.Now.ToString("yyyy-MM-ddThh:mm"))" />
                     <span asp-validation-for="StartDate" class="text-danger" />
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="EndDate" class="col-md-2 control-label">Ends on/at</label>
+                <label asp-for="EndDate" class="col-md-2 control-label">Ends on/at *</label>
                 <div class="col-md-10">
                     <input asp-for="EndDate" class="form-control" name="EndDate" id="EndDate" type="datetime-local" required value="@(Model.EndDate.HasValue ? Model.StartDate.Value.ToString("yyyy-MM-ddThh:mm") : DateTime.Now.ToString("yyyy-MM-ddThh:mm"))" />
                     <span asp-validation-for="EndDate" class="text-danger" />
@@ -26,7 +26,7 @@
             </div>
 
             <div class="form-group">
-                <label class="col-md-2 control-label" id="TeamLabel">Teams</label>
+                <label class="col-md-2 control-label" id="TeamLabel">Teams *</label>
                 <div class="col-md-10">
                     <select name="Teams" id="Teams" asp-items="@(new SelectList(Model.TeamList, "TeamId", "Name"))" asp-for="Teams" class="form-control" required></select>
                     <span asp-validation-for="Teams" class="text-danger" />
@@ -34,15 +34,15 @@
             </div>
 
             <div class="form-group" id="OpponentGroup">
-                <label class="col-md-2 control-label">Opponent</label>
+                <label class="col-md-2 control-label">Opponent *</label>
                 <div class="col-md-10">
                     <select name="Opponent" id="Opponent" class="form-control"></select>
                     <span  class="text-danger" asp-validation-for="Opponent"/>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Title" class="col-md-2 control-label"></label>
+            <div class="form-group" id="TitleGroup">
+                <label asp-for="Title" class="col-md-2 control-label">Title *</label>
                 <div class="col-md-10">
                     <input asp-for="Title" class="form-control" style="max-width:100%" name="title" id="title" />
                     <span asp-validation-for="Title" class="text-danger" />
@@ -90,13 +90,16 @@
                 var GAME = 1, EXHIBITION_GAME = 6;
                 var select2 = $('#Teams').select2();
                 var opponent = $('#Opponent');
+                var title = $('#title');
                 var teamLabel = $("#TeamLabel");
 
                 function setUpMultiSelection() {
                     if ($("#eventtype").val() == GAME || $("#eventtype").val() == EXHIBITION_GAME) {
                         console.log('game');
                         $("#OpponentGroup").show();
+                        $("#TitleGroup").hide();
                         opponent.prop('required', true);
+                        title.removeAttr("required");
 
                         if (!select2.val())
                         {
@@ -111,14 +114,16 @@
                         } else {
                             $("#Teams").removeAttr("multiple");                            
                         }
-                        teamLabel.text("Team");
+                        teamLabel.text("Team *");
                     }
                     else {
                         console.log('not game');
                         $("#OpponentGroup").hide();
+                        $("#TitleGroup").show();
                         opponent.removeAttr("required");
+                        title.prop('required', true);
                         $("#Teams").attr("multiple", "multiple");
-                        teamLabel.text("Teams");
+                        teamLabel.text("Teams *");
                     }
                 }
 

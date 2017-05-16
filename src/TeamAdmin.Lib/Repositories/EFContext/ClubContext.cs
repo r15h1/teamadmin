@@ -18,6 +18,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         public DbSet<Player> Players { get; set; }
         public DbSet<Core.Message> Messages { get; set; }
         public DbSet<Core.Notification> Notifications { get; set; }
+        public DbSet<Core.Opponent> Opponents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,6 +43,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                 .Property(b => b.MessageType).HasColumnName("MessageTypeId");
 
             modelBuilder.Entity<Core.Notification>().ForSqlServerToTable("Notifications").HasKey("NotificationId");
+            modelBuilder.Entity<Core.Opponent>().ForSqlServerToTable("Opponents").HasKey("OpponentId");
         }
     }
 }

@@ -71,6 +71,7 @@ namespace TeamAdmin.Web
             services.AddScoped<IProgramRepository, ProgramRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddSingleton<ICacheService, CacheService>();
+            services.AddSingleton<IOpponentRepository, OpponentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
