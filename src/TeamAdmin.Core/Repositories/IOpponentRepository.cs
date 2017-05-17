@@ -5,7 +5,7 @@ namespace TeamAdmin.Core.Repositories
     public interface IOpponentRepository
     {
         Opponent SaveOpponent(Opponent opponent);
-        IEnumerable<Opponent> GetOpponents();
+        IEnumerable<Opponent> GetOpponents(string name);
         Opponent GetOpponent(int opponentId);
     }
 }

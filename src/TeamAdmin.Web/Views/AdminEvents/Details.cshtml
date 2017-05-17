@@ -28,7 +28,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label" id="TeamLabel">Teams *</label>
                 <div class="col-md-10">
-                    <select name="Teams" id="Teams" asp-items="@(new SelectList(Model.TeamList, "TeamId", "Name"))" asp-for="Teams" class="form-control" required></select>
+                    <select name="Teams" id="Teams" asp-for="Teams" class="form-control" required></select>
                     <span asp-validation-for="Teams" class="text-danger" />
                 </div>
             </div>
@@ -36,7 +36,7 @@
             <div class="form-group" id="OpponentGroup">
                 <label class="col-md-2 control-label">Opponent *</label>
                 <div class="col-md-10">
-                    <select name="Opponent" id="Opponent" class="form-control"></select>
+                    <select name="Opponent" id="Opponent" class="form-control" asp-for="Opponent"></select>
                     <span  class="text-danger" asp-validation-for="Opponent"/>
                     <input type="button" id="AddOpponentButton" value="+" title="Add an opponent"/>
                 </div>
@@ -137,8 +137,58 @@
         <script>
             $(document).ready(function () {
                 var GAME = 1, EXHIBITION_GAME = 6;
-                var select2 = $('#Teams').select2();
-                var opponent = $('#Opponent');
+                
+
+                var opponent = $('#Opponent').select2(
+                {
+                    placeholder: 'Select an opponent',
+                    ajax: {
+                        url: "/api/opponents",
+                        data: function (params) {
+                            var query = {
+                                name: params.term
+                            }
+                            // Query paramters will be ?search=[term]&page=[page]
+                            return query;
+                        },
+                        processResults: function (data) {
+                            var values = $.map(data, function (obj) {
+                                obj.text = obj.name;
+                                obj.id = obj.opponentId;
+                                return obj;
+                            });
+                            return {
+                                results: values
+                            };
+                        },
+                        cache: false
+                    },
+                    allowClear: true
+                });
+
+                var teams = $('#Teams').select2(
+                {
+                    placeholder: 'Select a team',
+                    ajax: {
+                        url: "/api/teams",
+                        data: function (params) {
+                            var query = {
+                                name: params.term
+                            }
+                            // Query paramters will be ?search=[term]&page=[page]
+                            return query;
+                        },
+                        processResults: function (data) {
+                            var values = $.map(data, function (obj) {
+                                obj.text = obj.displayName + " - " + obj.name;
+                                obj.id = obj.teamId;
+                                return obj;
+                            });
+                            return { results: values };
+                        }
+                    },
+                    allowClear: true
+                });
                 var title = $('#title');
                 var teamLabel = $("#TeamLabel");
 
@@ -150,14 +200,14 @@
                         opponent.prop('required', true);
                         title.removeAttr("required");
 
-                        if (!select2.val())
+                        if (!teams.val())
                         {
                             $("#Teams").removeAttr("multiple");
                             $("#Teams").prop('selectedIndex', -1);
                         }
-                        else if (typeof select2.val() != "string" && select2.val().length > 1) {
-                            console.log('clearing ' + select2.val().length);
-                            select2.val(null).trigger("change");
+                        else if (typeof teams.val() != "string" && teams.val().length > 1) {
+                            console.log('clearing ' + teams.val().length);
+                            teams.val(null).trigger("change");
                             $("#Teams").removeAttr("multiple");
                             $("#Teams").prop('selectedIndex', -1);                            
                         } else {
@@ -289,7 +339,6 @@
                         $("#map").attr("src", src);
                     }
                 }
-
 
                 //logo
                 $("#opponentForm").submit(function (e) {

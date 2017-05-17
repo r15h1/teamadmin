@@ -19,12 +19,21 @@ namespace TeamAdmin.Lib.Repositories
             mapper = AutoMapperFactory.GetMapper();
         }
 
-        public IEnumerable<Core.Team> GetTeams()
+        public IEnumerable<Core.Team> GetTeams(string name = null)
         {
             var list = new List<Core.Team>();
             using (var context = ContextFactory.Create<ClubContext>())
             {
-                var teams = context.Teams.Include(t => t.TeamMedia).Where( t => !t.Deleted.HasValue || !t.Deleted.Value).ToList();
+                List< EFContext.Team > teams = null;
+                if (string.IsNullOrWhiteSpace(name))
+                    teams = context.Teams.Include(t => t.TeamMedia).Where(t => !t.Deleted.HasValue || !t.Deleted.Value).ToList();
+                else
+                    teams = context.Teams.Include(t => t.TeamMedia)
+                                .Where( t => (!t.Deleted.HasValue || !t.Deleted.Value) && 
+                                             (t.Name.ToLowerInvariant().Contains(name.ToLowerInvariant()) || t.DisplayName.ToLowerInvariant().Contains(name.ToLowerInvariant()))
+                                       )
+                                .ToList();
+
                 teams.ForEach((t) => list.Add(MapTeamFromDB(t)));
                 return list;
             }

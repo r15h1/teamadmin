@@ -77,10 +77,9 @@ namespace TeamAdmin.Web.Controllers
         }
 
         [HttpGet("teams")]
-        public IActionResult GetTeams()
+        public IEnumerable<Team> GetTeams(string name)
         {
-            var teams = teamRepository.GetTeams();
-            return new JsonResult(teams);
+            return teamRepository.GetTeams(name).OrderBy(t => t.DisplayName);            
         }
 
         [HttpGet("events")]

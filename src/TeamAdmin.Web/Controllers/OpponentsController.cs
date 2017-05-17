@@ -55,9 +55,9 @@ namespace TeamAdmin.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(string name)
         {
-            var opponents = repository.GetOpponents();
+            var opponents = repository.GetOpponents(name);
             return StatusCode(200, opponents);
         }
 

@@ -24,7 +24,7 @@ namespace TeamAdmin.Web.Models.AdminViewModels
         [Required]
         public EventType EventType { get; set; }
 
-        [Required]
+        //[Required]
         public string Title { get; set; }
 
         [Required]

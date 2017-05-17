@@ -17,11 +17,11 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        public IEnumerable<Opponent> GetOpponents()
-        {
+        public IEnumerable<Opponent> GetOpponents(string name)
+        {            
             using (var context = ContextFactory.Create<ClubContext>())
             {
-                return context.Opponents.ToList();
+                return string.IsNullOrWhiteSpace(name) ? context.Opponents.ToList() : context.Opponents.Where(x => x.Name.ToLowerInvariant().Contains(name.ToLowerInvariant())).ToList();
             }
         }
 
