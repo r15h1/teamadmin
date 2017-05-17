@@ -20,7 +20,7 @@ namespace TeamAdmin.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Models.ApiViewModels.Opponent opponent)
+        public IActionResult Post([FromForm][FromBody] Models.ApiViewModels.Opponent opponent)
         {
             if (!ModelState.IsValid) return StatusCode(400, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage));
             if(opponent.OpponentId.HasValue) return StatusCode(400, "To create opponents, use the POST request. For update, use PUT request and supply an opponent id");

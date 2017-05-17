@@ -38,6 +38,7 @@
                 <div class="col-md-10">
                     <select name="Opponent" id="Opponent" class="form-control"></select>
                     <span  class="text-danger" asp-validation-for="Opponent"/>
+                    <input type="button" id="AddOpponentButton" value="+" title="Add an opponent"/>
                 </div>
             </div>
 
@@ -77,6 +78,53 @@
         <input type="hidden" asp-for="EventId" />
     </form>
 
+    <div id="OpponentModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form id="opponentForm">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Add an Opponent</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Name *</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" name="name" id="name" maxlength="250" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Short Name</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" name="shortname" id="shortname" maxlength="25" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Website</label>
+                                <div class="col-md-9">
+                                    <input type="url" class="form-control" name="website" id="website" maxlength="250" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Logo</label>
+                                <div class="col-md-9">
+                                    <input type="file" class="form-control" name="logoUploader" id="logoUploader" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <div>
         <a href="/admin/events">Back to List</a>
     </div>
@@ -85,6 +133,7 @@
         <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
         <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
         <script src="~/lib/select2/dist/js/select2.min.js"></script>
+        <script src="~/lib/bootstrap-fileinput/js/fileinput.min.js"></script>
         <script>
             $(document).ready(function () {
                 var GAME = 1, EXHIBITION_GAME = 6;
@@ -159,6 +208,76 @@
                 });
 
                 $("#address").on('input', updateMap);
+
+                $("#AddOpponentButton").click(function () {
+                    console.log("opening modal");
+                    $("#name, #shortname, #website").val("");
+                    $("#logoUploader").fileinput({
+                        //'overwriteInitial': true,
+                        'initialPreviewShowDelete': true,
+                        'showUpload': false, // hide upload button
+                        'showRemove': false, // hide remove button
+                        'showClose': false,  //hide the x at the top right
+                        'showUploadedThumbs': false,
+                        'previewFileType': 'jpg',
+                        'maxFileCount': 1,
+                        'uploadUrl': '/api/upload',
+                        'uploadAsync': false,
+                        'fileActionSettings': {
+                            'showZoom': false,
+                            'showRemove': true,
+                            'showDrag': false
+                        }
+                    });
+
+                    $('#logoUploader').on("filebatchselected", function (event, files) {
+                        // trigger upload method immediately after files are selected
+                        console.log("filebatchselected");
+                        $('#logoUploader').fileinput("upload");
+                    });
+
+                    $('#logoUploader').on('filebatchuploadsuccess', function (event, data, previewId, index) {
+                        console.log("filebatchuploadsuccess");
+                        var response = data.response;
+                        if (response && response.initialPreview && response.initialPreview.length > 0) {
+                            for (i = 0; i < response.initialPreview.length; i++) {
+                                var img = $.parseHTML(response.initialPreview[i]);
+                                var hidden = $("<input type='hidden' name='logourl' value='" + $(img).attr("src") + "'>");
+                                $('#opponentForm').append(hidden);
+                                response.initialPreview[i] = "<img src='" + $(img).attr("src") + "?w=150&h=100'>";
+                            }
+                        }
+                    });
+
+                    $('#logoUploader').on('filebatchuploadcomplete', function (event, files, extra) {
+                        console.log('File batch upload complete');
+                    });
+
+                    $('#logoUploader').on('fileloaded', function (event, file, previewId, index, reader) {
+                        console.log("fileloaded");
+                    });
+
+                    $('#logoUploader').on('fileimageloaded', function (event, previewId) {
+                        console.log("fileimageloaded");
+                    });
+
+                    $('#logoUploader').on('fileerror', function (event, data, msg) {
+                        console.log("error");
+                        console.log(data.id);
+                        console.log(data.index);
+                        console.log(data.file);
+                        console.log(data.reader);
+                        console.log(data.files);
+                    });
+
+                    $('#OpponentModal').modal('show');
+                });
+
+                $("#OpponentModal").on("hidden.bs.modal", function () {
+                    $('#logoUploader').fileinput('destroy');
+                    $("input[name='logourl'][type='hidden']", $('#opponentForm')).remove();
+                });
+
                 updateMap();
                 setUpMultiSelection();
                 function updateMap() {
@@ -170,8 +289,31 @@
                         $("#map").attr("src", src);
                     }
                 }
+
+
+                //logo
+                $("#opponentForm").submit(function (e) {
+                    console.log("submitting...");
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/opponents",
+                        data: $("#opponentForm").serialize(), // serializes the form's elements.
+                        success: function(data)
+                        {
+                            $('#OpponentModal').modal('toggle');
+                        },
+                        error: function () {
+                            alert("There was an error creating the opponent. Please contact administrator");
+                        }
+                    });
+
+                    e.preventDefault(); 
+                });
             });
         </script>
     }
 
-    @section headerlinks{ <link href="~/lib/select2/dist/css/select2.min.css" rel="stylesheet" /> }
+    @section headerlinks{ 
+        <link href="~/lib/select2/dist/css/select2.min.css" rel="stylesheet" /> 
+        <link href="~/lib/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+    }
