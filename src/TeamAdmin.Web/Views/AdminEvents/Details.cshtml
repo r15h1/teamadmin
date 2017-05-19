@@ -1,6 +1,6 @@
 @model TeamAdmin.Web.Models.AdminViewModels.Event
 <div class="container">
-    <h1>Add an Event</h1>
+    <h1>@(Model.EventId.HasValue ? "Event Details" : "Add an Event")</h1>
     <form asp-action="Add" name="myform" id="myform" method="post">
         <div class="form-horizontal">
             @*<div asp-validation-summary="All" class="text-danger"></div>*@
@@ -20,7 +20,7 @@
             <div class="form-group">
                 <label asp-for="EndDate" class="col-md-2 control-label">Ends on/at *</label>
                 <div class="col-md-10">
-                    <input asp-for="EndDate" class="form-control" name="EndDate" id="EndDate" type="datetime-local" required value="@(Model.EndDate.HasValue ? Model.StartDate.Value.ToString("yyyy-MM-ddThh:mm") : DateTime.Now.ToString("yyyy-MM-ddThh:mm"))" />
+                    <input asp-for="EndDate" class="form-control" name="EndDate" id="EndDate" type="datetime-local" required value="@(Model.EndDate.HasValue ? Model.EndDate.Value.ToString("yyyy-MM-ddThh:mm") : DateTime.Now.ToString("yyyy-MM-ddThh:mm"))" />
                     <span asp-validation-for="EndDate" class="text-danger" />
                 </div>
             </div>
@@ -30,6 +30,7 @@
                 <div class="col-md-10">
                     <select name="Teams" id="Teams" asp-for="Teams" class="form-control" required></select>
                     <span asp-validation-for="Teams" class="text-danger" />
+                    @*<input type="button" id="SelectAllTeamsButton" value="Select All Teams" title="Select All Teams" class="btn btn-sm btn-default" />*@
                 </div>
             </div>
 
@@ -38,7 +39,7 @@
                 <div class="col-md-10">
                     <select name="Opponent" id="Opponent" class="form-control" asp-for="Opponent"></select>
                     <span class="text-danger" asp-validation-for="Opponent" />
-                    <input type="button" id="AddOpponentButton" value="+" title="Add an opponent" />
+                    <input type="button" id="AddOpponentButton" value="Create New Opponent" title="Create a new opponent" class="btn btn-sm btn-default" />
                 </div>
             </div>
 
@@ -95,18 +96,18 @@
                                     <input class="form-control" name="name" id="name" maxlength="250" required />
                                 </div>
                             </div>
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <label class="col-md-3 control-label">Short Name</label>
                                 <div class="col-md-9">
                                     <input class="form-control" name="shortname" id="shortname" maxlength="25" />
                                 </div>
-                            </div>
-                            <div class="form-group">
+                            </div>*@
+                            @*<div class="form-group">
                                 <label class="col-md-3 control-label">Website</label>
                                 <div class="col-md-9">
                                     <input type="url" class="form-control" name="website" id="website" maxlength="250" />
                                 </div>
-                            </div>
+                            </div>*@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Logo</label>
                                 <div class="col-md-9">
@@ -137,7 +138,6 @@
     <script>
         $(document).ready(function () {
             var GAME = 1, EXHIBITION_GAME = 6;
-
 
             var opponent = $('#Opponent').select2(
             {
@@ -227,9 +227,7 @@
                 var validator = $("#myform").submit(function () {
                     // update underlying textarea before submit validation
                     if ($("#eventtype").val() == GAME || $("#eventtype").val() == EXHIBITION_GAME) {
-                        var gameTitle = $("#eventtype").val() == GAME ? "Game vs. " : "Exhibition Game vs. ";
-                        gameTitle += $("#Opponent").text();
-                        title.val(gameTitle);
+                        title.val("vs. " + $("#Opponent option:selected").text());
                     }
                 }).validate({
                     ignore: "",
@@ -262,7 +260,7 @@
 
             $("#AddOpponentButton").click(function () {
                 console.log("opening modal");
-                $("#name, #shortname, #website").val("");
+                $("#name").val("");
                 $("#logoUploader").fileinput({
                     //'overwriteInitial': true,
                     'initialPreviewShowDelete': true,
@@ -335,8 +333,10 @@
             //set initial value for teams and opponent
             @if (Model.Teams != null && Model.Teams.Count > 0)
             {
-                @Html.Raw("var $teamoption = $('<option selected>Loading...</option>').val(\"" + Model.Teams.FirstOrDefault() + "\").text(\"" + Model.TeamList.FirstOrDefault(t => t.TeamId == Model.Teams.FirstOrDefault()).Name + "\");");
-                @Html.Raw("teams.append($teamoption).trigger('change'); ");
+                foreach(var team in Model.Teams)
+                {
+                    @Html.Raw("teams.append( $('<option selected>Loading...</option>').val(\"" + team + "\").text(\"" + Model.TeamList.FirstOrDefault(t => t.TeamId == team).Name + "\").trigger('change'));");
+                }
             }
 
             @if (Model.Opponent.HasValue &&  Model.OpponentList != null && Model.OpponentList.Count > 0)
@@ -372,7 +372,7 @@
                 });
 
                 e.preventDefault();
-            });
+            });            
         });
     </script>
 }

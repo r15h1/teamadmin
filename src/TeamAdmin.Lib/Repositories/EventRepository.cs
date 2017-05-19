@@ -28,6 +28,9 @@ namespace TeamAdmin.Lib.Repositories
 
         public Core.Event SaveEvent(Core.Club club, Core.Event evnt)
         {
+            if (evnt.EventType != EventType.GAME && evnt.EventType != EventType.EXHIBITION_GAME)
+                evnt.Opponent = null;
+
             if (evnt.EventId.HasValue)
                 return UpdateEvent(club, evnt);
 
@@ -126,12 +129,13 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<EventContext>())
             {
-                var ev = context.ClubTeamEvents.Include(c => c.Event)
+                var ev = context.ClubTeamEvents.Include(c => c.Event).ThenInclude(e => e.Opponent)
                         .Include(c => c.Team)
                         .Where(c => c.EventId == eventId);
 
                 var evnt = mapper.Map<Core.Event>(ev.Select(c => c.Event).ToList().FirstOrDefault());
                 evnt.Teams = mapper.Map<List<Core.Team>>(ev.Select(c => c.Team).ToList());
+                evnt.Opponent = mapper.Map<Core.Opponent>(ev.Select(e => e.Event.Opponent).FirstOrDefault());
                 return evnt;
             }
         }

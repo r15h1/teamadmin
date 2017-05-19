@@ -69,7 +69,7 @@ namespace TeamAdmin.Web.Controllers
         {
             if (ModelState.IsValid)
             {                
-                var ev = mapper.Map<Core.Event>(evnt);
+                var ev = mapper.Map<Core.Event>(evnt);                
                 eventRepository.SaveEvent(club, ev);
                 return RedirectToAction("Index");
             }

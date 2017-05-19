@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<TeamAdmin.Core.Event>
+@using System.Globalization
 <div class="container">
     <h1>Manage Events</h1>
     <div class="btn-toolbar" role="toolbar"><a class="btn btn-default pull-right" asp-controller="AdminEvents" asp-action="Add">Add an Event</a></div>
@@ -9,20 +10,21 @@
                 <thead>
                     <tr class="bg-primary">
                         <th class="col-md-1 col-sm-1 col-xs-2">When</th>
-                        <th class="col-md-1 col-sm-1 col-xs-2">What</th>
+                        <th class="col-md-2 col-sm-2 col-xs-2">What</th>
                         <th class="col-md-2 col-sm-2 col-xs-2">Teams</th>
-                        <th class="col-md-6 col-sm-6 col-xs-4">Title / Opponent</th>
+                        <th class="col-md-4 col-sm-4 col-xs-4">Title / Opponent</th>
                         <th class="col-md-1 col-sm-1 col-xs-1">Start</th>
                         <th class="col-md-1 col-sm-1 col-xs-1">End</th>
+                        <th class="col-md-1 col-sm-1 col-xs-1">Edit</th>
                     </tr>
                 </thead>
                 @foreach (var ev in Model)
                 {
                     <tr>
                         <td>@ev.StartDate.ToString("ddd dd MMM")</td>
-                        <td>@ev.EventType</td>
+                        <td>@(new CultureInfo("en-US", false).TextInfo.ToTitleCase(ev.EventType.ToString().Replace("_", " ").ToLowerInvariant()))</td>
                         <td>@(string.Join(", ", ev.Teams.Select(t => t.DisplayName).ToArray()))</td>
-                        <td>@((ev.EventType == TeamAdmin.Core.EventType.GAME || ev.EventType == TeamAdmin.Core.EventType.EXHIBITION_GAME) && ev.Opponent != null? ev.Opponent.Name : ev.Title)</td>
+                        <td>@((ev.EventType == TeamAdmin.Core.EventType.GAME || ev.EventType == TeamAdmin.Core.EventType.EXHIBITION_GAME) && ev.Opponent != null ? ev.Opponent.Name : ev.Title)</td>
                         <td>@ev.StartDate.ToString("hh:mm tt")</td>
                         <td>@ev.EndDate.ToString("hh:mm tt")</td>
                         <td class="text-center"><a href="/admin/events/@ev.EventId"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="edit"></i></a></td>
@@ -30,5 +32,9 @@
                 }
             </table>
         </div>
+    }
+    else
+    {
+        <p>There are no active events at this time.</p>
     }
 </div>
