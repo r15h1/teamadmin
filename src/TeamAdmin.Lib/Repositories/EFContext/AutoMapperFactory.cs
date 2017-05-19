@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -38,10 +39,17 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                     cfg.CreateMap<Core.Media, EFContext.TeamMedia>().ForMember(m => m.MediaType, opt => opt.MapFrom(src => (byte)src.MediaType));
                     cfg.CreateMap<EFContext.TeamMedia, Core.Media>().ForMember(m => m.MediaType, opt => opt.MapFrom(src => (int)src.MediaType));
 
-                    cfg.CreateMap<Core.Event, EFContext.Event>().ForMember(m => m.EventType, opt => opt.MapFrom(src => (byte)src.EventType));
+                    cfg.CreateMap<Core.Opponent, EFContext.Opponent>().ReverseMap();
+
+                    cfg.CreateMap<Core.Event, EFContext.Event>()
+                        .ForMember(m => m.EventType, opt => opt.MapFrom(src => (byte)src.EventType))
+                        .ForMember(m => m.OpponentId, opt => opt.MapFrom(src => src.Opponent != null && src.Opponent.OpponentId.HasValue ? src.Opponent.OpponentId : null))
+                        .ForMember(m => m.Opponent, opt => opt.Ignore());
+
                     cfg.CreateMap<EFContext.Event, Core.Event>()
                         .ForMember(m => m.EventType, opt => opt.MapFrom(src => (int)src.EventType))
-                        .ForMember(m => m.Teams, opt => opt.ResolveUsing<TeamEventResolver>());
+                        .ForMember(m => m.Teams, opt => opt.ResolveUsing<TeamEventResolver>())
+                        .ForMember(m => m.Opponent, opt => opt.MapFrom(src => src.Opponent));                       
 
                     cfg.CreateMap<Core.Post, EFContext.Post>()
                         .ForMember(m => m.PostMedia, opt => opt.ResolveUsing<CorePostMediaResolver>())

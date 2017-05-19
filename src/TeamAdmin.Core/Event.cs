@@ -19,6 +19,8 @@ namespace TeamAdmin.Core
         public DateTime EndDate { get; set; }
         public IList<Team> Teams { get; set; }
         public string Address { get; set; }
+        public Opponent Opponent { get; set; }
+
     }
 
     public enum EventType

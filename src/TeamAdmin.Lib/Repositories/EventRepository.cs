@@ -82,7 +82,8 @@ namespace TeamAdmin.Lib.Repositories
                     eventItem.StartDate = evnt.StartDate;
                     eventItem.Title = evnt.Title;
                     eventItem.Address = evnt.Address;
-                    
+                    eventItem.OpponentId = evnt.Opponent != null ? evnt.Opponent.OpponentId : null;
+
                     if (eventItem.ClubTeamEvents != null && eventItem.ClubTeamEvents.Count > 0)
                         foreach (var cev in eventItem.ClubTeamEvents)
                             context.Remove(cev);
@@ -139,7 +140,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<EventContext>())
             {
-                return context.ClubTeamEvents.Include(c => c.Event).Include(c => c.Team)
+                return context.ClubTeamEvents.Include(c => c.Event).ThenInclude(e => e.Opponent).Include(c => c.Team)
                         .Where(c => c.ClubId == club.ClubId.Value && c.Event.EndDate >= DateTime.Today)
                         .GroupBy(x => x.Event, (e, cte) => new Core.Event
                         {
@@ -150,7 +151,8 @@ namespace TeamAdmin.Lib.Repositories
                             StartDate = e.StartDate,
                             Title = e.Title,
                             Address = e.Address,
-                            Teams = cte.Select(x => new Core.Team(club.ClubId.Value) { Name = x.Team.Name, DisplayName = x.Team.DisplayName }).ToList()
+                            Teams = cte.Select(x => new Core.Team(club.ClubId.Value) { Name = x.Team.Name, DisplayName = x.Team.DisplayName }).ToList(),
+                            Opponent = mapper.Map<Core.Opponent>(cte.Select(t=> t.Event.Opponent).FirstOrDefault())
                         }).OrderBy(e => e.StartDate).ThenBy(e => e.EndDate).ToList();
             }            
         }
@@ -159,7 +161,7 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<EventContext>())
             {
-                return context.ClubTeamEvents.Include(c => c.Event).Include(c => c.Team)
+                return context.ClubTeamEvents.Include(c => c.Event).ThenInclude(e => e.Opponent).Include(c => c.Team)
                         .Where(c => c.TeamId == team.TeamId.Value && c.Event.EndDate >= DateTime.Today)
                         .GroupBy(x => x.Event, (e, cte) => new Core.Event
                         {

@@ -9,7 +9,7 @@ namespace TeamAdmin.Lib.Repositories
 {
     public class OpponentRepository : IOpponentRepository
     {
-        public Opponent GetOpponent(int opponentId)
+        public Core.Opponent GetOpponent(int opponentId)
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {
@@ -17,7 +17,7 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        public IEnumerable<Opponent> GetOpponents(string name)
+        public IEnumerable<Core.Opponent> GetOpponents(string name = "")
         {            
             using (var context = ContextFactory.Create<ClubContext>())
             {
@@ -25,7 +25,7 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        public Opponent SaveOpponent(Opponent opponent)
+        public Core.Opponent SaveOpponent(Core.Opponent opponent)
         {
             if (opponent.OpponentId.HasValue)
                 return UpdateOpponent(opponent);
@@ -33,7 +33,7 @@ namespace TeamAdmin.Lib.Repositories
             return CreateOpponent(opponent);
         }
 
-        private Opponent CreateOpponent(Opponent opponent)
+        private Core.Opponent CreateOpponent(Core.Opponent opponent)
         {
             if (opponent == null) throw new ArgumentNullException();
             using (var context = ContextFactory.Create<ClubContext>())
@@ -44,7 +44,7 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        private Opponent UpdateOpponent(Opponent opponent)
+        private Core.Opponent UpdateOpponent(Core.Opponent opponent)
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {
