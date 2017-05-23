@@ -97,7 +97,7 @@
     <p style="margin-left:15px;"><a href="/testimonials">Read full testimonials</a></>
 </section>
 <section class="container">
-        <article class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+        <article class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
             <header>
                 <h3>Latest News</h3>
             </header>
@@ -122,36 +122,37 @@
             }
         </article>
 
-        <aside class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-            <header>
-                <h3>Fixtures</h3><a href="/events">More Events</a>
-            </header>
-            @if (Model != null && Model.Events != null && Model.Events.Count() > 0)
+    <aside class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
+        <header>
+            <h3>Fixtures</h3><a href="/events">More Events</a>
+        </header>
+        @if (Model != null && Model.Events != null && Model.Events.Count() > 0)
             {
 
-                <div class="panel panel-default">
-                    @foreach (var group in Model.Events.Take(5))
+            <div>
+                @foreach (var group in Model.Events.Take(4))
                 {
-                        @foreach (var ev in group)
+                    @foreach (var ev in group)
                     {
+                        <a href="/events/@ev.EventId">
                             <div class="fixture">
-                                <div class="fixture-date">
-                                    <span class="fixture-month">@ev.StartDate.ToString("MMM")</span>
-                                    <span class="fixture-day">@ev.StartDate.ToString("dd")</span>
-                                    <span>@ev.StartDate.ToString("ddd")</span>
-                                </div>
-                                <div class="fixture-title"><a href="/events/@ev.EventId">@ev.Title</a></div>
-                                <div>
-                                    <span class="glyphicon glyphicon-time"></span><span class="fixture-time"> @ev.StartDate.ToString("h:mmtt") - @ev.EndDate.ToString("h:mmtt")</span>
+                                <div class="fixture-full-date"> @ev.StartDate.ToString("ddd dd MMM")  <span class="glyphicon glyphicon-time"></span>  @ev.StartDate.ToString("h:mmtt") - @ev.EndDate.ToString("h:mmtt")</div>                                
+                                <div class="fixture-title">
+                                    <figure style="display:inline-block;vertical-align: top; margin-right:10px;"><figcaption style="text-align: center;">@ev.Teams.FirstOrDefault().DisplayName</figcaption><img src="@Settings.ImageUrlRoot/mapola-logo.png?w=40&h=40"></figure> <figure style="display:inline-block;text-align:center;margin-left:10px;"><figcaption style="text-align: center;">@ev.Opponent.Name</figcaption><img src="@(string.IsNullOrWhiteSpace(ev.Opponent.LogoUrl) ? Settings.ImageUrlRoot + "/no_image.jpeg" : ev.Opponent.LogoUrl)?w=40&h=40"></figure>
                                 </div>
                                 <div class="fixture-address">@ev.Address</div>
                             </div>
-                        }
+                        </a>
                     }
-                </div>
-            }
+                }
+            </div>
+        }
 
-        </aside>
+    </aside>
+
+
+
+
 
 
 

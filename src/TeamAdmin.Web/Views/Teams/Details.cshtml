@@ -18,32 +18,46 @@
     @if (Model != null && events != null && events.Count() > 0)
     {
         <h2>Upcoming Events</h2>
-            <div class="row">
-                @foreach (var evnt in events)
+        <div class="row">
+            @foreach (var evnt in events)
+            {
+                @foreach (var ev in evnt)
                 {
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="media">
-                            <div class="media-body list-group">
-                                @foreach (var ev in evnt)
-                                {
-                                    <div class="fixture">
-                                        <div class="fixture-date">
-                                            <span class="fixture-month">@ev.StartDate.ToString("MMM")</span>
-                                            <span class="fixture-day">@ev.StartDate.ToString("dd")</span>
-                                            <span>@ev.StartDate.ToString("ddd")</span>
+                            <div class="media-body">
+                                <a href="/events/@ev.EventId">
+                                    @if (ev.EventType == TeamAdmin.Core.EventType.GAME || ev.EventType == TeamAdmin.Core.EventType.EXHIBITION_GAME)
+                                    {
+                                        <div class="fixture">
+                                            <div class="fixture-full-date"> @ev.StartDate.ToString("ddd dd MMM")  <span class="glyphicon glyphicon-time"></span>  @ev.StartDate.ToString("h:mmtt") - @ev.EndDate.ToString("h:mmtt")</div>
+                                            <div class="fixture-title">
+                                                <figure style="display:inline-block;vertical-align: top; margin-right:10px;"><figcaption style="text-align: center;">@ev.Teams.FirstOrDefault().DisplayName</figcaption><img src="@Settings.ImageUrlRoot/mapola-logo.png?w=40&h=40"></figure> <figure style="display:inline-block;text-align:center;margin-left:10px;"><figcaption style="text-align: center;">@ev.Opponent.Name</figcaption><img src="@ev.Opponent.LogoUrl?w=40&h=40"></figure>
+                                            </div>
+                                            <div class="fixture-address">@ev.Address</div>
                                         </div>
-                                        <div class="fixture-title"><a href="/events/@ev.EventId">@ev.Title</a></div>
-                                        <div>
-                                            <span class="glyphicon glyphicon-time"></span><span class="fixture-time"> @ev.StartDate.ToString("h:mmtt") - @ev.EndDate.ToString("h:mmtt")</span>
+                                    }
+                                    else
+                                    {
+                                        <div class="fixture">
+                                            <div class="fixture-full-date"> @ev.StartDate.ToString("ddd dd MMM")  <span class="glyphicon glyphicon-time"></span>  @ev.StartDate.ToString("h:mmtt") - @ev.EndDate.ToString("h:mmtt")</div>
+                                            <div class="fixture-title">
+                                                @foreach (var t in @ev.Teams)
+                                                {
+                                                    <span>@t.DisplayName</span>
+                                                }
+                                                <div>@ev.Title</div>
+                                            </div>
+                                            <div class="fixture-address">@ev.Address</div>
                                         </div>
-                                        <div class="fixture-address">@ev.Address</div>
-                                    </div>
-                                }
+                                    }
+                                </a>
                             </div>
                         </div>
                     </div>
                 }
-            </div>
+            }
+        </div>
     }
 
     @if (Model != null && Model.Players != null && Model.Players.Count() > 0)

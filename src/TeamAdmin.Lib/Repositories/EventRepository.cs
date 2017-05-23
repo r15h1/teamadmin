@@ -176,7 +176,8 @@ namespace TeamAdmin.Lib.Repositories
                             StartDate = e.StartDate,
                             Title = e.Title,
                             Address = e.Address,
-                            Teams = cte.Select(x => new Core.Team(team.ClubId) { Name = x.Team.Name, DisplayName = x.Team.DisplayName }).ToList()
+                            Teams = cte.Select(x => new Core.Team(team.ClubId) { Name = x.Team.Name, DisplayName = x.Team.DisplayName }).ToList(),
+                            Opponent = mapper.Map<Core.Opponent>(cte.Select(t => t.Event.Opponent).FirstOrDefault())
                         }).OrderBy(e => e.StartDate).ThenBy(e => e.EndDate).ToList();
             }        
         }
