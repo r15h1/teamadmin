@@ -39,7 +39,7 @@ section{
     padding-bottom: 2px;
     background-color: rgba(0,0,0,0.05);
     text-align:center;
-    min-height:111px;
+    min-height:90px;
 }
 
 .fixture-address{
@@ -52,7 +52,7 @@ section{
     background-color:rgb(176, 39, 8);
     color:white;
     text-transform:uppercase;
-    font-size:13px;
+    font-size:12px;
     font-weight:600;
     padding:5px 0 5px 0;
 }
@@ -91,7 +91,7 @@ section{
 }
 
 .fixture-title{
-    padding:2px 0 2px 0;
+    padding:5px 0 2px 0;
     font-size:12px;
     font-weight:600;
 }
@@ -104,6 +104,7 @@ section{
     font-size:12px;
     font-weight:600;
     text-overflow:clip;
+    vertical-align:middle;
 }
 
 .hero {

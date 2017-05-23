@@ -33,36 +33,49 @@ section{
 }
 
 .fixture{
-    margin: 5px 5px 5px 5px;
+    margin: 2px 0 7px 0;
     border: solid 1px rgb(200,200,200);
-    padding-bottom: 8px;
-    border-radius: 5px;
-    background-color: rgba(0,0,0,0.06);
+    border-radius:3px;
+    padding-bottom: 2px;
+    background-color: rgba(0,0,0,0.05);
+    text-align:center;
+    min-height:111px;
 }
 
 .fixture-address{
-    color:rgb(36, 91, 23);
+    color:rgb(42, 117, 25);
     font-size:12px;
+    font-weight:600;
+}
+
+.fixture-full-date{
+    background-color:rgb(176, 39, 8);
+    color:white;
+    text-transform:uppercase;
+    font-size:13px;
+    font-weight:600;
+    padding:5px 0 5px 0;
 }
 
 .fixture-date{    
     border:solid 1px rgb(200, 200, 200);
     border-radius:5px;   
     float:left;
-    font-size:12px;
+    font-size:13px;
     font-weight:600;
-    margin:5px 5px 0px 5px;
+    margin:2px 5px 0px 2px;
     text-transform:uppercase;
 }
 
 .fixture-date span{    
     display:block;
-    padding:1px 10px 0px 10px;
+    padding:1px 7px 0px 7px;
     text-align:center;
 }
 
 .fixture-day{
     font-size:15px;
+    padding-bottom:5px;
 }
 
 .fixture-month{
@@ -73,12 +86,24 @@ section{
 .fixture-time{
     font-size:12px;
     font-weight:600;
+    text-transform:uppercase;
+    margin:5px 0 0 5px;
 }
 
 .fixture-title{
-    padding-top:5px;
-    font-size:15px;
+    padding:2px 0 2px 0;
+    font-size:12px;
     font-weight:600;
+}
+
+.fixture-title figure img {
+    margin-bottom:1px;
+}
+
+.fixture-title figure figcaption {
+    font-size:12px;
+    font-weight:600;
+    text-overflow:clip;
 }
 
 .hero {
@@ -441,7 +466,7 @@ footer img{
     position: relative;
     margin: 0 auto;
     padding: 1em 0 4em;
-    max-width: 1000px;
+    max-width: 1050px;
     list-style: none;
     text-align: center;
 }
