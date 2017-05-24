@@ -19,14 +19,11 @@
     </div>
 </div>
     @section headerlinks{
-        <link href="~/lib/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
-        <link href="~/css/eventscalendar.css" rel="stylesheet" />
+        <link href="~/css/eventscalendar.min.css" rel="stylesheet" />
     }
 
     @section scripts {
-        <script src="~/lib/moment/min/moment.min.js"></script>
-        <script src="~/lib/fullcalendar/dist/fullcalendar.min.js"></script>
-        <script src="~/lib/purl/purl.js"></script>
+        <script src="~/js/backend.min.js"></script>
         <script>
             $(document).ready(function () {
                 $('#calendar').fullCalendar({

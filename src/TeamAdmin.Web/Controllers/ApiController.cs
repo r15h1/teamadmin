@@ -85,7 +85,8 @@ namespace TeamAdmin.Web.Controllers
         [HttpGet("events")]
         public IActionResult GetEvents(int? team)
         {
-            if (!team.HasValue || team.Value <= 0) return new JsonResult(null);
+            if (!team.HasValue || team.Value <= 0)
+                return new JsonResult(GetClubEvents(new Club() { ClubId = 1 }));
 
             var events = eventRepository.GetEvents(new Team(1) { TeamId = team.Value }).Select(e => new {
                 start = e.StartDate, end = e.EndDate, id = e.EventId,
@@ -96,6 +97,20 @@ namespace TeamAdmin.Web.Controllers
                 className = "event"
             });
             return new JsonResult(events);
+        }
+
+        private object GetClubEvents(Club club)
+        {
+            return  eventRepository.GetEvents(club).Select(e => new {
+                start = e.StartDate,
+                end = e.EndDate,
+                id = e.EventId,
+                title = $"{e.EventType.ToString()}: {e.Teams.Select(t => string.Join(", ", t.DisplayName))} {e.Title}",
+                description = e.Description,
+                location = e.Address,
+                url = $"{Settings.SiteUrl}events/{e.EventId}",
+                className = "event"
+            });
         }
 
         [HttpPost("recaptcha")]

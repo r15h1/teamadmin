@@ -1,0 +1,24 @@
+{
+  "name": "teamadmin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "bootstrap-fileinput": "^4.4.0",
+    "fullcalendar": "^3.4.0",
+    "jquery": "^3.2.1",
+    "jquery-validation": "^1.16.0",
+    "jquery-validation-unobtrusive": "^3.2.6",
+    "moment": "^2.18.1",
+    "purl": "^1.0.4",
+    "select2": "^4.0.3",
+    "tinymce": "^4.6.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -60,14 +60,10 @@
         }
     </form>
 </div>
-    @section headerlinks{
-        <link href="~/lib/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
-    }
+    @section headerlinks{<link href="~/css/backend.min.css" rel="stylesheet" />}
 
     @section scripts {
-        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-        <script src="~/lib/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script src="~/js/backend.min.js"></script>
         <script>
             $(function () {
                 var validator = $("#myform").submit(function () { }).validate({
