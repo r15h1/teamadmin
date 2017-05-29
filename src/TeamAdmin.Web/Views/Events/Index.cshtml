@@ -7,7 +7,7 @@
                 <div class="form-group">
                     <label for="Teams" class="col-md-1 col-sm-1 col-xs-2 control-label pull-left">Teams</label>
                     <div class="col-md-6 col-sm-8 col-xs-10">
-                        <select name="team" id="team" asp-items="@(new SelectList(Model.Teams.OrderBy(n => n.Name), "TeamId", "Name"))" style="width:100%"></select>
+                        <select name="team" id="team" asp-items="@(new SelectList(Model.Teams.OrderBy(n => n.Name).Select(t => new { Name = !string.IsNullOrWhiteSpace(t.Name) ? $"{t.Name} - {t.DisplayName}" : "All Teams", TeamId = t.TeamId }), "TeamId", "Name"))" style="width:100%"></select>
                     </div>
                 </div>
             </div>
