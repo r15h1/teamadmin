@@ -85,32 +85,23 @@ namespace TeamAdmin.Web.Controllers
         [HttpGet("events")]
         public IActionResult GetEvents(int? team)
         {
+            IEnumerable<Event> events;
             if (!team.HasValue || team.Value <= 0)
-                return new JsonResult(GetClubEvents(new Club() { ClubId = 1 }));
-
-            var events = eventRepository.GetEvents(new Team(1) { TeamId = team.Value }).Select(e => new {
-                start = e.StartDate, end = e.EndDate, id = e.EventId,
-                title = $"{e.EventType.ToString()}: {e.Title}",
-                description = e.Description,
-                location = e.Address,
-                url = $"{Settings.SiteUrl}events/{e.EventId}",
-                className = "event"
-            });
-            return new JsonResult(events);
-        }
-
-        private object GetClubEvents(Club club)
-        {
-            return  eventRepository.GetEvents(club).Select(e => new {
+                events = eventRepository.GetEvents(new Club { ClubId = 1 });
+            else
+                events = eventRepository.GetEvents(new Team(1) { TeamId = team.Value });
+            
+            return new JsonResult(events.Select(e => new
+            {
                 start = e.StartDate,
                 end = e.EndDate,
                 id = e.EventId,
-                title = $"{e.EventType.ToString()}: {e.Teams.Select(t => string.Join(", ", t.DisplayName))} {e.Title}",
+                title = $"{e.EventType.ToString()}: {string.Join(", ", e.Teams.Select(t => t.DisplayName))} {e.Title}",
                 description = e.Description,
                 location = e.Address,
                 url = $"{Settings.SiteUrl}events/{e.EventId}",
                 className = "event"
-            });
+            }));
         }
 
         [HttpPost("recaptcha")]
