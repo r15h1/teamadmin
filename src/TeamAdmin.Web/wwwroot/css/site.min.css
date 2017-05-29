@@ -628,21 +628,28 @@ margin-top: 5px;
 
 a.event, a.event:hover{
     background-color:white;
-    padding:2px 0 2px 0;
+    padding:0;
     color:black;
     text-decoration:none;
 }
 
 div.eventLocation{
     white-space:normal;
-    color:black;
+    color:rgb(42, 117, 25);
+}
+
+span.fc-time {
+    display: block;
+    background-color: rgb(176, 39, 8);
+    color:white;
+    width:100%;
 }
 
 span.fc-title{
-    white-space:normal;
+    display:block;
+    color:rgb(176, 39, 8);
     font-weight:bolder;
     font-size:1.2rem;
-    border-bottom:dotted 1px rgb(221, 221, 221);
 }
 
 span.fc-day-number{
@@ -668,6 +675,12 @@ td.fc-day{
 
 .fc-content-skeleton table{
     background-color:white;
+}
+
+.fc-event {
+    border: solid 1px rgb(176, 39, 8);
+    padding:0;
+    margin-bottom:5px;
 }
 
 .fc-content-skeleton table thead tr td.fc-day-top{
