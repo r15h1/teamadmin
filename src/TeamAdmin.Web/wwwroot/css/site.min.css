@@ -650,6 +650,7 @@ span.fc-title{
     color:rgb(176, 39, 8);
     font-weight:bolder;
     font-size:1.2rem;
+    word-wrap:break-word;
 }
 
 span.fc-day-number{
@@ -671,6 +672,10 @@ td.fc-day{
 .fc-widget-header {
     background-color:rgb(8, 89, 176);
     color:white;
+}
+
+.fc-day-grid-event .fc-content {
+    white-space: normal;
 }
 
 .fc-content-skeleton table{
