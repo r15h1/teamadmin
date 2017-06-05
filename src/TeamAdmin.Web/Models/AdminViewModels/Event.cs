@@ -25,22 +25,16 @@ namespace TeamAdmin.Web.Models.AdminViewModels
         [Required]
         public EventType EventType { get; set; }
 
-        //[Required]
         public string Title { get; set; }
 
-        [Required]
-        //[CompareDateAttribute("Start date must be greater than current date and time, End date must be greater than start date")]
+        [Required]        
         [DataType(DataType.Date)]
         public DateTime? EndDate { get; set; }
-
         public List<int> Teams { get; set; }
-
         public List<Team> TeamList{ get; set; }
-
         public string Address { get; set; }
-
         public int? Opponent { get; set; }
-
         public List<ApiViewModels.Opponent> OpponentList { get; set; }
+        public bool Away { get; set; }
     }
 }

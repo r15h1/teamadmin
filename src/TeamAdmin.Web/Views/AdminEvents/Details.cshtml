@@ -7,9 +7,16 @@
             <div class="form-group">
                 <label asp-for="EventType" class="col-md-2 control-label">What *</label>
                 <div class="col-md-10">
-                    <select class="btn btn-default" id="eventtype" name="eventtype" asp-for="EventType" asp-items="Html.GetEnumSelectList<TeamAdmin.Core.EventType>()"></select>
+                    <select class="btn btn-default" id="eventtype" name="eventtype" asp-for="EventType" asp-items="Html.GetEnumSelectList<TeamAdmin.Core.EventType>()"></select>                    
                 </div>
             </div>
+            <div class="form-group" id="AwayGroup">
+                <label asp-for="Away" class="col-md-2 control-label">Away</label>
+                <div class="col-md-10">
+                    <input id="away" name="away" asp-for="Away" type="checkbox"  style="border:none;margin-top:10px;"/>                    
+                </div>
+            </div>
+            
             <div class="form-group">
                 <label asp-for="StartDate" class="col-md-2 control-label">Starts on/at *</label>
                 <div class="col-md-10">
@@ -193,7 +200,7 @@
             function setUpMultiSelection() {
                 if ($("#eventtype").val() == GAME || $("#eventtype").val() == EXHIBITION_GAME) {
                     console.log('game');
-                    $("#OpponentGroup").show();
+                    $("#OpponentGroup,#AwayGroup").show();
                     $("#TitleGroup").hide();
                     opponent.prop('required', true);
 
@@ -213,7 +220,7 @@
                 }
                 else {
                     console.log('not game');
-                    $("#OpponentGroup").hide();
+                    $("#OpponentGroup,#AwayGroup").hide();
                     $("#TitleGroup").show();
                     opponent.removeAttr("required");
                     $("#Teams").attr("multiple", "multiple");
@@ -224,8 +231,8 @@
             $(function () {
                 var validator = $("#myform").submit(function () {
                     // update underlying textarea before submit validation
-                    if ($("#eventtype").val() == GAME || $("#eventtype").val() == EXHIBITION_GAME) {
-                        title.val("vs. " + $("#Opponent option:selected").text());
+                    if ($("#eventtype").val() == GAME || $("#eventtype").val() == EXHIBITION_GAME) {                       
+                        title.val($("#Opponent option:selected").text());
                     }
                 }).validate({
                     ignore: "",

@@ -63,11 +63,6 @@
                     updateCalendar();
                     e.preventDefault();
                 });
-
-                if ($.url().param('team') && !isNaN($.url().param('team'))) {
-                    $('#team').val($.url().param('team'));
-                    updateCalendar();
-                }
             });
 
             function updateCalendar() {

@@ -20,6 +20,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         public string Address { get; set; }
         public int? OpponentId { get; set; }
         public Opponent Opponent { get; set; }
+        public bool? Away { get; set; }
     }
 
     internal class ClubTeamEvent

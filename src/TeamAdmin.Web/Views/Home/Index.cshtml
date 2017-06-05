@@ -143,9 +143,9 @@
                             <div class="fixture">
                                 <div class="fixture-full-date"> @ev.StartDate.ToString("ddd dd MMM")  <span class="glyphicon glyphicon-time"></span>  @ev.StartDate.ToString("h:mmtt") - @ev.EndDate.ToString("h:mmtt")</div>
                                 <div class="fixture-title">
-                                    <figure style="display:inline-block;vertical-align: top; margin-right:10px;"><figcaption style="padding-right:5px;display: block;float: left;max-width:80px;text-align:right;">@ev.Teams.FirstOrDefault().DisplayName</figcaption><img src="@Settings.ImageUrlRoot/mapola-logo.png?w=40&h=40"></figure>
-                                    <span style="margin:auto;">vs</span>
-                                    <figure style="display:inline-block;text-align:center;margin-left:10px;"><figcaption style="padding-left:5px;display: block;float:right;max-width:80px;text-align:left;">@ev.Opponent.Name</figcaption><img src="@(string.IsNullOrWhiteSpace(ev.Opponent.LogoUrl) ? Settings.ImageUrlRoot + "/no_image.jpeg" : ev.Opponent.LogoUrl)?w=40&h=40"></figure>
+                                        <figure style="display:inline-block;vertical-align: top; margin-right:10px;"><figcaption style="padding-right:5px;display: block;float: left;max-width:80px;text-align:right;">@(ev.Away.HasValue && ev.Away.Value ? ev.Opponent.Name : ev.Teams.FirstOrDefault().DisplayName)</figcaption><img src="@(ev.Away.HasValue && ev.Away.Value ? (string.IsNullOrWhiteSpace(ev.Opponent.LogoUrl) ? Settings.ImageUrlRoot + "/no_image.jpeg" : ev.Opponent.LogoUrl) : Settings.ImageUrlRoot + "/mapola-logo.png")?w=40&h=40"></figure>
+                                        <span style="margin:auto;">vs</span>
+                                        <figure style="display:inline-block;margin-left:10px;"><figcaption style="padding-left:5px;display: block;float:right;max-width:80px;text-align:left;">@(ev.Away.HasValue && ev.Away.Value ? ev.Teams.FirstOrDefault().DisplayName : ev.Opponent.Name)</figcaption><img src="@(ev.Away.HasValue && ev.Away.Value ? @Settings.ImageUrlRoot + "/mapola-logo.png" : (string.IsNullOrWhiteSpace(ev.Opponent.LogoUrl) ? @Settings.ImageUrlRoot + "/no_image.jpeg" : ev.Opponent.LogoUrl))?w=40&h=40"></figure>                                    
                                 </div>
                                 <div class="fixture-address">@ev.Address</div>
                             </div>

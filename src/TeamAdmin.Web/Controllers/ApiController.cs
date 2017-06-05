@@ -96,12 +96,20 @@ namespace TeamAdmin.Web.Controllers
                 start = e.StartDate,
                 end = e.EndDate,
                 id = e.EventId,
-                title = $"{e.EventType.ToString()}: {string.Join(", ", e.Teams.Select(t => t.DisplayName))} {e.Title}",
+                title = BuildTitle(e),
                 description = e.Description,
                 location = e.Address,
                 url = $"{Settings.SiteUrl}events/{e.EventId}",
                 className = "event"
             }));
+        }
+
+        private string BuildTitle(Event e)
+        {
+            if(e.EventType == EventType.GAME || e.EventType == EventType.EXHIBITION_GAME)
+                return e.Away.HasValue && e.Away.Value ? $"{e.Opponent.Name} vs {e.Teams.FirstOrDefault().DisplayName}" : $"{e.Teams.FirstOrDefault().DisplayName} vs {e.Opponent.Name}";
+
+           return $"{e.Title} {string.Join(", ", e.Teams.Select(t => t.DisplayName))}";
         }
 
         [HttpPost("recaptcha")]
