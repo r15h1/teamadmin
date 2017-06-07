@@ -45,6 +45,7 @@ section{
     color:rgb(42, 117, 25);
     font-size:12px;
     font-weight:600;
+    text-align:center;
 }
 
 .fixture-full-date{
@@ -54,6 +55,7 @@ section{
     font-size:12px;
     font-weight:600;
     padding:5px 0 5px 0;
+    text-align:center;
 }
 
 .fixture-date{    

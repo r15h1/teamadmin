@@ -88,6 +88,7 @@ namespace TeamAdmin.Lib.Repositories
                     eventItem.Title = evnt.Title;
                     eventItem.Address = evnt.Address;
                     eventItem.OpponentId = evnt.Opponent != null ? evnt.Opponent.OpponentId : null;
+                    eventItem.Away = evnt.Away;
 
                     if (eventItem.ClubTeamEvents != null && eventItem.ClubTeamEvents.Count > 0)
                         foreach (var cev in eventItem.ClubTeamEvents)
