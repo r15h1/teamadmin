@@ -63,7 +63,7 @@
   },
   {
     "outputFileName": "wwwroot/js/backend.min.js",
-    "inputFiles": [
+    "inputFiles": [      
       "node_modules/moment/min/moment.min.js",
       "node_modules/fullcalendar/dist/fullcalendar.min.js",
       "node_modules/purl/dist/purl.min.js",
