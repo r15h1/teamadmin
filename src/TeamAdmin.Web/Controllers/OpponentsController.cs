@@ -50,7 +50,7 @@ namespace TeamAdmin.Web.Controllers
                 return StatusCode(200, updatedOpponent);
             }
             catch (ArgumentNullException ex) { return StatusCode(400, ex.Message); }
-            catch (ArgumentException ex) { return StatusCode(404, ex.Message); }            
+            catch (ArgumentException ex) { return StatusCode(400, ex.Message); }            
             catch (Exception ex) {return StatusCode(500, ex.Message);}
         }
 

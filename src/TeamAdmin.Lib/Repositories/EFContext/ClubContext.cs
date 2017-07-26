@@ -19,6 +19,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         public DbSet<Core.Message> Messages { get; set; }
         public DbSet<Core.Notification> Notifications { get; set; }
         public DbSet<Core.Opponent> Opponents { get; set; }
+        public DbSet<Core.Competition> Competitions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,6 +45,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
 
             modelBuilder.Entity<Core.Notification>().ForSqlServerToTable("Notifications").HasKey("NotificationId");
             modelBuilder.Entity<Core.Opponent>().ForSqlServerToTable("Opponents").HasKey("OpponentId");
+            modelBuilder.Entity<Core.Competition>().ForSqlServerToTable("Competitions").HasKey("CompetitionId");
         }
     }
 }

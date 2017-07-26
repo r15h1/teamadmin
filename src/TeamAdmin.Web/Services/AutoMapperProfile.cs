@@ -42,6 +42,7 @@ namespace TeamAdmin.Web.Services
             CreateMap<TeamAdmin.Web.Models.AdminViewModels.Notification, Core.Notification>().ReverseMap();
 
             CreateMap<TeamAdmin.Web.Models.ApiViewModels.Opponent, Core.Opponent>().ReverseMap();
+            CreateMap<TeamAdmin.Web.Models.ApiViewModels.Competition, Core.Competition>().ReverseMap();
         }
     }
 

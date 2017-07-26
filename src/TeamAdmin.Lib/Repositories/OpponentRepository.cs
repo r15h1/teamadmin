@@ -27,6 +27,8 @@ namespace TeamAdmin.Lib.Repositories
 
         public Core.Opponent SaveOpponent(Core.Opponent opponent)
         {
+            Ensure.NotNull(opponent);
+
             if (opponent.OpponentId.HasValue)
                 return UpdateOpponent(opponent);
 
@@ -34,8 +36,7 @@ namespace TeamAdmin.Lib.Repositories
         }
 
         private Core.Opponent CreateOpponent(Core.Opponent opponent)
-        {
-            if (opponent == null) throw new ArgumentNullException();
+        {            
             using (var context = ContextFactory.Create<ClubContext>())
             {
                 context.Opponents.Add(opponent);
@@ -48,7 +49,6 @@ namespace TeamAdmin.Lib.Repositories
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {
-                if (opponent == null) throw new ArgumentNullException();
                 var opp = context.Opponents.FirstOrDefault(c => c.OpponentId == opponent.OpponentId);
                 if (opp == null) throw new ArgumentException("This opponent does not exist.");
 
