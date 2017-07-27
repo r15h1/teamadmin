@@ -5,11 +5,27 @@
     {
         <div class="form-horizontal">
             <div class="form-group">
+                <label class="col-md-2 control-label">Teams</label>
+                <div class="col-md-10">
+                    <label class="form-control">@(string.Join(", ", Model.Teams.Select(t => $"{t.DisplayName}").ToArray()))</label>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="EventType" class="col-md-2 control-label">What</label>
                 <div class="col-md-10">
                     <label class="form-control">@Model.EventType: @Model.Title</label>
-                </div>
+                </div>                
             </div>
+            @if (Model.Competition != null && !string.IsNullOrWhiteSpace(Model.Competition.Name))
+            {
+                <div class="form-group">
+                    <label asp-for="Competition" class="col-md-2 control-label">Competition</label>
+                    <div class="col-md-10">
+                        <label class="form-control">@Model.Competition.Name</label>
+                    </div>
+                </div>
+            }
             <div class="form-group">
                 <label asp-for="StartDate" class="col-md-2 control-label">Starts</label>
                 <div class="col-md-10">
@@ -21,14 +37,7 @@
                 <div class="col-md-10">
                     <label class="form-control">@Model.EndDate.ToString("ddd, dd MMM yyyy @h:mm tt")</label>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">Teams</label>
-                <div class="col-md-10">
-                    <label class="form-control">@(string.Join(", ", Model.Teams.Select(t => $"{t.DisplayName}").ToArray()))</label>
-                </div>
-            </div>
+            </div>           
 
             <div class="form-group">
                 <label class="col-md-2 control-label">Notes</label>
