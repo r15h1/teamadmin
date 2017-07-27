@@ -14,7 +14,7 @@ namespace TeamAdmin.Lib.Repositories
             throw new NotImplementedException();
         }
 
-        public Competition GetCompetition(long competitionId)
+        public Core.Competition GetCompetition(long competitionId)
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {
@@ -22,7 +22,7 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        public IEnumerable<Competition> GetCompetitions(string name = "")
+        public IEnumerable<Core.Competition> GetCompetitions(string name = "")
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {
@@ -30,7 +30,7 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        public Competition SaveCompetition(Competition competition)
+        public Core.Competition SaveCompetition(Core.Competition competition)
         {
             Ensure.NotNull(competition);
 
@@ -40,7 +40,7 @@ namespace TeamAdmin.Lib.Repositories
             return CreateCompetition(competition);
         }
 
-        private Competition CreateCompetition(Competition competition)
+        private Core.Competition CreateCompetition(Core.Competition competition)
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {
@@ -50,7 +50,7 @@ namespace TeamAdmin.Lib.Repositories
             }
         }
 
-        private Competition UpdateCompetition(Competition competition)
+        private Core.Competition UpdateCompetition(Core.Competition competition)
         {
             using (var context = ContextFactory.Create<ClubContext>())
             {

@@ -46,6 +46,13 @@
                     },
                     timeFormat: 'h:mm T',
                     eventRender: function (event, element) {
+                        if (event.competition) {
+                            var compdiv = document.createElement("div");
+                            var competition = document.createTextNode(event.competition);
+                            compdiv.appendChild(competition);
+                            element[0].childNodes[0].appendChild(compdiv);
+                        }
+
                         var div = document.createElement("div");
                         div.className = "eventLocation";
                         var location = document.createTextNode(event.location);

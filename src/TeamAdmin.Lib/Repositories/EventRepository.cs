@@ -28,6 +28,8 @@ namespace TeamAdmin.Lib.Repositories
 
         public Core.Event SaveEvent(Core.Club club, Core.Event evnt)
         {
+            if (evnt.EventType != EventType.GAME) evnt.Competition = null;
+
             if (evnt.EventType != EventType.GAME && evnt.EventType != EventType.EXHIBITION_GAME) {
                 evnt.Opponent = null;
                 evnt.Away = null;
@@ -88,6 +90,7 @@ namespace TeamAdmin.Lib.Repositories
                     eventItem.Title = evnt.Title;
                     eventItem.Address = evnt.Address;
                     eventItem.OpponentId = evnt.Opponent != null ? evnt.Opponent.OpponentId : null;
+                    eventItem.CompetitionId = evnt.Competition != null ? evnt.Competition.CompetitionId : null;
                     eventItem.Away = evnt.Away;
 
                     if (eventItem.ClubTeamEvents != null && eventItem.ClubTeamEvents.Count > 0)
@@ -139,6 +142,7 @@ namespace TeamAdmin.Lib.Repositories
                 var evnt = mapper.Map<Core.Event>(ev.Select(c => c.Event).ToList().FirstOrDefault());
                 evnt.Teams = mapper.Map<List<Core.Team>>(ev.Select(c => c.Team).ToList());
                 evnt.Opponent = mapper.Map<Core.Opponent>(ev.Select(e => e.Event.Opponent).FirstOrDefault());
+                evnt.Competition = mapper.Map<Core.Competition>(ev.Select(e => e.Event.Competition).FirstOrDefault());
                 return evnt;
             }
         }
@@ -160,6 +164,7 @@ namespace TeamAdmin.Lib.Repositories
                             Address = e.Address,
                             Teams = cte.Select(x => new Core.Team(club.ClubId.Value) { Name = x.Team.Name, DisplayName = x.Team.DisplayName }).ToList(),
                             Opponent = mapper.Map<Core.Opponent>(cte.Select(t=> t.Event.Opponent).FirstOrDefault()),
+                            Competition = mapper.Map<Core.Competition>(cte.Select(t => t.Event.Competition).FirstOrDefault()),
                             Away = e.Away
                         }).OrderBy(e => e.StartDate).ThenBy(e => e.EndDate).ToList();
             }            
@@ -182,6 +187,7 @@ namespace TeamAdmin.Lib.Repositories
                             Address = e.Address,
                             Teams = cte.Select(x => new Core.Team(team.ClubId) { Name = x.Team.Name, DisplayName = x.Team.DisplayName }).ToList(),
                             Opponent = mapper.Map<Core.Opponent>(cte.Select(t => t.Event.Opponent).FirstOrDefault()),
+                            Competition = mapper.Map<Core.Competition>(cte.Select(t => t.Event.Competition).FirstOrDefault()),
                             Away = e.Away
                         }).OrderBy(e => e.StartDate).ThenBy(e => e.EndDate).ToList();
             }        

@@ -99,6 +99,7 @@ namespace TeamAdmin.Web.Controllers
                 title = BuildTitle(e),
                 description = e.Description,
                 location = e.Address,
+                competition = e.Competition?.Name,
                 url = $"{Settings.SiteUrl}events/{e.EventId}",
                 className = "event"
             }));

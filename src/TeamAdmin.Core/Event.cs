@@ -20,6 +20,7 @@ namespace TeamAdmin.Core
         public IList<Team> Teams { get; set; }
         public string Address { get; set; }
         public Opponent Opponent { get; set; }
+        public Competition Competition { get; set; }
         public bool? Away { get; set; }
     }
 

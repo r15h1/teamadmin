@@ -40,6 +40,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                     cfg.CreateMap<EFContext.TeamMedia, Core.Media>().ForMember(m => m.MediaType, opt => opt.MapFrom(src => (int)src.MediaType));
 
                     cfg.CreateMap<Core.Opponent, EFContext.Opponent>().ReverseMap();
+                    cfg.CreateMap<Core.Competition, EFContext.Competition>().ReverseMap();
 
                     cfg.CreateMap<Core.Event, EFContext.Event>()
                         .ForMember(m => m.EventType, opt => opt.MapFrom(src => (byte)src.EventType))

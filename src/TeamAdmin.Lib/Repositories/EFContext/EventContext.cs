@@ -10,6 +10,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         public DbSet<ClubTeamEvent> ClubTeamEvents { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Opponent> Opponents { get; set; }
+        public DbSet<Competition> Competitions{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,6 +26,11 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                 .HasOne(e => e.Opponent)
                 .WithMany(c => c.Events)
                 .HasForeignKey(e => e.OpponentId);
+
+            modelBuilder.Entity<Event>()
+                .HasOne(e => e.Competition)
+                .WithMany(c => c.Events)
+                .HasForeignKey(e => e.CompetitionId);
 
             modelBuilder.Entity<ClubTeamEvent>()
                 .HasOne(c => c.Event)
