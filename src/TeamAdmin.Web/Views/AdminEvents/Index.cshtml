@@ -22,7 +22,9 @@
                 {
                     <tr>
                         <td>@ev.StartDate.ToString("ddd dd MMM")</td>
-                        <td>@(new CultureInfo("en-US", false).TextInfo.ToTitleCase(ev.EventType.ToString().Replace("_", " ").ToLowerInvariant()))</td>
+                        <td>
+                            @(new CultureInfo("en-US", false).TextInfo.ToTitleCase(ev.EventType.ToString().Replace("_", " ").ToLowerInvariant()))
+                            @(ev.Competition != null && !string.IsNullOrWhiteSpace(ev.Competition.Name) ? $"- {ev.Competition.Name}" : "")                        </td>
                         <td>@(string.Join(", ", ev.Teams.Select(t => t.DisplayName).ToArray()))</td>
                         <td>@((ev.EventType == TeamAdmin.Core.EventType.GAME || ev.EventType == TeamAdmin.Core.EventType.EXHIBITION_GAME) && ev.Opponent != null ? ev.Opponent.Name : ev.Title)</td>
                         <td>@ev.StartDate.ToString("hh:mm tt")</td>

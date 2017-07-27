@@ -19,11 +19,13 @@ namespace TeamAdmin.Web.Services
 
             CreateMap<Models.AdminViewModels.Event, Core.Event>()
                 .ForMember(dest => dest.Teams, opt => opt.ResolveUsing<ViewModelTeamEventResolver>())
-                .ForMember(dest => dest.Opponent, opt => opt.MapFrom(src => new Core.Opponent { OpponentId = src.Opponent }));
+                .ForMember(dest => dest.Opponent, opt => opt.MapFrom(src => new Core.Opponent { OpponentId = src.Opponent }))
+                .ForMember(dest => dest.Competition, opt => opt.MapFrom(src => new Core.Competition { CompetitionId = src.Competition }));
 
             CreateMap<Core.Event, Models.AdminViewModels.Event>()
                 .ForMember(dest => dest.Teams, opt => opt.ResolveUsing<CoreTeamEventResolver>())
-                .ForMember(dest => dest.Opponent, opt => opt.MapFrom(src => src.Opponent != null ? src.Opponent.OpponentId : null ));
+                .ForMember(dest => dest.Opponent, opt => opt.MapFrom(src => src.Opponent != null ? src.Opponent.OpponentId : null))
+                .ForMember(dest => dest.Competition, opt => opt.MapFrom(src => src.Competition != null ? src.Competition.CompetitionId : null ));
 
             CreateMap<Models.AdminViewModels.Team, Core.Team>().ReverseMap()
                 .ForMember(dest => dest.Images, opt => opt.ResolveUsing<TeamViewModelImageResolver>())

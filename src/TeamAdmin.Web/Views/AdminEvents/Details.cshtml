@@ -10,6 +10,16 @@
                     <select class="btn btn-default" id="eventtype" name="eventtype" asp-for="EventType" asp-items="Html.GetEnumSelectList<TeamAdmin.Core.EventType>()"></select>                    
                 </div>
             </div>
+
+            <div class="form-group" id="CompetitionGroup">
+                <label class="col-md-2 control-label">Competition</label>
+                <div class="col-md-10">
+                    <select name="Competition" id="Competition" class="form-control" asp-for="Competition"></select>
+                    <span class="text-danger" asp-validation-for="Competition" />
+                    <input type="button" id="AddCompetitionButton" value="Create New Competition" title="Create a new competition" class="btn btn-sm btn-default" />
+                </div>
+            </div>
+
             <div class="form-group" id="AwayGroup">
                 <label asp-for="Away" class="col-md-2 control-label">Away</label>
                 <div class="col-md-10">
@@ -144,6 +154,33 @@
         $(document).ready(function () {
             var GAME = 1, EXHIBITION_GAME = 6;
 
+            var competition = $('#Competition').select2(
+            {
+                placeholder: 'Select a competition',
+                ajax: {
+                    url: "/api/competitions",
+                    data: function (params) {
+                        var query = {
+                            name: params.term
+                        }
+                        // Query paramters will be ?search=[term]&page=[page]
+                        return query;
+                    },
+                    processResults: function (data) {
+                        var values = $.map(data, function (obj) {
+                            obj.text = obj.name;
+                            obj.id = obj.competitionId;
+                            return obj;
+                        });
+                        return {
+                            results: values
+                        };
+                    },
+                    cache: false
+                },
+                allowClear: true
+            });
+
             var opponent = $('#Opponent').select2(
             {
                 placeholder: 'Select an opponent',
@@ -198,8 +235,16 @@
             var teamLabel = $("#TeamLabel");
 
             function setUpMultiSelection() {
+
+                if ($("#eventtype").val() == GAME) {
+                    $("#CompetitionGroup").show();
+                }
+                else {
+                    $("#CompetitionGroup").hide();
+                }
+
                 if ($("#eventtype").val() == GAME || $("#eventtype").val() == EXHIBITION_GAME) {
-                    console.log('game');
+                    //console.log('game');
                     $("#OpponentGroup,#AwayGroup").show();
                     $("#TitleGroup").hide();
                     opponent.prop('required', true);
@@ -231,7 +276,7 @@
             $(function () {
                 var validator = $("#myform").submit(function () {
                     // update underlying textarea before submit validation
-                    if ($("#eventtype").val() == GAME || $("#eventtype").val() == EXHIBITION_GAME) {                       
+                    if ($("#eventtype").val() == GAME || $("#eventtype").val() == EXHIBITION_GAME) {
                         title.val($("#Opponent option:selected").text());
                     }
                 }).validate({
@@ -350,6 +395,12 @@
                     @Html.Raw("opponent.append($opponentoption).trigger('change'); ");
             }
 
+            @if (Model.Competition.HasValue &&  Model.CompetitionsList != null && Model.CompetitionsList.Count > 0)
+            {
+                    @Html.Raw("var $competitionoption = $('<option selected>Loading...</option>').val(\"" + Model.Competition + "\").text(\"" + Model.CompetitionsList.FirstOrDefault(o => o.CompetitionId == Model.Competition).Name + "\");");
+                    @Html.Raw("competition.append($competitionoption).trigger('change'); ");
+            }
+
             function updateMap() {
                 if ($("#address").val().trim().length < 5) {
                     $("#mapHolder").attr("style", "display:none;");
@@ -377,7 +428,7 @@
                 });
 
                 e.preventDefault();
-            });            
+            });
         });
     </script>
 }

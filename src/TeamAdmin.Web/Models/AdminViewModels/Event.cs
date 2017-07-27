@@ -11,6 +11,7 @@ namespace TeamAdmin.Web.Models.AdminViewModels
         {
             TeamList = new List<Team>();
             OpponentList = new List<ApiViewModels.Opponent>();
+            CompetitionsList = new List<ApiViewModels.Competition>();
         }
 
         public long? EventId { get; set; }
@@ -33,8 +34,10 @@ namespace TeamAdmin.Web.Models.AdminViewModels
         public List<int> Teams { get; set; }
         public List<Team> TeamList{ get; set; }
         public string Address { get; set; }
-        public int? Opponent { get; set; }
+        public int? Opponent { get; set; }        
         public List<ApiViewModels.Opponent> OpponentList { get; set; }
+        public long? Competition { get; set; }
+        public List<ApiViewModels.Competition> CompetitionsList { get; set; }
         public bool Away { get; set; }
     }
 }

@@ -15,13 +15,15 @@ namespace TeamAdmin.Web.Controllers
         private Club club;
         private IMapper mapper;
         private IOpponentRepository opponentRepository;
+        private ICompetitionsRepository competitionRepository;
 
-        public AdminEventsController(IEventRepository eventRepository, ITeamRepository teamRepository, IOpponentRepository opponentRepository, IMapper mapper)
+        public AdminEventsController(IEventRepository eventRepository, ITeamRepository teamRepository, IOpponentRepository opponentRepository, ICompetitionsRepository competitionRepository, IMapper mapper)
         {
             club = new Club { ClubId = 1 };
             this.eventRepository = eventRepository;
             this.teamRepository = teamRepository;
             this.opponentRepository = opponentRepository;
+            this.competitionRepository = competitionRepository;
             this.mapper = mapper;
         }
 
@@ -37,6 +39,7 @@ namespace TeamAdmin.Web.Controllers
         {
             var teams = teamRepository.GetTeams();
             var opponents = opponentRepository.GetOpponents();
+            var competitions = competitionRepository.GetCompetitions();
             var ev = eventRepository.GetEvent(id);
             var evnt = mapper.Map<Models.AdminViewModels.Event>(ev);
             if (teams != null)
@@ -46,6 +49,10 @@ namespace TeamAdmin.Web.Controllers
             if (opponents != null)
                 foreach (var opponent in opponents)
                     evnt.OpponentList.Add(new Models.ApiViewModels.Opponent { Name = opponent.Name, OpponentId = opponent.OpponentId });
+
+            if (competitions != null)
+                foreach (var competition in competitions)
+                    evnt.CompetitionsList.Add(new Models.ApiViewModels.Competition { Name = competition.Name, CompetitionId = competition.CompetitionId });
 
             return View("Details", evnt);
         }

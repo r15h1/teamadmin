@@ -55,9 +55,9 @@ namespace TeamAdmin.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(string name = "")
         {
-            var competitions = repository.GetCompetitions().OrderBy(o => o.Name);
+            var competitions = repository.GetCompetitions(name).OrderBy(o => o.Name);
             return StatusCode(200, mapper.Map<List<TeamAdmin.Web.Models.ApiViewModels.Competition>>(competitions));
         }
 

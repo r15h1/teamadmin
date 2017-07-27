@@ -45,12 +45,16 @@ namespace TeamAdmin.Lib.Repositories.EFContext
                     cfg.CreateMap<Core.Event, EFContext.Event>()
                         .ForMember(m => m.EventType, opt => opt.MapFrom(src => (byte)src.EventType))
                         .ForMember(m => m.OpponentId, opt => opt.MapFrom(src => src.Opponent != null && src.Opponent.OpponentId.HasValue ? src.Opponent.OpponentId : null))
-                        .ForMember(m => m.Opponent, opt => opt.Ignore());
+                        .ForMember(m => m.Opponent, opt => opt.Ignore())
+                        .ForMember(m => m.CompetitionId, opt => opt.MapFrom(src => src.Competition != null && src.Competition.CompetitionId.HasValue ? src.Competition.CompetitionId: null))
+                        .ForMember(m => m.Competition, opt => opt.Ignore());
+                    ;
 
                     cfg.CreateMap<EFContext.Event, Core.Event>()
                         .ForMember(m => m.EventType, opt => opt.MapFrom(src => (int)src.EventType))
                         .ForMember(m => m.Teams, opt => opt.ResolveUsing<TeamEventResolver>())
-                        .ForMember(m => m.Opponent, opt => opt.MapFrom(src => src.Opponent));                       
+                        .ForMember(m => m.Opponent, opt => opt.MapFrom(src => src.Opponent))
+                        .ForMember(m => m.Competition, opt => opt.MapFrom(src => src.Competition));                       
 
                     cfg.CreateMap<Core.Post, EFContext.Post>()
                         .ForMember(m => m.PostMedia, opt => opt.ResolveUsing<CorePostMediaResolver>())
