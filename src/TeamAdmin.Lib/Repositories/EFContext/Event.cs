@@ -23,6 +23,7 @@ namespace TeamAdmin.Lib.Repositories.EFContext
         public long? CompetitionId { get; set; }
         public Competition Competition { get; set; }
         public bool? Away { get; set; }
+        public string Result { get; set; }
     }
 
     internal class ClubTeamEvent

@@ -45,6 +45,7 @@ namespace TeamAdmin.Web.Services
 
             CreateMap<TeamAdmin.Web.Models.ApiViewModels.Opponent, Core.Opponent>().ReverseMap();
             CreateMap<TeamAdmin.Web.Models.ApiViewModels.Competition, Core.Competition>().ReverseMap();
+            CreateMap<TeamAdmin.Web.Models.ApiViewModels.GameResult, Core.GameResult>().ReverseMap();
         }
     }
 

@@ -22,6 +22,7 @@ namespace TeamAdmin.Core
         public Opponent Opponent { get; set; }
         public Competition Competition { get; set; }
         public bool? Away { get; set; }
+        public GameResult GameResult { get; set; }
     }
 
     public enum EventType

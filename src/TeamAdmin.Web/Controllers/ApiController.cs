@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,12 +25,14 @@ namespace TeamAdmin.Web.Controllers
         private IHostingEnvironment environment;
         private ITeamRepository teamRepository;
         private IEventRepository eventRepository;
+        private IMapper mapper;
 
-        public ApiController(IHostingEnvironment environment, ITeamRepository teamRepository, IEventRepository eventRepository)
+        public ApiController(IHostingEnvironment environment, ITeamRepository teamRepository, IEventRepository eventRepository, IMapper mapper)
         {
             this.environment = environment;
             this.teamRepository = teamRepository;
             this.eventRepository = eventRepository;
+            this.mapper = mapper;
         }
 
         [HttpPost("image")]
@@ -142,5 +144,11 @@ namespace TeamAdmin.Web.Controllers
             return JsonConvert.DeserializeObject<CaptchaVerification>(response.Content.ReadAsStringAsync().Result); ;
         }
 
+        [HttpPost("events/{eventId:long}/result")]
+        public IActionResult GetEvents([FromBody]Models.ApiViewModels.GameResult result)
+        {
+            eventRepository.UpdateResult(result.EventId, mapper.Map<Core.GameResult>(result));
+            return new StatusCodeResult(StatusCodes.Status200OK);
+        }
     }
 }

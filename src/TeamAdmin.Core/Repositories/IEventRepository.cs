@@ -10,5 +10,6 @@ namespace TeamAdmin.Core.Repositories
         Event GetEvent(long value);
         IEnumerable<Event> GetEvents(Team team);
         IEnumerable<Event> GetEvents(Club club);
+        void UpdateResult(long eventId, GameResult result);
     }
 }

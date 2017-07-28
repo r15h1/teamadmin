@@ -139,10 +139,13 @@ namespace TeamAdmin.Lib.Repositories
                         .Include(c => c.Team)
                         .Where(c => c.EventId == eventId);
 
-                var evnt = mapper.Map<Core.Event>(ev.Select(c => c.Event).ToList().FirstOrDefault());
+                var efevent = ev.Select(c => c.Event).ToList().FirstOrDefault();
+
+                var evnt = mapper.Map<Core.Event>(efevent);
                 evnt.Teams = mapper.Map<List<Core.Team>>(ev.Select(c => c.Team).ToList());
                 evnt.Opponent = mapper.Map<Core.Opponent>(ev.Select(e => e.Event.Opponent).FirstOrDefault());
                 evnt.Competition = mapper.Map<Core.Competition>(ev.Select(e => e.Event.Competition).FirstOrDefault());
+                evnt.GameResult = string.IsNullOrWhiteSpace(efevent.Result) ? null : new GameResult(efevent.Result);
                 return evnt;
             }
         }
@@ -165,7 +168,8 @@ namespace TeamAdmin.Lib.Repositories
                             Teams = cte.Select(x => new Core.Team(club.ClubId.Value) { Name = x.Team.Name, DisplayName = x.Team.DisplayName }).ToList(),
                             Opponent = mapper.Map<Core.Opponent>(cte.Select(t=> t.Event.Opponent).FirstOrDefault()),
                             Competition = mapper.Map<Core.Competition>(cte.Select(t => t.Event.Competition).FirstOrDefault()),
-                            Away = e.Away
+                            Away = e.Away,
+                            GameResult = string.IsNullOrWhiteSpace(e.Result) ? null : new GameResult(e.Result)
                         }).OrderBy(e => e.StartDate).ThenBy(e => e.EndDate).ToList();
             }            
         }
@@ -188,9 +192,20 @@ namespace TeamAdmin.Lib.Repositories
                             Teams = cte.Select(x => new Core.Team(team.ClubId) { Name = x.Team.Name, DisplayName = x.Team.DisplayName }).ToList(),
                             Opponent = mapper.Map<Core.Opponent>(cte.Select(t => t.Event.Opponent).FirstOrDefault()),
                             Competition = mapper.Map<Core.Competition>(cte.Select(t => t.Event.Competition).FirstOrDefault()),
-                            Away = e.Away
+                            Away = e.Away,
+                            GameResult = string.IsNullOrWhiteSpace(e.Result) ? null : new GameResult(e.Result)
                         }).OrderBy(e => e.StartDate).ThenBy(e => e.EndDate).ToList();
             }        
+        }
+
+        public void UpdateResult(long eventId, GameResult result)
+        {
+            using (var context = ContextFactory.Create<EventContext>())
+            {
+                var ev = context.Events.Where(c => c.EventId == eventId).FirstOrDefault();
+                ev.Result = $"{result.Team1Score}|{result.Team2Score}";
+                context.SaveChanges();
+            }
         }
     }
 }
