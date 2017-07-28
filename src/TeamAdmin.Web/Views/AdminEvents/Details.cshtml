@@ -143,6 +143,54 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <div id="CompetitionModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form id="competitionForm">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Create a competition</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Name *</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" name="name" id="name" maxlength="250" required />
+                                </div>
+                            </div>                            
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Description</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" name="description" id="description" maxlength="250" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Start Date*</label>
+                                <div class="col-md-9">
+                                    <input type="date" class="form-control" name="startdate" id="startdate" required/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">End Date*</label>
+                                <div class="col-md-9">
+                                    <input type="date" class="form-control" name="enddate" id="enddate" required />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
     <div>
         <a href="/admin/events">Back to List</a>
     </div>
@@ -377,6 +425,12 @@
                 $("input[name='logourl'][type='hidden']", $('#opponentForm')).remove();
             });
 
+
+            $("#AddCompetitionButton").click(function () {
+                console.log("opening competition modal");
+                $("#CompetitionModal").modal("show");
+            });
+
             updateMap();
             setUpMultiSelection();
 
@@ -429,7 +483,35 @@
 
                 e.preventDefault();
             });
+
+            $("#competitionForm").submit(function (e) {
+                console.log("submitting competition...");
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/competitions",
+                    data: objectifyForm($("#competitionForm").serializeArray()),
+                    contentType:"application/json;charset=UTF-8",
+                    success: function (data) {
+                        $('#CompetitionModal').modal('toggle');
+                        e.preventDefault();
+                    },
+                    error: function () {
+                        alert("There was an error creating the opponent. Please contact administrator");
+                    }
+                });
+
+                e.preventDefault();
+            });
         });
+
+        function objectifyForm(formArray) {//serialize data function
+            var returnArray = {};
+            for (var i = 0; i < formArray.length; i++) {
+                returnArray[formArray[i]['name']] = formArray[i]['value'];
+            }
+            return JSON.stringify(returnArray);
+        }
     </script>
 }
 
