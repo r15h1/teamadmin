@@ -1,60 +1,31 @@
 @model TeamAdmin.Lib.zz.SummerCamp
 @using TeamAdmin.Lib.Util
 <div class="container">
-    <h2>Rangers FC Summer Camp Registration</h2>
+    <h2>4 to 8 Years Old Community Program / House League</h2>
 
     @if (Model != null)
     {
-        <p>Thank you for registering for the Rangers FC summer camp!</p>
+        <p>Thank you for registering for the House League!</p>
         <p>Should you have any question, please do not hesitate to contact us.</p>
         <p>Have a great day ahead, see you soon!</p>
     }
     else
     {
-        <p>Mapola FC has partnered with Scottish giants Rangers FC and is organizing a Summer Camp between July 10th to July 14th 2017.</p><p> Join us to train and play the Rangers way.</p>
+        <p>Mapola FC is delighted to announce its new community grassroots training / house league program for girls and boys 4 to 8 years old. It is more than just a house league program, participants will get quality training from highly qualified staff to develop skills before game play every week. Areas of focus include Agility, balance, coordination, moving with the ball, passing, receiving, game play and ball mastery.</p>
+        <h4>Register Below - 22 Weeks Program: $330 only</h4>
+        <h5>Location: <span style="color:brown">Jean Augustine Secondary School, 500 Elbern Markell Drive, Brampton ON L6X5L3</span></h5>
+        <h5>Contact:<span style="color:brown"> +1 647-391-0429</span></h5>
+        <h5>Schedule: <span style="color:brown">Saturdays 10:00am to 12:00pm in a Futsal Training Environment</span></h5>
+        <ul>
+            <li>October: 7, 14, 21, 28</li>
+            <li>November: 4, 11, 18, 25</li>
+            <li>December: 2, 9, 16</li>
+            <li>January: 13, 20, 27</li>
+            <li>February: 3, 10, 17, 24</li>
+            <li>March: 3, 10, 24, 31</li>
+        </ul>
         <form asp-action="SummerCamp" method="post" id="myform">
             <div class="form-horizontal">
-                <fieldset>
-                    <legend>Camp Selections</legend>
-                    <span>Please check one or more options</span>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <input asp-for="Ages5To7_9amTo11am_120" type="checkbox" /><label asp-for="Ages5To7_9amTo11am_120"></label>
-                            <span asp-validation-for="Ages5To7_9amTo11am_120" class="text-danger" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <input asp-for="Ages8To18_9amTo12pm_150" type="checkbox" /><label asp-for="Ages8To18_9amTo12pm_150"></label>
-                            <span asp-validation-for="Ages8To18_9amTo12pm_150" class="text-danger" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <input asp-for="Ages8To18_9amTo3pm_250" type="checkbox" /><label asp-for="Ages8To18_9amTo3pm_250"></label>
-                            <span asp-validation-for="Ages8To18_9amTo3pm_250" class="text-danger" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <input asp-for="TeamTraining_4pmTo6pm_45" type="checkbox" /><label asp-for="TeamTraining_4pmTo6pm_45"></label>
-                            <span asp-validation-for="TeamTraining_4pmTo6pm_45" class="text-danger" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <input asp-for="CoachesClinics_6pmTo8pm_110" type="checkbox" /><label asp-for="CoachesClinics_6pmTo8pm_110"></label>
-                            <span asp-validation-for="CoachesClinics_6pmTo8pm_110" class="text-danger" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <input asp-for="ParentsEducationSession" type="checkbox" /><label asp-for="ParentsEducationSession"></label>
-                            <span asp-validation-for="ParentsEducationSession" class="text-danger" />
-                        </div>
-                    </div>
-                </fieldset>
-
                 <fieldset>
                     <legend>Player Information</legend>
                     <div class="form-group">
@@ -197,7 +168,7 @@
                             <div class="checkbox">
                                 <input asp-for="MapolaFCRangersFCCanUseChildImage" required />
                                 <label asp-for="MapolaFCRangersFCCanUseChildImage"></label>
-                                <br /><span asp-validation-for="WaiverForm" class="text-danger" />
+                                <br /><span asp-validation-for="MapolaFCRangersFCCanUseChildImage" class="text-danger" />
                             </div>
                         </div>
                     </div>
@@ -206,7 +177,7 @@
                             <div class="checkbox">
                                 <input asp-for="ParentLegalGuardianAffirmParticipationOfChild" required />
                                 <label asp-for="ParentLegalGuardianAffirmParticipationOfChild"></label>
-                                <br /><span asp-validation-for="WaiverForm" class="text-danger" />
+                                <br /><span asp-validation-for="ParentLegalGuardianAffirmParticipationOfChild" class="text-danger" />
                             </div>
                         </div>
                     </div>
@@ -215,7 +186,7 @@
                             <div class="checkbox">
                                 <input asp-for="CancellationPolicy" required />
                                 <label asp-for="CancellationPolicy"></label><br />
-                                <span asp-validation-for="WaiverForm" class="text-danger" />
+                                <span asp-validation-for="CancellationPolicy" class="text-danger" />
                             </div>
                         </div>
                     </div>
@@ -224,7 +195,7 @@
                             <div class="checkbox">
                                 <input asp-for="FullPaymentAgreementWithin24HrsOfApplication" required />
                                 <label asp-for="FullPaymentAgreementWithin24HrsOfApplication"></label><br />
-                                <span asp-validation-for="WaiverForm" class="text-danger" />
+                                <span asp-validation-for="FullPaymentAgreementWithin24HrsOfApplication" class="text-danger" />
                             </div>
                         </div>
                     </div>
@@ -233,7 +204,7 @@
                             <div class="checkbox">
                                 <input asp-for="TypesOfPaymentAccepted" required />
                                 <label asp-for="TypesOfPaymentAccepted"></label><br />
-                                <span asp-validation-for="WaiverForm" class="text-danger" />
+                                <span asp-validation-for="TypesOfPaymentAccepted" class="text-danger" />
                             </div>
                         </div>
                     </div>
@@ -255,68 +226,68 @@
     <div>
         <a href="/" rel="nofollow">Go to Home Page</a>
     </div>
-    </div>
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-        <script src='https://www.google.com/recaptcha/api.js'></script>
-        <script src="~/js/recaptcha.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('#Register').click(function () {
-                    var checked1 = $("input[name=Ages5To7_9amTo11am_120]:checked").length;
-                    var checked2 = $("input[name=Ages8To18_9amTo12pm_150]:checked").length;
-                    var checked3 = $("input[name=Ages8To18_9amTo3pm_250]:checked").length;
-                    var checked4 = $("input[name=TeamTraining_4pmTo6pm_45]:checked").length;
-                    var checked5 = $("input[name=CoachesClinics_6pmTo8pm_110]:checked").length;
-                    var checked6 = $("input[name=ParentsEducationSession]:checked").length;
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="~/js/recaptcha.js"></script>
+    <script>
+        //$(document).ready(function () {
+        //    $('#Register').click(function () {
+        //        var checked1 = $("input[name=Ages5To7_9amTo11am_120]:checked").length;
+        //        var checked2 = $("input[name=Ages8To18_9amTo12pm_150]:checked").length;
+        //        var checked3 = $("input[name=Ages8To18_9amTo3pm_250]:checked").length;
+        //        var checked4 = $("input[name=TeamTraining_4pmTo6pm_45]:checked").length;
+        //        var checked5 = $("input[name=CoachesClinics_6pmTo8pm_110]:checked").length;
+        //        var checked6 = $("input[name=ParentsEducationSession]:checked").length;
 
-                    if (!checked1 && !checked2 && !checked3 && !checked4 && !checked5 && !checked6) {
-                        alert("You must check at least one item from the camp selections.");
-                        return false;
-                    }
+        //        if (!checked1 && !checked2 && !checked3 && !checked4 && !checked5 && !checked6) {
+        //            alert("You must check at least one item from the camp selections.");
+        //            return false;
+        //        }
 
-                });
-            });
-        </script>
-    }
+        //    });
+        //});
+    </script>
+}
 
-    @section headerlinks{
-        <style>
-            .form-horizontal .form-group {
-                margin-left: 0;
-                margin-right: 0;
+@section headerlinks{
+    <style>
+        .form-horizontal .form-group {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        input.form-control {
+            min-width: 100%;
+            width: 100%;
+        }
+
+        .checkbox input[type=checkbox] {
+            padding-top: 5px;
+            margin-left: 0;
+        }
+
+            .checkbox input[type=checkbox] + label {
+                margin-left: 5px;
             }
 
-            input.form-control {
-                min-width: 100%;
-                width: 100%;
-            }
 
-            .checkbox input[type=checkbox] {
-                padding-top: 5px;
-                margin-left: 0;
-            }
+        fieldset {
+            border: 1px solid #ddd !important;
+            margin-top: 25px !important;
+            /*margin-bottom: 25px !important;*/
+            padding: 10px;
+            position: relative;
+            border-radius: 4px;
+            padding-left: 10px !important;
+        }
 
-                .checkbox input[type=checkbox] + label {
-                    margin-left: 5px;
-                }
-
-
-            fieldset {
-                border: 1px solid #ddd !important;
-                margin-top: 25px !important;
-                /*margin-bottom: 25px !important;*/
-                padding: 10px;
-                position: relative;
-                border-radius: 4px;
-                padding-left: 10px !important;
-            }
-
-            legend {
-                font-size: 1.5em;
-                font-weight: bold;
-                width: auto;
-                border-bottom: none;
-            }
-        </style>
-    }
+        legend {
+            font-size: 1.5em;
+            font-weight: bold;
+            width: auto;
+            border-bottom: none;
+        }
+    </style>
+}

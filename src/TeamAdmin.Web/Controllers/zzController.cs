@@ -46,13 +46,13 @@ namespace TeamAdmin.Web.Controllers
             return View(model);
         }
 
-        [HttpGet("summer-camp-registration")]
+        [HttpGet("4-to-8-years-old-community-program-house-league")]
         public IActionResult SummerCamp()
         {
             return View();
         }
 
-        [HttpPost("summer-camp-registration")]
+        [HttpPost("4-to-8-years-old-community-program-house-league")]
         public IActionResult SummerCamp(SummerCamp model)
         {
             if (!ModelState.IsValid) return View(model);
@@ -64,7 +64,7 @@ namespace TeamAdmin.Web.Controllers
                 Email = model.Email,
                 MessageType = Core.MessageType.SummerCamp,
                 Name = $"{model.PlayerFullName}",
-                Subject = $"Summer Camp for {model.PlayerFullName}"
+                Subject = $"4-8 House League Registration for {model.PlayerFullName}"
             };
             clubRepository.SaveMessage(message);
             return View(model);

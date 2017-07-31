@@ -33,7 +33,7 @@
                         </td>
                         <td>
                             <div>@((ev.EventType == TeamAdmin.Core.EventType.GAME || ev.EventType == TeamAdmin.Core.EventType.EXHIBITION_GAME) && ev.Opponent != null ? ev.Opponent.Name : ev.Title)</div>
-                            <div class="label label-success  pull-left">@(ev.GameResult?.Team2Score)</div>
+                            <div class="label label-success pull-left">@(ev.GameResult?.Team2Score)</div>
                         </td>
                             <td>@ev.StartDate.ToString("hh:mm tt")</td>
                             <td>@ev.EndDate.ToString("hh:mm tt")</td>

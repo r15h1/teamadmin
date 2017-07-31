@@ -96,14 +96,6 @@ namespace TeamAdmin.Web.Controllers
             var result = (SummerCamp)serializer.Deserialize(rdr);
             StringBuilder builder = new StringBuilder();
 
-            builder.AppendLine($"-----Camp Selections---------------------------------------");
-            builder.AppendLine($"Ages 5-7 / 9am to 11am / $120 + HST: {(result.Ages5To7_9amTo11am_120 ? "Yes" : "No")}");
-            builder.AppendLine($"Ages 8-18 / 9am - 12pm / $150 + HST: {(result.Ages8To18_9amTo12pm_150 ? "Yes" : "No")}");
-            builder.AppendLine($"Ages 8-18 / 9am - 3pm / $250 + HST: {(result.Ages8To18_9amTo3pm_250 ? "Yes" : "No")}");
-            builder.AppendLine($"Team Training / 4pm - 6pm / $45 + HST: {(result.TeamTraining_4pmTo6pm_45 ? "Yes" : "No")}");
-            builder.AppendLine($"Coaches Clinics 6pm - 8pm / $110 + HST for 3 days: {(result.CoachesClinics_6pmTo8pm_110 ? "Yes" : "No")}");
-            builder.AppendLine($"Parents Education Session / Saturday 15th July 6pm-8pm / $30 per family mom & dad: {(result.ParentsEducationSession ? "Yes" : "No")}");
-
             builder.AppendLine($"\n-----Player's Information---------------------------------------");
             builder.AppendLine($"Player's Full Name: {result.PlayerFullName}");
             builder.AppendLine($"Player's Date of Birth: {result.DateOfBirth}");
